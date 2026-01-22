@@ -28,9 +28,10 @@
       <p> A passionate Computer Science Graduate dedicated to exploring new technologies, problem solving, and building
         impactful solutions</p>
       <div class="social-links">
-        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" class="btn" target="_blank" rel="noopener">Connect
+        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" class="btn" target="_blank">Connect
           on LinkedIn</a>
         <a href="#contact" class="btn">Email me</a>
+        <a href="#" class="btn" onclick="openResume(event)">My Resume</a>
       </div>
     </div>
   </section>
@@ -313,13 +314,25 @@
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"
             class="github-icon">
         </a>
-        <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener"> <!-- Placeholder Instagram link -->
+        <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener">
+          <!-- Placeholder Instagram link -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
         </a>
       </div>
       <p>&copy; 2026 Harsh Kumar Sinha. All rights reserved</p>
     </div>
   </footer>
+
+  <!-- Resume Modal -->
+  <div id="resumeModal" class="resume-modal" onclick="closeResume(event)">
+    <div class="resume-content" onclick="event.stopPropagation()">
+      <div class="resume-header">
+        <h3 class="resume-title">My Resume</h3>
+        <span class="close-resume" onclick="closeResume(event)">&times;</span>
+      </div>
+      <iframe src="" id="resumeFrame" width="100%" height="100%" frameborder="0"></iframe>
+    </div>
+  </div>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script>
@@ -361,6 +374,28 @@
     }
 
     requestAnimationFrame(raf);
+
+    function openResume(event) {
+      event.preventDefault();
+
+      const modal = document.getElementById('resumeModal');
+      const frame = document.getElementById('resumeFrame');
+
+      // Set the PDF source if it's not already set
+      if (!frame.src || frame.src === window.location.href) {
+        frame.src = "document/Harsh_Kumar_Sinha_Resume.pdf#toolbar=0&view=FitH";
+      }
+
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    }
+
+    function closeResume(event) {
+      if (event) event.preventDefault();
+      const modal = document.getElementById('resumeModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    }
 
     function sendMail(event) {
       event.preventDefault();
