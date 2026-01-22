@@ -543,3 +543,143 @@ section {
 .github-icon {
     filter: invert(1); /* Invert black to white for dark mode */
 }
+
+/* =========================================
+   Responsive Design Updates
+   ========================================= */
+
+/* Tablets and below (max-width: 900px) */
+@media (max-width: 900px) {
+    h1 {
+        font-size: 3rem;
+    }
+    
+    h2 {
+        font-size: 2rem;
+    }
+    
+    .intro h1 {
+        font-size: 3rem;
+    }
+
+    .interests-container {
+        gap: 2rem;
+    }
+}
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+    /* Global Section Padding */
+    section {
+        padding: 3rem 1.5rem;
+    }
+
+    /* Intro Section */
+    .intro {
+        padding: 1rem;
+        min-height: auto;
+        padding-top: 15vh;
+        padding-bottom: 5rem;
+    }
+
+    .intro h1 {
+        font-size: 2.2rem;
+    }
+
+    .intro p {
+        font-size: 1.1rem;
+    }
+
+    /* About Section */
+    .about p {
+        font-size: 1rem;
+        text-align: left; /* Easier to read on mobile */
+    }
+
+    /* Skills Grid */
+    .skills-grid {
+        grid-template-columns: 1fr; /* Stack on mobile */
+        gap: 1rem;
+    }
+
+    .skill {
+        padding: 1.25rem;
+    }
+
+    /* Experience Section */
+    .experience-container {
+        gap: 2rem;
+    }
+    
+    .experience-image {
+        position: static; /* Remove sticky on mobile */
+        margin-top: 2rem;
+        width: 100%;
+        display: none; /* Often checking images on mobile takes too much space, or we can keep it */
+    }
+    /* Let's keep the image but ensure it fits */
+    .experience-image {
+        display: block;
+        margin-bottom: 2rem;
+    }
+
+    /* Academic Grid */
+    .academic-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Footer */
+    .footer-container {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 2rem 1rem;
+        text-align: center;
+        height: auto;
+        max-height: none;
+    }
+    
+    .footer-socials {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Small Mobile Devices (max-width: 480px) */
+@media (max-width: 480px) {
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    .intro h1 {
+        font-size: 1.8rem;
+    }
+    
+    .btn {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.5rem;
+    }
+
+    .contact-container {
+        padding: 1.5rem;
+    }
+    
+    /* Fine tune timeline for very small screens */
+    .timeline-container::before {
+        left: 15px;
+    }
+    
+    .timeline-item {
+        padding-left: 40px;
+    }
+    
+    .timeline-item.left::after, .timeline-item.right::after {
+        left: 4px;
+    }
+}
