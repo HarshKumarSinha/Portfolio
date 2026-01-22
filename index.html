@@ -431,14 +431,22 @@
           const mobileContainer = document.getElementById('mobileResumeContainer');
           const viewportOriginal = page.getViewport({ scale: 1 });
 
-          // Calculate scale to fit width
-          // We subtract some padding if needed, but on mobile we want full width
+          // Calculate visual scale to fit container width
           const containerWidth = mobileContainer.clientWidth || window.innerWidth;
-          const scale = (containerWidth / viewportOriginal.width);
-          const viewport = page.getViewport({ scale: scale });
+          const visualScale = (containerWidth / viewportOriginal.width);
+
+          // Fix blurry text: Scale up for high-DPI (Retina) screens
+          const dpr = window.devicePixelRatio || 1;
+          const viewport = page.getViewport({ scale: visualScale * dpr });
 
           canvas.height = viewport.height;
           canvas.width = viewport.width;
+
+          // Scale back down visually using CSS
+          canvas.style.width = `${viewport.width / dpr}px`;
+          canvas.style.height = `${viewport.height / dpr}px`;
+
+          // Ensure context is scaled? No, PDF.js viewport handles the transform if we pass it.
 
           const renderContext = {
             canvasContext: ctx,
