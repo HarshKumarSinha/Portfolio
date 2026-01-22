@@ -330,12 +330,22 @@
         <h3 class="resume-title">My Resume</h3>
         <span class="close-resume" onclick="closeResume(event)">&times;</span>
       </div>
+      <!-- Native Iframe for Desktop -->
       <iframe src="" id="resumeFrame" width="100%" height="100%" frameborder="0"></iframe>
+      <!-- Canvas for Mobile (PDF.js) -->
+      <div id="mobileResumeContainer"
+        style="display: none; width: 100%; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #525659;">
+        <canvas id="resumeCanvas" style="width: 100%; display: block; margin: 0 auto;"></canvas>
+      </div>
     </div>
   </div>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
+    // Set up PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
     // Simple Intersection Observer to trigger animations on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -375,19 +385,75 @@
 
     requestAnimationFrame(raf);
 
+    let pdfDoc = null;
+    let pageNum = 1;
+    let canvas = document.getElementById('resumeCanvas');
+    let ctx = canvas.getContext('2d');
+    let isMobileRendered = false;
+
     function openResume(event) {
       event.preventDefault();
 
       const modal = document.getElementById('resumeModal');
       const frame = document.getElementById('resumeFrame');
-
-      // Set the PDF source if it's not already set
-      if (!frame.src || frame.src === window.location.href) {
-        frame.src = "document/Harsh_Kumar_Sinha_Resume.pdf#toolbar=0&view=FitH";
-      }
+      const mobileContainer = document.getElementById('mobileResumeContainer');
+      const isMobile = window.innerWidth <= 768;
 
       modal.classList.add('active');
       document.body.style.overflow = 'hidden'; // Prevent background scrolling
+
+      if (isMobile) {
+        // Mobile: Show Canvas, Hide Iframe
+        frame.style.display = 'none';
+        mobileContainer.style.display = 'block';
+
+        // Render PDF only if not already rendered
+        if (!isMobileRendered) {
+          renderMobilePDF("document/Harsh_Kumar_Sinha_Resume.pdf");
+        }
+      } else {
+        // Desktop: Show Iframe, Hide Canvas
+        mobileContainer.style.display = 'none';
+        frame.style.display = 'block';
+
+        // Set the PDF source if it's not already set
+        if (!frame.src || frame.src === window.location.href) {
+          frame.src = "document/Harsh_Kumar_Sinha_Resume.pdf#toolbar=0&view=FitH";
+        }
+      }
+    }
+
+    function renderMobilePDF(url) {
+      const loadingTask = pdfjsLib.getDocument(url);
+      loadingTask.promise.then(function (pdf) {
+        pdfDoc = pdf;
+        pdf.getPage(1).then(function (page) {
+          const mobileContainer = document.getElementById('mobileResumeContainer');
+          const viewportOriginal = page.getViewport({ scale: 1 });
+
+          // Calculate scale to fit width
+          // We subtract some padding if needed, but on mobile we want full width
+          const containerWidth = mobileContainer.clientWidth || window.innerWidth;
+          const scale = (containerWidth / viewportOriginal.width);
+          const viewport = page.getViewport({ scale: scale });
+
+          canvas.height = viewport.height;
+          canvas.width = viewport.width;
+
+          const renderContext = {
+            canvasContext: ctx,
+            viewport: viewport
+          };
+
+          const renderTask = page.render(renderContext);
+          renderTask.promise.then(function () {
+            isMobileRendered = true;
+          });
+        });
+      }, function (reason) {
+        // PDF loading error
+        console.error(reason);
+      });
     }
 
     function closeResume(event) {
