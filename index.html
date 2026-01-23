@@ -341,6 +341,45 @@
     </div>
   </div>
 
+  <!-- Chatbot Widget -->
+  <div class="chatbot-widget" id="chatbotWidget">
+    <div class="chatbot-window">
+      <div class="chatbot-header">
+        <div class="chatbot-title">
+          <div class="bot-avatar-container">
+            <img src="img/chatbot-svgrepo-com.svg" alt="Bot"
+              style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
+          </div>
+          <div>
+            <div>Harsh's Assistant</div>
+            <span class="chat-status">Online</span>
+          </div>
+        </div>
+        <button class="close-chat" onclick="toggleChatbot()">×</button>
+      </div>
+      <div class="chatbot-body" id="chatbotBody">
+        <div class="message bot-message">
+          Hello! 👋 I'm Harsh's virtual assistant. Ask me anything about his projects, skills, or experience!
+        </div>
+        <div class="typing-indicator" id="typingIndicator">
+          <span></span><span></span><span></span>
+        </div>
+      </div>
+      <div class="chatbot-footer">
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)">
+        <button class="send-btn" onclick="sendUserMessage()">
+          <svg viewBox="0 0 24 24">
+            <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <button class="chatbot-toggle" onclick="toggleChatbot()">
+      <img src="img/chatbot-svgrepo-com.svg" alt="Chat" class="icon"
+        style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+    </button>
+  </div>
+
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script>
@@ -377,6 +416,28 @@
         e.preventDefault();
         lenis.scrollTo(this.getAttribute('href'));
       });
+    });
+
+    const timelineSection = document.querySelector('.timeline-section');
+    const timelineContainer = document.querySelector('.timeline-container');
+
+    // Use Lenis scroll event to drive the animation
+    lenis.on('scroll', (e) => {
+      if (timelineSection && timelineContainer) {
+        const rect = timelineContainer.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+
+        // Start filling when the top of the container hits the middle of the screen
+        const startOffset = windowHeight / 2;
+
+        // Calculate progress based on position relative to viewport
+        let progress = (startOffset - rect.top) / (rect.height);
+
+        // Clamp between 0 and 1
+        progress = Math.max(0, Math.min(1, progress));
+
+        timelineContainer.style.setProperty('--line-height', `${progress * 100}%`);
+      }
     });
 
     function raf(time) {
@@ -430,7 +491,9 @@
         pdfDoc = pdf;
         pdf.getPage(1).then(function (page) {
           const mobileContainer = document.getElementById('mobileResumeContainer');
-          const viewportOriginal = page.getViewport({ scale: 1 });
+          const viewportOriginal = page.getViewport({
+            scale: 1
+          });
 
           // Calculate visual scale to fit container width
           const containerWidth = mobileContainer.clientWidth || window.innerWidth;
@@ -438,7 +501,9 @@
 
           // Fix blurry text: Scale up for high-DPI (Retina) screens
           const dpr = window.devicePixelRatio || 1;
-          const viewport = page.getViewport({ scale: visualScale * dpr });
+          const viewport = page.getViewport({
+            scale: visualScale * dpr
+          });
 
           canvas.height = viewport.height;
           canvas.width = viewport.width;
@@ -558,6 +623,124 @@
           });
           btn.innerText = originalText;
         });
+    }
+
+    // Chatbot Logic
+    const chatbotWidget = document.getElementById('chatbotWidget');
+    const chatInput = document.getElementById('chatInput');
+    const chatbotBody = document.getElementById('chatbotBody');
+    const typingIndicator = document.getElementById('typingIndicator');
+
+    // Knowledge Base powered by the portfolio content
+    const knowledgeBase = {
+      greetings: [
+        "Hi there! How can I help you?",
+        "Hello! improved I'm ready to answer your questions about Harsh.",
+        "Greetings! Ask me anything about Harsh's work."
+      ],
+      about: "Harsh Sinha is a Computer Science Graduate and Junior Software Analyst at Enaiya Information Technology. He specializes in building modern web applications and enterprise SharePoint solutions, bridging the gap between backend logic and frontend design.",
+      experience: "<b>Professional Experience:</b><br>• <b>Junior Software Analyst</b> @ Enaiya Information Technology (Aug 2025 - Present): Focuses on SharePoint Online, custom SPFx components, and system optimization.<br>• <b>Full Stack Developer</b> @ Ice Technology Lab (Feb 2025 - Mar 2025): Built web apps using Python and Django.",
+      skills: "<b>Core Technical Skills:</b><br>• <b>Languages:</b> Python, Java, JavaScript, HTML5, CSS3<br>• <b>Frameworks:</b> Django, jQuery, Bootstrap 5<br>• <b>Platforms:</b> SharePoint (Online & On-Premise), SPFx<br>• <b>Tools:</b> Git, VS Code, REST APIs",
+      education: "Harsh holds a <b>Bachelor of Technology (B.Tech)</b> in Computer Science from Shivalik College of Engineering (2021-2025). He completed his schooling (ISC & ICSE) at Assembly of God Church.",
+      projects: "Harsh has worked on various projects including:<br>• <b>Portfolio Website:</b> This responsive site you're looking at!<br>• <b>SharePoint Automation:</b> Enterprise workflows and SPFx components.<br>• <b>Django Web Apps:</b> Full-stack applications with Python backend.",
+      contact: "You can reach Harsh via the <a href='#contact' style='color: #a855f7;'>contact form</a> below. He is also active on <a href='https://www.linkedin.com/in/harsh-sinha-24b65731a/' target='_blank' style='color: #a855f7;'>LinkedIn</a>.",
+      summary: "<b>Quick Summary:</b><br>Harsh Sinha is a passionate Full Stack Developer & SharePoint Analyst. He converts complex backend logic into smooth, user-friendly experiences. With expertise in Python, Django, and JavaScript, he loves solving real-world business challenges."
+    };
+
+    function toggleChatbot() {
+      chatbotWidget.classList.toggle('active');
+      if (chatbotWidget.classList.contains('active')) {
+        setTimeout(() => chatInput.focus(), 300);
+      }
+    }
+
+    function handleChatInput(event) {
+      if (event.key === 'Enter') {
+        sendUserMessage();
+      }
+    }
+
+    function sendUserMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      // Add User Message
+      addMessage(message, 'user-message');
+      chatInput.value = '';
+
+      // Show Typing Indicator
+      showTypingIndicator();
+
+      // Simulate Bot Processing and Response
+      setTimeout(() => {
+        hideTypingIndicator();
+        const botResponse = getSmartResponse(message);
+        addMessage(botResponse, 'bot-message');
+      }, 1000 + Math.random() * 1000); // Random delay between 1-2s for realism
+    }
+
+    function addMessage(htmlContent, className) {
+      const messageDiv = document.createElement('div');
+      messageDiv.classList.add('message', className);
+      // Allow HTML for better formatting (lists, bold text)
+      messageDiv.innerHTML = htmlContent;
+
+      // Insert before typing indicator
+      chatbotBody.insertBefore(messageDiv, typingIndicator);
+      scrollToBottom();
+    }
+
+    function showTypingIndicator() {
+      typingIndicator.style.display = 'flex';
+      scrollToBottom();
+    }
+
+    function hideTypingIndicator() {
+      typingIndicator.style.display = 'none';
+    }
+
+    function scrollToBottom() {
+      chatbotBody.scrollTop = chatbotBody.scrollHeight;
+    }
+
+    function getSmartResponse(input) {
+      const lowerInput = input.toLowerCase();
+
+      // Check for specific intents
+      if (lowerInput.includes('summary') || lowerInput.includes('overview') || lowerInput.includes('tell me about harsh')) {
+        return knowledgeBase.summary;
+      }
+
+      if (lowerInput.includes('skill') || lowerInput.includes('tech') || lowerInput.includes('stack') || lowerInput.includes('language')) {
+        return knowledgeBase.skills;
+      }
+
+      if (lowerInput.includes('experience') || lowerInput.includes('work') || lowerInput.includes('job') || lowerInput.includes('career') || lowerInput.includes('company')) {
+        return knowledgeBase.experience;
+      }
+
+      if (lowerInput.includes('education') || lowerInput.includes('college') || lowerInput.includes('degree') || lowerInput.includes('study')) {
+        return knowledgeBase.education;
+      }
+
+      if (lowerInput.includes('project') || lowerInput.includes('built') || lowerInput.includes('create')) {
+        return knowledgeBase.projects;
+      }
+
+      if (lowerInput.includes('contact') || lowerInput.includes('email') || lowerInput.includes('reach') || lowerInput.includes('hire')) {
+        return knowledgeBase.contact;
+      }
+
+      if (lowerInput.includes('resume') || lowerInput.includes('cv')) {
+        return "You can view or download the resume by clicking the <b>'My Resume'</b> button at the top of the page.";
+      }
+
+      if (lowerInput.match(/\b(hi|hello|hey|greetings|start)\b/)) {
+        return knowledgeBase.greetings[Math.floor(Math.random() * knowledgeBase.greetings.length)];
+      }
+
+      // Default Fallback
+      return "That's a great question! While I'm a simple bot, I can tell you about Harsh's <br>• <b>Experience</b><br>• <b>Skills</b><br>• <b>Education</b><br>• <b>Projects</b><br><br>Or ask for a <b>Summary</b>!";
     }
   </script>
 </body>
