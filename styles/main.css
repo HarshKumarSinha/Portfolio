@@ -979,6 +979,9 @@ section {
     gap: 12px;
     align-items: center;
     background: rgba(0,0,0,0.2);
+    box-sizing: border-box; /* Fix for padding increasing width */
+    width: 100%;
+    justify-content: center;
 }
 
 .chatbot-footer input {
@@ -1011,6 +1014,7 @@ section {
     align-items: center;
     justify-content: center;
     transition: var(--transition);
+    flex-shrink: 0; /* Prevent button from squishing */
 }
 
 .send-btn:hover {
@@ -1058,7 +1062,8 @@ section {
         width: 300px;
         height: 60vh;
         bottom: 90px;
-        right: 1px;
+        right: 0; /* Align to edge */
+        border-radius: 16px; /* Smaller radius on mobile to save space */
     }
     .chatbot-widget {
         right: 20px;
