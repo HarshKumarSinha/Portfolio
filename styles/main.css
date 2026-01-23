@@ -1059,11 +1059,16 @@ section {
 
 @media (max-width: 480px) {
     .chatbot-window {
-        width: 300px;
+        position: fixed;
+        width: 90%;
+        max-width: 380px;
         height: 60vh;
         bottom: 90px;
-        right: 0; /* Align to edge */
-        border-radius: 16px; /* Smaller radius on mobile to save space */
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        border-radius: 20px;
+        z-index: 1005; /* Ensure it stays on top */
     }
     .chatbot-widget {
         right: 20px;
