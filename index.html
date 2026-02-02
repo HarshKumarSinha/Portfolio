@@ -11,6 +11,7 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css">
+  <link rel="stylesheet" href="styles/voice.css">
   <link rel="icon" href="img/android-chrome-512x512.png">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
@@ -350,14 +351,15 @@
             <img src="img/chatbot-svgrepo-com.svg" alt="Bot"
               style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
           </div>
-          <div>
+          <div class="chatbot-title-text">
             <div>Harsh's Assistant</div>
-            <span class="chat-status">Online</span>
+            <span class="chat-status" id="chatStatus">Online</span>
+            <div id="voiceStatus" class="voice-status">Listening...</div>
           </div>
         </div>
         <button class="close-chat" onclick="toggleChatbot()">×</button>
       </div>
-      <div class="chatbot-body" id="chatbotBody">
+      <div class="chatbot-body" id="chatbotBody" data-lenis-prevent>
         <div class="message bot-message">
           Hello! 👋 I'm Harsh's virtual assistant. Ask me anything about his projects, skills, or experience!
         </div>
@@ -366,6 +368,13 @@
         </div>
       </div>
       <div class="chatbot-footer">
+        <button id="micBtn" class="mic-btn" onclick="jarvis.toggle()" title="Activate Voice Mode">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+            <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
+            <path
+              d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
+          </svg>
+        </button>
         <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)">
         <button class="send-btn" onclick="sendUserMessage()">
           <svg viewBox="0 0 24 24">
@@ -640,7 +649,7 @@
       ],
       about: "Harsh Sinha is a Computer Science Graduate and Junior Software Analyst at Enaiya Information Technology. He specializes in building modern web applications and enterprise SharePoint solutions, bridging the gap between backend logic and frontend design.",
       experience: "<b>Professional Experience:</b><br>• <b>Junior Software Analyst</b> @ Enaiya Information Technology (Aug 2025 - Present): Focuses on SharePoint Online, custom SPFx components, and system optimization.<br>• <b>Full Stack Developer</b> @ Ice Technology Lab (Feb 2025 - Mar 2025): Built web apps using Python and Django.",
-      skills: "<b>Core Technical Skills:</b><br>• <b>Languages:</b> Python, Java, JavaScript, HTML5, CSS3<br>• <b>Frameworks:</b> Django, jQuery, Bootstrap 5<br>• <b>Platforms:</b> SharePoint (Online & On-Premise), SPFx<br>• <b>Tools:</b> Git, VS Code, REST APIs",
+      skills: "<b>Core Technical Skills:</b><br>• <b>Languages:</b> Python, Java, JavaScript, HTML5, CSS3, jQuery, Bootstrap 5<br>• <b>Frameworks:</b> Django, SPFx<br>• <b>Platforms:</b> SharePoint (Online & On-Premise)<br>• <b>Tools:</b> Git, VS Code, REST APIs",
       education: "Harsh holds a <b>Bachelor of Technology (B.Tech)</b> in Computer Science from Shivalik College of Engineering (2021-2025). He completed his schooling (ISC & ICSE) at Assembly of God Church.",
       projects: "Harsh has worked on various projects including:<br>• <b>Portfolio Website:</b> This responsive site you're looking at!<br>• <b>SharePoint Automation:</b> Enterprise workflows and SPFx components.<br>• <b>Django Web Apps:</b> Full-stack applications with Python backend.",
       contact: "You can reach Harsh via the <a href='#contact' style='color: #a855f7;'>contact form</a> below. He is also active on <a href='https://www.linkedin.com/in/harsh-sinha-24b65731a/' target='_blank' style='color: #a855f7;'>LinkedIn</a>.",
@@ -741,6 +750,220 @@
 
       // Default Fallback
       return "That's a great question! While I'm a simple bot, I can tell you about Harsh's <br>• <b>Experience</b><br>• <b>Skills</b><br>• <b>Education</b><br>• <b>Projects</b><br><br>Or ask for a <b>Summary</b>!";
+    }
+
+    // Jarvis Voice Assistant Logic
+    class JarvisAssistant {
+      constructor() {
+        this.recognition = null;
+        this.synth = window.speechSynthesis;
+        this.isWakeMode = false; // "Waiting for Hello Jarvis"
+        this.awake = false; // "Listening for command"
+        this.silenceTimer = null;
+        this.voices = [];
+
+        // Initialize Speech Recognition
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+          const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+          this.recognition = new SpeechRecognition();
+          this.recognition.continuous = true; // Keep listening for wake word
+          this.recognition.interimResults = false;
+          this.recognition.lang = 'en-US';
+
+          this.recognition.onstart = () => {
+            console.log("Voice Recognition Started");
+            this.updateUI();
+          };
+
+          this.recognition.onend = () => {
+            console.log("Voice Recognition Ended");
+            // Auto-restart if we are supposed to be active (Continuous Listening)
+            if (this.isWakeMode) {
+              try {
+                this.recognition.start();
+              } catch (e) {
+                console.log("Restarting recognition...");
+              }
+            } else {
+              this.updateUI();
+            }
+          };
+
+          this.recognition.onresult = (event) => {
+            const transcript = event.results[event.results.length - 1][0].transcript.toLowerCase().trim();
+            console.log("Heard:", transcript);
+
+            if (!this.awake) {
+              // WAKE WORD DETECTION
+              if (transcript.includes('hello jarvis') || transcript.includes('hello service') || transcript.includes('hey jarvis')) {
+                this.wakeUp();
+              }
+            } else {
+              // COMMAND PROCESSING
+              this.processCommand(transcript);
+            }
+          };
+
+          this.recognition.onerror = (event) => {
+            console.error("Speech Recognition Error:", event.error);
+            if (event.error === 'not-allowed') {
+              this.stop();
+              // alert("Microphone access is required for Jarvis.");
+            }
+          };
+        } else {
+          console.warn("Web Speech API not supported in this browser.");
+          const btn = document.getElementById('micBtn');
+          if (btn) btn.style.display = 'none';
+        }
+
+        // Load Voices
+        window.speechSynthesis.onvoiceschanged = () => {
+          this.voices = window.speechSynthesis.getVoices();
+        };
+      }
+
+      toggle() {
+        if (this.isWakeMode) {
+          this.stop();
+        } else {
+          this.start();
+        }
+      }
+
+      start() {
+        if (!this.recognition) return;
+        this.isWakeMode = true;
+        this.awake = false; // Start in passive mode waiting for wake word
+        try {
+          this.recognition.start();
+          this.speak("Voice system initialized. Say Hello Jarvis.");
+        } catch (e) {
+          console.error(e);
+        }
+        this.updateUI();
+      }
+
+      stop() {
+        this.isWakeMode = false;
+        this.awake = false;
+        if (this.recognition) this.recognition.stop();
+        this.stopSilenceTimer();
+        this.speak("Voice system deactivated.");
+        this.updateUI();
+      }
+
+      wakeUp() {
+        this.awake = true;
+        this.speak("Yes?"); // Acknowledge wake word
+        this.updateUI();
+        this.startSilenceTimer();
+      }
+
+      processCommand(text) {
+        this.stopSilenceTimer();
+
+        // Show what was heard
+        document.getElementById('chatInput').value = text;
+
+        // Use existing message logic
+        sendUserMessage();
+      }
+
+      speak(text) {
+        if (this.synth.speaking) this.synth.cancel();
+
+        // Remove HTML tags for speech
+        const cleanText = text.replace(/<[^>]*>?/gm, '');
+
+        const utterance = new SpeechSynthesisUtterance(cleanText);
+        utterance.rate = 1;
+        utterance.pitch = 1;
+
+        // Try to select a "Google US English" voice or similar
+        const preferredVoice = this.voices.find(v => v.name.includes('Google US English')) || this.voices.find(v => v.lang === 'en-US');
+        if (preferredVoice) utterance.voice = preferredVoice;
+
+        utterance.onend = () => {
+          // If we were awake, reset the timer to wait for follow-up or go to sleep
+          if (this.awake) {
+            this.startSilenceTimer();
+          }
+        };
+
+        this.synth.speak(utterance);
+      }
+
+      startSilenceTimer() {
+        this.stopSilenceTimer();
+        this.silenceTimer = setTimeout(() => {
+          if (this.awake) {
+            this.speak("I'm going back to sleep now.");
+            this.awake = false; // Return to Wake Word mode
+            this.updateUI();
+          }
+        }, 15000); // 15 seconds of silence = go to sleep
+      }
+
+      stopSilenceTimer() {
+        if (this.silenceTimer) clearTimeout(this.silenceTimer);
+      }
+
+      updateUI() {
+        const btn = document.getElementById('micBtn');
+        const statusText = document.getElementById('chatStatus');
+        const voiceStatus = document.getElementById('voiceStatus');
+
+        if (this.isWakeMode) {
+          btn.classList.add('active'); // General Voice Mode On
+
+          if (this.awake) {
+            btn.classList.add('listening'); // Currently listening for command
+            statusText.style.display = 'none';
+            voiceStatus.style.display = 'block';
+            voiceStatus.innerText = "Listening...";
+            voiceStatus.style.color = '#ef4444';
+          } else {
+            btn.classList.remove('listening');
+            statusText.style.display = 'none';
+            voiceStatus.style.display = 'block';
+            voiceStatus.innerText = "Say 'Hello Jarvis'";
+            voiceStatus.style.color = '#a855f7';
+          }
+        } else {
+          btn.classList.remove('active');
+          btn.classList.remove('listening');
+          statusText.style.display = 'inline';
+          voiceStatus.style.display = 'none';
+        }
+      }
+    }
+
+    const jarvis = new JarvisAssistant();
+
+    // Redefine sendUserMessage to include voice response
+    function sendUserMessage() {
+      const message = chatInput.value.trim();
+      if (!message) return;
+
+      // Add User Message
+      addMessage(message, 'user-message');
+      chatInput.value = '';
+
+      // Show Typing Indicator
+      showTypingIndicator();
+
+      // Simulate Bot Processing and Response
+      setTimeout(() => {
+        hideTypingIndicator();
+        const botResponse = getSmartResponse(message);
+        addMessage(botResponse, 'bot-message');
+
+        // Speak response if voice active
+        if (jarvis.isWakeMode) {
+          jarvis.speak(botResponse);
+        }
+      }, 1000 + Math.random() * 1000);
     }
   </script>
 </body>
