@@ -543,6 +543,8 @@ class JarvisAssistant {
     this.isSpeaking = false; // Flag to prevent self-listening
     this.silenceTimer = null;
     this.voices = [];
+    this.commandBuffer = ""; // Buffer to accumulate speech
+    this.commandTimer = null; // Timer to debounce command processing
 
     // Initialize Speech Recognition
     if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
@@ -588,8 +590,22 @@ class JarvisAssistant {
             this.wakeUp();
           }
         } else {
-          // COMMAND PROCESSING
-          this.processCommand(transcript);
+          // COMMAND PROCESSING WITH DEBOUNCING
+          // Accumulate the speech input
+          this.commandBuffer = transcript;
+
+          // Clear any existing timer
+          if (this.commandTimer) {
+            clearTimeout(this.commandTimer);
+          }
+
+          // Set a new timer to process the command after speech stops
+          this.commandTimer = setTimeout(() => {
+            if (this.commandBuffer.trim()) {
+              this.processCommand(this.commandBuffer);
+              this.commandBuffer = ""; // Clear buffer after processing
+            }
+          }, 1500); // Wait 1.5 seconds after last speech input
         }
       };
 
@@ -638,6 +654,7 @@ class JarvisAssistant {
     this.awake = false;
     if (this.recognition) this.recognition.stop();
     this.stopSilenceTimer();
+    this.stopCommandTimer(); // Clear any pending command processing
     this.speak("Voice system deactivated.");
     this.updateUI();
   }
@@ -719,6 +736,14 @@ class JarvisAssistant {
 
   stopSilenceTimer() {
     if (this.silenceTimer) clearTimeout(this.silenceTimer);
+  }
+
+  stopCommandTimer() {
+    if (this.commandTimer) {
+      clearTimeout(this.commandTimer);
+      this.commandTimer = null;
+    }
+    this.commandBuffer = ""; // Clear buffer
   }
 
   updateUI() {
