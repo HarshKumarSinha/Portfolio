@@ -257,26 +257,134 @@ const typingIndicator = document.getElementById("typingIndicator");
 const knowledgeBase = {
   greetings: [
     "Hi there! How can I help you?",
-    "Hello! improved I'm ready to answer your questions about Harsh.",
+    "Hello! I'm ready to answer your questions about Harsh.",
     "Greetings! Ask me anything about Harsh's work.",
   ],
-  about:
-    "Harsh Sinha is a Computer Science Graduate and Junior Software Analyst at Enaiya Information Technology. He specializes in building modern web applications and enterprise SharePoint solutions, bridging the gap between backend logic and frontend design.",
-  experience:
-    "<b>Professional Experience:</b><br>• <b>Junior Software Analyst</b> @ Enaiya Information Technology (Aug 2025 - Present): Focuses on SharePoint Online, custom SPFx components, and system optimization.<br>• <b>Full Stack Developer</b> @ Ice Technology Lab (Feb 2025 - Mar 2025): Built web apps using Python and Django.",
-  skills:
-    "<b>Core Technical Skills:</b><br>• <b>Languages:</b> Python, Java, JavaScript, HTML5, CSS3, jQuery, Bootstrap 5<br>• <b>Frameworks:</b> Django, SPFx<br>• <b>Platforms:</b> SharePoint (Online & On-Premise)<br>• <b>Tools:</b> Git, VS Code, REST APIs",
-  education:
-    "Harsh holds a <b>Bachelor of Technology (B.Tech)</b> in Computer Science from Shivalik College of Engineering (2021-2025). He completed his schooling (ISC & ICSE) at Assembly of God Church.",
-  projects:
-    "Harsh has worked on various projects including:<br>• <b>Portfolio Website:</b> This responsive site you're looking at!<br>• <b>SharePoint Automation:</b> Enterprise workflows and SPFx components.<br>• <b>Django Web Apps:</b> Full-stack applications with Python backend.",
-  contact:
-    "You can reach Harsh via the <a href='#contact' style='color: #a855f7;'>contact form</a> below. He is also active on <a href='https://www.linkedin.com/in/harsh-sinha-24b65731a/' target='_blank' style='color: #a855f7;'>LinkedIn</a>.",
-  summary:
-    "<b>Quick Summary:</b><br>Harsh Sinha is a passionate Full Stack Developer & SharePoint Analyst. He converts complex backend logic into smooth, user-friendly experiences. With expertise in Python, Django, and JavaScript, he loves solving real-world business challenges.",
-  personality:
-    "<b>Nature & Personality:</b><br>Harsh is known for being a proactive problem-solver and a curious learner. He enjoys collaborating with teams, mentoring juniors, and staying updated with the latest tech trends. He values clean code, efficiency, and user-centric design.",
+  about: "",
+  experience: "",
+  skills: "",
+  education: "",
+  projects: "",
+  contact: "",
+  summary: "",
+  personality: "",
 };
+
+// Dynamically update Knowledge Base from DOM content
+function updateDynamicKnowledgeBase() {
+  try {
+    // 1. Update Summary from Intro
+    const introParams = document.querySelector(".intro p");
+    if (introParams) {
+      knowledgeBase.summary = `<b>Quick Summary:</b><br>${introParams.innerText.trim()}`;
+    }
+
+    // 2. Update About
+    const aboutSection = document.querySelector(".about");
+    if (aboutSection) {
+      const texts = Array.from(aboutSection.querySelectorAll("p"))
+        .map((p) => p.innerText.trim())
+        .filter((text) => text.length > 0)
+        .join("<br><br>");
+      if (texts) knowledgeBase.about = texts;
+    }
+
+    // 3. Update Skills
+    const skillsGrid = document.querySelector(".skills-grid");
+    if (skillsGrid) {
+      let skillsList = [];
+      skillsGrid.querySelectorAll(".skill").forEach((skill) => {
+        const title = skill.querySelector("h3")?.innerText.trim();
+        if (title) skillsList.push(title);
+      });
+
+      // Compact Skills from Overview
+      const compactSkills = document.querySelectorAll(
+        ".skills-overview .skill-item span",
+      );
+      compactSkills.forEach((s) => skillsList.push(s.innerText.trim()));
+
+      // Unique skills
+      skillsList = [...new Set(skillsList)];
+
+      if (skillsList.length > 0) {
+        knowledgeBase.skills = `<b>Core Technical Skills:</b><br>${skillsList.join(", ")}`;
+      }
+    }
+
+    // 4. Update Experience & Projects
+    const expSection = document.querySelector(".experience-section");
+    if (expSection) {
+      let expHTML = "<b>Professional Experience:</b><br>";
+      let projectsHTML = "<b>Key Projects & Achievements:</b><br>";
+      const cards = expSection.querySelectorAll(".bento-card");
+
+      cards.forEach((card) => {
+        const duration = card.querySelector(".duration")?.innerText.trim();
+        if (duration) {
+          const role = card.querySelector("h3")?.innerText.trim();
+          // Get company name, removing extra whitespace from SVG/newlines
+          let company =
+            card
+              .querySelector(".company-name")
+              ?.innerText.replace(/\s+/g, " ")
+              .trim() || "";
+
+          expHTML += `• <b>${role}</b> @ ${company} (${duration})<br>`;
+
+          // Extract achievements for Projects
+          const achievements = card.querySelectorAll(
+            ".achievement-list li div",
+          );
+          achievements.forEach((ach) => {
+            const title = ach.querySelector("strong")?.innerText.trim();
+            const desc = ach.querySelector("p")?.innerText.trim();
+            if (title) {
+              projectsHTML += `• <b>${title}</b>: ${desc}<br>`;
+            }
+          });
+        }
+      });
+      knowledgeBase.experience = expHTML;
+      knowledgeBase.projects = projectsHTML;
+    }
+
+    // 5. Update Education from Timeline
+    const timeline = document.querySelector(".timeline-container");
+    if (timeline) {
+      let eduHTML = "<b>Education History:</b><br>";
+      const items = timeline.querySelectorAll(".timeline-item .content");
+      items.forEach((item) => {
+        const year = item.querySelector("h3")?.innerText.trim();
+        const school = item.querySelector("h4")?.innerText.trim();
+        const degree = item.querySelector("p")?.innerText.trim();
+        eduHTML += `• <b>${school}</b>: ${degree} (${year})<br>`;
+      });
+      knowledgeBase.education = eduHTML;
+    }
+
+    // 6. Update Contact
+    const footerSocials = document.querySelectorAll(".footer-socials a");
+    let contactHTML =
+      "You can reach Harsh via the <a href='#contact' style='color: #a855f7;'>contact form</a> below.<br>";
+    if (footerSocials.length > 0) {
+      contactHTML += "<b>Social Links:</b><br>";
+      footerSocials.forEach((link) => {
+        const url = link.href;
+        const imgAlt = link.querySelector("img")?.alt || "Profile";
+        contactHTML += `• <a href='${url}' target='_blank' style='color: #a855f7;'>${imgAlt}</a><br>`;
+      });
+      knowledgeBase.contact = contactHTML;
+    }
+
+    console.log("Knowledge Base updated from DOM");
+  } catch (e) {
+    console.warn("Failed to update knowledge base dynamically:", e);
+  }
+}
+
+// Run update on load
+updateDynamicKnowledgeBase();
 
 function toggleChatbot() {
   chatbotWidget.classList.toggle("active");
@@ -381,21 +489,30 @@ async function sendUserMessage() {
 async function getSmartResponse(input) {
   // Construct a system prompt based on the knowledge base
   const contextPrompt = `
-  You are an AI assistant for Harsh Sinha's portfolio website. 
-  Your name is "Harsh's Assistant" or "Jarvis" if addressed as such.
-  Your goal is to answer questions about Harsh based strictly on the information provided below.
+  You are Harsh Sinha's personal AI assistant and representative.
+  Your name is "Jarvis" or "Harsh's Assistant".
+  You speak ON BEHALF of Harsh Sinha, representing him directly to visitors of his portfolio website.
   
-  -- INFORMATION ABOUT HARSH --
+  -- INFORMATION ABOUT HARSH (Your Owner) --
   ${JSON.stringify(knowledgeBase)}
   -----------------------------
   
-  Instructions:
-  1. Prioritize answering based on the provided information about Harsh.
-  2. If the user asks about Harsh (skills, experience, contact, etc.), use the info above.
-  3. If the user asks a GENERAL question (e.g., "What is React?", "Tell me a joke", "Who is Bill Gates?"), answer it helpfully using your own knowledge as a large language model.
-  4. Be professional, friendly, and concise.
-  5. Use bolding (e.g. <b>Text</b>) for key points if helpful.
-  6. If asked about "Resume", tell them to click the "My Resume" button.
+  PERSONALITY & TONE:
+  - Speak as Harsh's trusted personal assistant, like a professional representative
+  - Use phrases like "Harsh has...", "He specializes in...", "His experience includes..."
+  - Be warm, professional, and helpful - you're representing Harsh's brand
+  - Show enthusiasm about Harsh's skills and accomplishments
+  
+  STRICT Instructions:
+  1. ONLY answer questions about Harsh Sinha using the information provided above.
+  2. When asked about skills, experience, education, projects, or contact info - provide detailed, enthusiastic answers from the data above.
+  3. If asked GENERAL questions NOT about Harsh (e.g., "What is React?", "Tell me a joke", "Who is Bill Gates?"), politely decline:
+     - Example: "I'm Harsh's personal assistant, so I focus on answering questions about him. Ask me about his skills, projects, or experience!"
+  4. Be conversational and engaging - you're the first impression visitors get of Harsh.
+  5. Use bolding (e.g. <b>Text</b>) for emphasis on key skills or achievements.
+  6. If asked about "Resume", say: "You can view Harsh's resume by clicking the 'My Resume' button at the top of the page!"
+  7. NEVER provide general knowledge unrelated to Harsh Sinha.
+  8. If someone asks "Who are you?", respond: "I'm Jarvis, Harsh's personal AI assistant. I'm here to help you learn about his skills, experience, and projects!"
   
   User Question: ${input}
   `;
