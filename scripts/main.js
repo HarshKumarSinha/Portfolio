@@ -894,3 +894,86 @@ class JarvisAssistant {
 }
 
 const jarvis = new JarvisAssistant();
+
+/* =========================================
+   Theme Switcher Logic
+   ========================================= */
+class ThemeManager {
+  constructor() {
+    this.themeToggle = document.getElementById("themeToggle");
+    this.buttons = document.querySelectorAll(".theme-btn");
+    this.html = document.documentElement;
+    this.storedTheme = localStorage.getItem("theme") || "system";
+
+    // Initialize
+    this.init();
+  }
+
+  init() {
+    // Set initial active state
+    this.setActiveButton(this.storedTheme);
+    this.applyTheme(this.storedTheme);
+
+    // Event Listeners
+    this.buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const theme = btn.dataset.theme;
+        this.setTheme(theme);
+      });
+    });
+
+    // System preference listener
+    window
+      .matchMedia("(prefers-color-scheme: dark)")
+      .addEventListener("change", (e) => {
+        if (this.storedTheme === "system") {
+          this.applyTheme("system");
+        }
+      });
+  }
+
+  setTheme(theme) {
+    this.storedTheme = theme;
+    localStorage.setItem("theme", theme);
+    this.setActiveButton(theme);
+    this.applyTheme(theme);
+  }
+
+  setActiveButton(theme) {
+    // Update active class on buttons
+    this.buttons.forEach((btn) => {
+      btn.classList.remove("active");
+      if (btn.dataset.theme === theme) {
+        btn.classList.add("active");
+      }
+    });
+
+    // Update indicator position via data attribute on parent
+    if (this.themeToggle) {
+      this.themeToggle.setAttribute("data-active", theme);
+    }
+  }
+
+  applyTheme(theme) {
+    let targetTheme = theme;
+
+    if (theme === "system") {
+      const systemDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+      targetTheme = systemDark ? "dark" : "light";
+    }
+
+    // Apply to HTML element
+    if (targetTheme === "light") {
+      this.html.setAttribute("data-theme", "light");
+    } else {
+      this.html.removeAttribute("data-theme"); // Default is dark
+    }
+  }
+}
+
+// Initialize Theme Manager
+document.addEventListener("DOMContentLoaded", () => {
+  new ThemeManager();
+});

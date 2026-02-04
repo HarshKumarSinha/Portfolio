@@ -11,6 +11,96 @@
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+[data-theme="light"] {
+  --bg-color: #f8fafc; /* Cool grey-white for cleaner look */
+  --card-bg: #ffffff;
+  --card-bg-hover: #ffffff;
+  --primary-color: #4f46e5; /* Slightly deeper indigo for better contrast */
+  --secondary-color: #9333ea;
+  --text-primary: #0f172a; /* Slate 900 */
+  --text-secondary: #475569; /* Slate 600 */
+}
+
+[data-theme="light"] body {
+  background-image:
+    radial-gradient(
+      circle at 10% 20%,
+      rgba(79, 70, 229, 0.08) 0%,
+      transparent 25%
+    ),
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(147, 51, 234, 0.08) 0%,
+      transparent 25%
+    );
+}
+
+[data-theme="light"] .intro {
+  /* Colorful gradient overlay for light mode - No Image to avoid muddy look */
+  background: 
+    radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
+    radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.15), transparent 40%),
+    linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
+  background-size: cover;
+}
+
+[data-theme="light"] .intro h1,
+[data-theme="light"] .intro p {
+  color: var(--text-primary);
+  text-shadow: none;
+}
+
+[data-theme="light"] .btn {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  color: var(--primary-color);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.15);
+}
+
+[data-theme="light"] .btn:hover {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .bento-card,
+[data-theme="light"] .academic-box,
+[data-theme="light"] .skill,
+[data-theme="light"] .resume-content {
+  border-color: rgba(0, 0, 0, 0.06);
+  box-shadow: 
+    0 4px 6px -1px rgba(0, 0, 0, 0.05), 
+    0 10px 15px -3px rgba(0, 0, 0, 0.03); /* Richer shadow for depth */
+}
+
+[data-theme="light"] .bento-card:hover,
+[data-theme="light"] .academic-box:hover,
+[data-theme="light"] .skill:hover {
+  border-color: rgba(99, 102, 241, 0.3);
+  box-shadow: 
+    0 20px 25px -5px rgba(0, 0, 0, 0.08), 
+    0 8px 10px -6px rgba(0, 0, 0, 0.01);
+}
+
+[data-theme="light"] .tech-tag {
+  background: #f1f5f9;
+  border-color: #e2e8f0;
+  color: #64748b;
+}
+
+[data-theme="light"] .tech-tag:hover {
+  background: rgba(99, 102, 241, 0.1);
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+[data-theme="light"] .timeline-item::after {
+  background: var(--bg-color);
+}
+
 html {
   /* scroll-behavior: smooth; - Disabled for Lenis */
   height: 100%;
@@ -96,7 +186,7 @@ p {
   box-sizing: border-box;
   /* Using a dark overlay on the background image for better text readability */
   background:
-    linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
     url("../img/Gemini_Generated_Image_5oinf65oinf65oin.png") no-repeat center
       center;
   background-size: cover;
@@ -1008,6 +1098,11 @@ section {
   filter: invert(1); /* Invert black to white for dark mode */
 }
 
+/* Fix GitHub icon in Light Mode (revert inversion to show original black/dark logo) */
+[data-theme="light"] .github-icon {
+  filter: invert(0);
+}
+
 /* =========================================
    Responsive Design Updates
    ========================================= */
@@ -1596,5 +1691,114 @@ section {
   .chatbot-widget {
     right: 20px;
     bottom: 20px;
+  }
+}
+
+/* =========================================
+   Theme Toggle Styles
+   ========================================= */
+/* =========================================
+   Theme Toggle Styles
+   ========================================= */
+.theme-wrapper {
+  position: absolute; /* Changed from fixed to absolute to sit within the intro relative container or first section */
+  /* Actually for 'top right' of the page, fixed is usually better if we want it always visible. 
+     If user wants it at the top of the initial view, absolute might be better inside .intro.
+     But standard pattern is usually fixed. Let's stick to fixed but move to top right. */
+  position: fixed;
+  top: 30px;
+  right: 30px;
+  bottom: auto; /* Reset bottom */
+  left: auto;   /* Reset left */
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.theme-toggle {
+  background: rgba(20, 20, 22, 0.6);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50px;
+  padding: 4px; /* Reduced from 5px */
+  display: flex;
+  position: relative;
+  gap: 4px; /* Reduced from 5px */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="light"] .theme-toggle {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.05);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+}
+
+.theme-btn {
+  width: 32px; /* Reduced from 36px */
+  height: 32px; /* Reduced from 36px */
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 2;
+  color: #a3a3a3;
+  transition: all 0.3s ease;
+}
+
+.theme-btn:hover {
+  color: white;
+}
+
+[data-theme="light"] .theme-btn:hover {
+  color: black;
+}
+
+.theme-btn.active {
+  color: white;
+}
+
+[data-theme="light"] .theme-btn.active {
+  color: black; /* Contrast for active state in light mode */
+}
+
+.theme-btn svg {
+  width: 18px;
+  height: 18px;
+  pointer-events: none;
+}
+
+.theme-indicator {
+  position: absolute;
+  top: 4px; /* Adjusted for new padding */
+  left: 4px; /* Adjusted for new padding */
+  width: 32px; /* Matches properties */
+  height: 32px; /* Matches properties */
+  border-radius: 50%;
+  background: var(--primary-color);
+  transition: transform 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  z-index: 1;
+}
+
+/* Positions based on child index */
+.theme-toggle[data-active="system"] .theme-indicator {
+  transform: translateX(0);
+}
+.theme-toggle[data-active="light"] .theme-indicator {
+  transform: translateX(36px); /* 32 width + 4 gap */
+}
+.theme-toggle[data-active="dark"] .theme-indicator {
+  transform: translateX(72px); /* (32 + 4) * 2 */
+}
+
+/* Adjustments for mobile */
+@media (max-width: 768px) {
+  .theme-wrapper {
+    top: 20px;
+    right: 20px;
+    bottom: auto;
+    left: auto;
   }
 }
