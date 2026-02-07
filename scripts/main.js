@@ -646,6 +646,19 @@ function getLocalResponse(input) {
     ];
   }
 
+  // Specific questions about the site features
+  if (lowerInput.includes("loader") || lowerInput.includes("loading")) {
+    return "That's a custom preloader built with CSS animations! It adds a touch of uniqueness before showcasing the main content.";
+  }
+
+  if (
+    lowerInput.includes("moving") ||
+    lowerInput.includes("mouse") ||
+    lowerInput.includes("effect")
+  ) {
+    return "That's a 3D Parallax effect in the hero section! It reacts to your mouse movement to create a sense of depth.";
+  }
+
   // Default Fallback
   return "That's a great question! While I'm a simple bot, I can tell you about Harsh's <br>• <b>Experience</b><br>• <b>Skills</b><br>• <b>Education</b><br>• <b>Projects</b><br><br>Or ask for a <b>Summary</b>!";
 }
@@ -973,7 +986,191 @@ class ThemeManager {
   }
 }
 
-// Initialize Theme Manager
+// Initialize Theme Manager & Preloader
 document.addEventListener("DOMContentLoaded", () => {
   new ThemeManager();
+
+  // Preloader Logic
+  const preloader = document.getElementById("preloader");
+  const bar = document.querySelector(".loader-progress-bar");
+
+  if (preloader && bar) {
+    // Simulate loading time roughly matching animation
+    setTimeout(() => {
+      document.body.classList.add("loaded");
+      // Start other animations only after loader finishes
+      setTimeout(() => {
+        new TypingEffect();
+        initFloatingNav();
+        initHeroParallax();
+      }, 500);
+    }, 2000); // 2s duration
+  } else {
+    // Fallback if preloader missing
+    new TypingEffect();
+    initFloatingNav();
+    initHeroParallax();
+  }
 });
+
+// Typing Effect
+class TypingEffect {
+  constructor() {
+    this.textElement = document.getElementById("typing-text");
+    this.cursorElement = document.querySelector(".cursor");
+    this.words = [
+      "Computer Science Graduate",
+      "Full Stack Developer",
+      "SharePoint Specialist",
+      "Tech Enthusiast",
+      "Problem Solver",
+    ];
+    this.wordIndex = 0;
+    this.isDeleting = false;
+    this.txt = "";
+    this.typeSpeed = 100;
+
+    if (this.textElement) {
+      this.type();
+    }
+  }
+
+  type() {
+    const current = this.wordIndex % this.words.length;
+    const fullTxt = this.words[current];
+
+    if (this.isDeleting) {
+      this.txt = fullTxt.substring(0, this.txt.length - 1);
+      this.typeSpeed = 50;
+    } else {
+      this.txt = fullTxt.substring(0, this.txt.length + 1);
+      this.typeSpeed = 100;
+    }
+
+    this.textElement.innerHTML = this.txt;
+
+    let typeSpeed = this.typeSpeed;
+
+    if (!this.isDeleting && this.txt === fullTxt) {
+      typeSpeed = 2000; // Pause at end of word
+      this.isDeleting = true;
+    } else if (this.isDeleting && this.txt === "") {
+      this.isDeleting = false;
+      this.wordIndex++;
+      typeSpeed = 500; // Pause before new word
+    }
+
+    setTimeout(() => this.type(), typeSpeed);
+  }
+}
+
+// Floating Navigation Logic
+function initFloatingNav() {
+  const sections = document.querySelectorAll("section, .intro");
+  const navItems = document.querySelectorAll(".floating-nav .nav-item");
+
+  if (!navItems.length) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.3, // Trigger when 30% of section is visible
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        // Remove active class from all
+        navItems.forEach((item) => item.classList.remove("active"));
+
+        // Add active class to current section link
+        const id = entry.target.getAttribute("id");
+        if (id) {
+          const activeLink = document.querySelector(
+            `.floating-nav a[href="#${id}"]`,
+          );
+          if (activeLink) {
+            activeLink.classList.add("active");
+          } else if (id === "home") {
+            // Special case for home usually being top
+            const homeLink = document.querySelector(
+              `.floating-nav a[href="#"]`,
+            );
+            if (homeLink) homeLink.classList.add("active");
+          }
+        }
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+
+  // Click Event for Smooth Scroll
+  navItems.forEach((item) => {
+    item.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const targetId = item.getAttribute("href").substring(1);
+
+      // Update Active State Visuals
+      navItems.forEach((nav) => nav.classList.remove("active"));
+      item.classList.add("active");
+
+      if (targetId === "" || targetId === "#") {
+        lenis.scrollTo(0); // Scroll to top for Home
+      } else {
+        const targetElement = document.getElementById(targetId);
+        if (targetElement) {
+          lenis.scrollTo(targetElement);
+        }
+      }
+    });
+  });
+}
+
+// Hero Parallax Effect
+function initHeroParallax() {
+  const introSection = document.querySelector(".intro");
+  const heading = document.querySelector(".intro h1");
+  const subtext = document.querySelector(".intro p");
+
+  if (!introSection || !heading) return;
+
+  introSection.addEventListener("mousemove", (e) => {
+    // Calculate center of screen
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+
+    // Calculate distance from center (percentage)
+    // Small factor (e.g., /50 or /100) to keep movement subtle
+    const x = (centerX - e.clientX) / 50;
+    const y = (centerY - e.clientY) / 50;
+
+    // Move heading slightly opposite to mouse
+    heading.style.transform = `translate(${x}px, ${y}px)`;
+
+    // Move subtext a bit more for depth
+    if (subtext) {
+      subtext.style.transform = `translate(${x * 1.5}px, ${y * 1.5}px)`;
+    }
+  });
+
+  // Reset on mouse leave
+  introSection.addEventListener("mouseleave", () => {
+    heading.style.transition = "transform 0.5s ease";
+    heading.style.transform = `translate(0, 0)`;
+
+    if (subtext) {
+      subtext.style.transition = "transform 0.5s ease";
+      subtext.style.transform = `translate(0, 0)`;
+    }
+
+    // Remove transition after it finishes so mousemove is snappy again
+    setTimeout(() => {
+      heading.style.transition = "";
+      if (subtext) subtext.style.transition = "";
+    }, 500);
+  });
+}
