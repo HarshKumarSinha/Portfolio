@@ -1849,15 +1849,29 @@ section {
   transition: all 0.3s ease;
 }
 
+/* .nav-text is now permanently hidden or just not displayed on hover to prevent width change */
+/* Nav Text - Positioned Absolutely to prevent width change */
 .nav-text {
   font-size: 0.7rem;
   font-weight: 500;
+  position: absolute;
+  top: 35px;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  white-space: nowrap;
   opacity: 0;
-  height: 0;
-  overflow: hidden;
+  visibility: hidden;
   transition: all 0.3s ease;
-  transform: translateY(5px);
-  display: none; /* Hide by default to keep clean */
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2px 8px;
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+[data-theme="light"] .nav-text {
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
 .nav-item:hover {
@@ -1871,10 +1885,13 @@ section {
 }
 
 .nav-item:hover .nav-text {
-  display: block;
   opacity: 1;
-  height: auto;
-  transform: translateY(0);
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.nav-item:hover svg {
+  transform: scale(1.1);
 }
 
 .nav-item.active {
