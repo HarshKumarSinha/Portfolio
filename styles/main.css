@@ -1693,7 +1693,7 @@ section {
   }
   .chatbot-widget {
     right: 20px;
-    bottom: 20px;
+    bottom: 90px; /* Lifted up to avoid overlap with floating navbar */
   }
 }
 
@@ -1799,10 +1799,7 @@ section {
 /* Adjustments for mobile */
 @media (max-width: 768px) {
   .theme-wrapper {
-    top: 20px;
-    right: 20px;
-    bottom: auto;
-    left: auto;
+    display: none;
   }
 }
 

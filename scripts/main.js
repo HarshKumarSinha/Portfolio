@@ -923,6 +923,12 @@ class ThemeManager {
   }
 
   init() {
+    // For mobile devices, force system theme to respect device settings
+    // since the toggle is hidden
+    if (window.innerWidth <= 768) {
+      this.storedTheme = "system";
+    }
+
     // Set initial active state
     this.setActiveButton(this.storedTheme);
     this.applyTheme(this.storedTheme);
