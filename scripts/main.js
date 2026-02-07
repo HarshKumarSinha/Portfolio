@@ -1030,12 +1030,27 @@ class TypingEffect {
     this.txt = "";
     this.typeSpeed = 100;
 
+    this.isPaused = false;
+
+    // Intersection Observer to pause when not visible
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        this.isPaused = !entry.isIntersecting;
+      });
+    });
+
     if (this.textElement) {
+      observer.observe(document.querySelector(".intro"));
       this.type();
     }
   }
 
   type() {
+    if (this.isPaused) {
+      setTimeout(() => this.type(), 500);
+      return;
+    }
+
     const current = this.wordIndex % this.words.length;
     const fullTxt = this.words[current];
 

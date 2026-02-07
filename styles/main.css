@@ -197,10 +197,13 @@ p {
   font-size: 4rem; /* Larger font */
   margin-bottom: 1rem;
   max-width: 900px;
+  line-height: 1.1; /* Tighter line height for better wrapping */
+  min-height: 4.4rem; /* Reserve space for one line at least */
 }
 @media (max-width: 768px) {
   .intro h1 {
     font-size: 2.5rem;
+    min-height: 5.5rem; /* Reserve space for wrapped text on mobile */
   }
 }
 
