@@ -24,15 +24,24 @@
 </head>
 
 <body>
+  <!-- 3D Background Canvas -->
+  <canvas id="canvas3d"></canvas>
+
   <!-- Preloader -->
   <!-- Preloader -->
   <div id="preloader">
     <div class="loader-content">
       <div class="geometric-loader">
-        <div class="geometric-box"></div>
-        <div class="geometric-box"></div>
+        <div class="cube-wrapper">
+          <div class="cube-face front"></div>
+          <div class="cube-face back"></div>
+          <div class="cube-face right"></div>
+          <div class="cube-face left"></div>
+          <div class="cube-face top"></div>
+          <div class="cube-face bottom"></div>
+        </div>
       </div>
-      <div class="loader-logo">Harsh Sinha</div>
+      <div class="loader-logo" data-text="Harsh Sinha">Harsh Sinha</div>
       <div class="loader-progress-wrapper">
         <div class="loader-progress-bar"></div>
       </div>
@@ -639,6 +648,46 @@
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+  <script type="text/javascript">
+    // Initialize VanillaTilt on load
+    document.addEventListener("DOMContentLoaded", function () {
+      // Bento Cards
+      VanillaTilt.init(document.querySelectorAll(".bento-card"), {
+        max: 5,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.2,
+        scale: 1.02,
+        gyroscope: true,
+      });
+
+      // Skill Cards
+      VanillaTilt.init(document.querySelectorAll(".skill"), {
+        max: 8,
+        speed: 400,
+        glare: true,
+        "max-glare": 0.1,
+        scale: 1.05
+      });
+
+      // Interest Boxes
+      VanillaTilt.init(document.querySelectorAll(".interest-box"), {
+        max: 5,
+        speed: 400,
+        scale: 1.02
+      });
+
+      // Academic Box
+      VanillaTilt.init(document.querySelectorAll(".academic-box"), {
+        max: 5,
+        speed: 400,
+        scale: 1.02
+      });
+    });
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="scripts/background.js"></script>
   <script src="scripts/main.js"></script>
 </body>
 
