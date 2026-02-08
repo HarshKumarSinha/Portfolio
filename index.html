@@ -684,6 +684,24 @@
         speed: 400,
         scale: 1.02
       });
+
+      // Timeline Items (Educational Milestones)
+      VanillaTilt.init(document.querySelectorAll(".timeline-item .content"), {
+        max: 5,
+        speed: 400,
+        scale: 1.02,
+        glare: true,
+        "max-glare": 0.1
+      });
+
+      // Contact Container
+      VanillaTilt.init(document.querySelectorAll(".contact-container"), {
+        max: 3,
+        speed: 400,
+        scale: 1.01,
+        glare: true,
+        "max-glare": 0.05
+      });
     });
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>

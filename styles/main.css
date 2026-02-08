@@ -2237,15 +2237,34 @@ body.loaded #preloader {
 /* 3D Depth for Skill Cards */
 .skill:hover {
   z-index: 10;
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.4);
+}
+.skill img, .skill h3, .skill p {
+  transition: transform 0.3s ease;
+  transform: translateZ(0); 
+}
+.skill:hover img {
+    transform: translateZ(30px);
 }
 .skill:hover h3 {
   transform: translateZ(20px);
   color: var(--primary-color);
 }
+.skill:hover p {
+    transform: translateZ(10px);
+}
 
 /* 3D Depth for Academic Boxes */
 .academic-box:hover {
   z-index: 10;
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.4);
+}
+.academic-box h3, .academic-box p {
+    transition: transform 0.3s ease;
+    transform: translateZ(0);
+}
+.academic-box:hover h3 {
+    transform: translateZ(25px);
 }
 .academic-box:hover p {
   transform: translateZ(15px);
@@ -2262,3 +2281,60 @@ body.loaded #preloader {
   transform: translateZ(30px) scale(1.1);
   box-shadow: 0 10px 20px rgba(0,0,0,0.4);
 }
+
+/* 3D Depth for Timeline Items */
+.timeline-item .content {
+    /* VanillaTilt applies to .content div */
+    transform-style: preserve-3d; 
+    /* perspective is inherited or set by VanillaTilt */
+  }
+  
+  .timeline-item h3, 
+  .timeline-item h4, 
+  .timeline-item p {
+    transition: transform 0.3s ease;
+    transform: translateZ(0);
+  }
+  
+  .timeline-item .content:hover {
+    z-index: 10;
+    box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.4);
+  }
+  
+  .timeline-item .content:hover h3 {
+    transform: translateZ(20px);
+    color: var(--primary-color);
+  }
+  .timeline-item .content:hover h4 {
+    transform: translateZ(15px);
+    color: white; /* Ensure text remains readable */
+  }
+  .timeline-item .content:hover p {
+    transform: translateZ(10px);
+  }
+  
+  /* 3D Depth for Contact Container */
+  .contact-container {
+      /* VanillaTilt on container */
+      position: relative;
+      /* Ensure z-index works */
+  }
+  
+  .contact-form .form-group,
+  .contact-form button {
+      transition: transform 0.3s ease;
+      transform: translateZ(0);
+      background: rgba(255,255,255,0.02); /* Slight background for 3D feel */
+      padding: 10px;
+      border-radius: 8px;
+  }
+  
+  .contact-container:hover .form-group:nth-child(1) { transform: translateZ(10px); }
+  .contact-container:hover .form-group:nth-child(2) { transform: translateZ(15px); }
+  .contact-container:hover .form-group:nth-child(3) { transform: translateZ(20px); }
+  .contact-container:hover .form-group:nth-child(4) { transform: translateZ(25px); }
+  
+  .contact-container:hover button {
+      transform: translateZ(35px);
+      box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+  }

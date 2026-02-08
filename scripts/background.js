@@ -1,10 +1,10 @@
 // Three.js Background Animation
 /* 
-  Creates a "La Rose" inspired dark atmospheric particle field.
+  Creates a "La Rose" inspired atmospheric particle field.
   Features:
   - Slow floating particles (Stars/Dust)
   - Subtle mouse interaction (Parallax)
-  - Elegant color palette matching the site
+  - Theme Awareness (Dark vs Light Mode)
 */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -15,7 +15,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Scene Setup
   const scene = new THREE.Scene();
-  // Transparent background handled by renderer alpha:true
 
   // Camera
   const camera = new THREE.PerspectiveCamera(
@@ -24,12 +23,12 @@ document.addEventListener("DOMContentLoaded", () => {
     0.1,
     1000,
   );
-  camera.position.z = 20; // Move back to see the field
+  camera.position.z = 20;
 
   // Renderer
   const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
-    alpha: true, // Allow CSS background to show through (gradients)
+    alpha: true,
     antialias: true,
   });
   renderer.setSize(window.innerWidth, window.innerHeight);
@@ -37,40 +36,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- PARTICLES ---
   const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 700; // Elegant density
+  const particlesCount = 700;
 
   const posArray = new Float32Array(particlesCount * 3);
-  const colorArray = new Float32Array(particlesCount * 3);
+  const colorArray = new Float32Array(particlesCount * 3); // Dynamic colors
   const scaleArray = new Float32Array(particlesCount);
 
-  // Colors: Indigo (#6366f1) and Purple (#a855f7)
-  const color1 = new THREE.Color("#6366f1");
-  const color2 = new THREE.Color("#a855f7");
-  const color3 = new THREE.Color("#ffffff"); // Sparkles
-
   for (let i = 0; i < particlesCount * 3; i += 3) {
-    // Random Spread
-    posArray[i] = (Math.random() - 0.5) * 45; // x
-    posArray[i + 1] = (Math.random() - 0.5) * 45; // y
-    posArray[i + 2] = (Math.random() - 0.5) * 45; // z
+    posArray[i] = (Math.random() - 0.5) * 45;
+    posArray[i + 1] = (Math.random() - 0.5) * 45;
+    posArray[i + 2] = (Math.random() - 0.5) * 45;
 
-    // Randomly pick a color
-    const mixedColor = Math.random();
-    if (mixedColor < 0.33) {
-      colorArray[i] = color1.r;
-      colorArray[i + 1] = color1.g;
-      colorArray[i + 2] = color1.b;
-    } else if (mixedColor < 0.66) {
-      colorArray[i] = color2.r;
-      colorArray[i + 1] = color2.g;
-      colorArray[i + 2] = color2.b;
-    } else {
-      colorArray[i] = color3.r;
-      colorArray[i + 1] = color3.g;
-      colorArray[i + 2] = color3.b;
-    }
-
-    // Random sizes
     scaleArray[i / 3] = Math.random();
   }
 
@@ -85,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
   particlesGeometry.setAttribute(
     "aScale",
     new THREE.BufferAttribute(scaleArray, 1),
-  ); // for shader if needed
+  );
 
-  // Create Circular Texture for soft particles
+  // Texture
   const getTexture = () => {
     const canvas = document.createElement("canvas");
     canvas.width = 32;
@@ -109,31 +85,96 @@ document.addEventListener("DOMContentLoaded", () => {
     map: getTexture(),
     transparent: true,
     opacity: 0.8,
-    vertexColors: true, // Enable per-particle colors
+    vertexColors: true,
     blending: THREE.AdditiveBlending,
-    depthWrite: false, // Don't occlude other particles
+    depthWrite: false,
     sizeAttenuation: true,
   });
 
   const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
   scene.add(particlesMesh);
 
+  // --- THEME COLOR LOGIC ---
+  const updateParticleColors = () => {
+    // Check current actual theme from body or localStorage
+    // Note: The toggle script sets attribute on the theme-toggle div, but styles apply based on body/root usually.
+    // Let's check the theme toggle state.
+    const themeToggle = document.querySelector(".theme-toggle");
+    const isLight = themeToggle
+      ? themeToggle.getAttribute("data-active") === "light"
+      : false;
+
+    // Colors
+    let c1, c2, c3;
+
+    if (isLight) {
+      // LIGHT MODE COLORS: Needs to be darker/colorful to show on white
+      c1 = new THREE.Color("#4f46e5"); // Indigo 600
+      c2 = new THREE.Color("#9333ea"); // Purple 600
+      c3 = new THREE.Color("#0f172a"); // Slate 900 (Dark specks)
+      particlesMaterial.blending = THREE.NormalBlending; // Better visibility on light
+      particlesMaterial.opacity = 0.7;
+    } else {
+      // DARK MODE COLORS: Glowing light colors
+      c1 = new THREE.Color("#6366f1"); // Indigo 500
+      c2 = new THREE.Color("#a855f7"); // Purple 500
+      c3 = new THREE.Color("#ffffff"); // White sparkles
+      particlesMaterial.blending = THREE.AdditiveBlending; // Glow
+      particlesMaterial.opacity = 0.8;
+    }
+
+    const colors = particlesGeometry.attributes.color.array;
+
+    for (let i = 0; i < particlesCount * 3; i += 3) {
+      const mixedColor = Math.random();
+      let selectedColor;
+
+      if (mixedColor < 0.33) selectedColor = c1;
+      else if (mixedColor < 0.66) selectedColor = c2;
+      else selectedColor = c3;
+
+      colors[i] = selectedColor.r;
+      colors[i + 1] = selectedColor.g;
+      colors[i + 2] = selectedColor.b;
+    }
+
+    particlesGeometry.attributes.color.needsUpdate = true;
+    particlesMaterial.needsUpdate = true;
+  };
+
+  // Initial Set
+  updateParticleColors();
+
+  // Listen for Theme Changes (Observer)
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (
+        mutation.type === "attributes" &&
+        mutation.attributeName === "data-active"
+      ) {
+        updateParticleColors();
+      }
+    });
+  });
+
+  const themeToggle = document.querySelector(".theme-toggle");
+  if (themeToggle) {
+    observer.observe(themeToggle, { attributes: true });
+  }
+
   // Mouse Interaction
   let mouseX = 0;
   let mouseY = 0;
-
   let targetX = 0;
   let targetY = 0;
 
   const windowHalfX = window.innerWidth / 2;
   const windowHalfY = window.innerHeight / 2;
 
-  const onDocumentMouseMove = (event) => {
+  document.addEventListener("mousemove", (event) => {
     mouseX = event.clientX - windowHalfX;
     mouseY = event.clientY - windowHalfY;
-  };
-
-  document.addEventListener("mousemove", onDocumentMouseMove);
+  });
 
   // Scroll Interaction
   let scrollY = 0;
@@ -141,34 +182,26 @@ document.addEventListener("DOMContentLoaded", () => {
     scrollY = window.scrollY;
   });
 
-  // Animation Loop
   const clock = new THREE.Clock();
 
   const tick = () => {
     targetX = mouseX * 0.001;
     targetY = mouseY * 0.001;
-
     const elapsedTime = clock.getElapsedTime();
 
-    // Constant Slow Rotation (Nebula feel)
     particlesMesh.rotation.y = 0.1 * elapsedTime;
     particlesMesh.rotation.x = 0.05 * elapsedTime;
 
-    // Mouse Parallax (Ease)
     particlesMesh.rotation.y += 0.5 * (targetX - particlesMesh.rotation.y);
     particlesMesh.rotation.x += 0.5 * (targetY - particlesMesh.rotation.x);
 
-    // Scroll Parallax (Move camera)
-    // Helps site feel deep
     camera.position.y = -scrollY * 0.01;
 
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
   };
-
   tick();
 
-  // Handle Resize
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
