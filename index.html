@@ -14,12 +14,28 @@
   <link rel="stylesheet" href="styles/voice.css">
   <link rel="icon" href="img/Portfolio-favicon.png">
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      corePlugins: {
+        preflight: false, // Keep existing main.css styles intact
+      },
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            secondary: '#a855f7',
+          }
+        }
+      }
+    }
+  </script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
-    (function () {
-      // https://dashboard.emailjs.com/admin/account
-      emailjs.init("g0LhAM3b5QHQElm1f"); // REPLACE THIS WITH YOUR ACTUAL PUBLIC KEY
-    })();
+      (function () {
+        // https://dashboard.emailjs.com/admin/account
+        emailjs.init("g0LhAM3b5QHQElm1f"); // REPLACE THIS WITH YOUR ACTUAL PUBLIC KEY
+      })();
   </script>
 </head>
 
@@ -48,31 +64,72 @@
     </div>
   </div>
   <section class="wrapper">
-    <div class="intro" id="home">
-      <h1>Harsh Sinha: <span id="typing-text"></span><span class="cursor">|</span></h1>
-      <p>Transforming ideas into reality through code. I am a <span class="highlight-text">Full Stack Developer</span>
-        and <span class="highlight-text">SharePoint Specialist</span> based in India.</p>
-      <div class="social-links">
-        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" class="btn" target="_blank">Connect
-          on LinkedIn</a>
-        <a href="#contact" class="btn">Email me</a>
-        <a href="#" class="btn" onclick="openResume(event)">My Resume</a>
+    <div class="intro max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" id="home">
+      <!-- Left Column: Text -->
+      <div class="intro-content text-left">
+        <h1
+          class="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight">
+          Harsh Sinha: <span id="typing-text" class="text-white"></span><span class="cursor text-indigo-400">|</span>
+        </h1>
+        <p class="text-lg md:text-xl text-gray-300 drop-shadow-md tracking-wide mt-6 leading-relaxed">
+          Transforming ideas into reality through code. I am a <span
+            class="highlight-text font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text">Full
+            Stack Developer</span>
+          and <span
+            class="highlight-text font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">SharePoint
+            Specialist</span> based in India.</p>
+        <div class="social-links mt-10 flex flex-wrap gap-4 justify-start">
+          <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/"
+            class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
+            target="_blank">Connect
+            on LinkedIn</a>
+          <a href="#contact"
+            class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]">Email
+            me</a>
+          <a href="#"
+            class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
+            onclick="openResume(event)">My Resume</a>
+        </div>
+      </div>
+
+      <!-- Right Column: Glass Profile Card -->
+      <div class="intro-image flex justify-center lg:justify-end">
+        <div class="relative group">
+          <!-- Animated Glow Behind -->
+          <div
+            class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+          </div>
+
+          <!-- Glass Container -->
+          <div
+            class="relative w-64 h-64 md:w-80 md:h-80 bg-white/5 backdrop-blur-md rounded-full border-[2px] border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.3)] transition-all duration-500 overflow-hidden flex items-center justify-center group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
+            <!-- Profile Image -->
+            <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).png" alt="Harsh Sinha"
+              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 profile-img" />
+          </div>
+        </div>
       </div>
     </div>
   </section>
-  <section class="about hidden" id="about">
-    <h2>About me</h2>
-    <p>I am a Computer Science Graduate and a Junior Software Analyst at Enaiya Information Technology, specializing in
-      building modern web applications and enterprise SharePoint solutions. With a strong foundation in Full Stack
-      Development, I bridge the gap between complex backend logic and intuitive frontend design.</p>
-    <p>Beyond my academic achievements at Shivalik College of Engineering, I have gained practical industry experience
-      optimizing workflows, developing custom SPFx components, and integrating secure API services. I am driven by a
-      passion for exploring new technologies and solving real-world business challenges through code.</p>
+  <section class="about scroll-reveal" id="about">
+    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+      About me</h2>
+    <div
+      class="max-w-4xl mx-auto space-y-6 text-gray-300 leading-relaxed text-lg tracking-wide bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500">
+      <p>I am a Computer Science Graduate and a Junior Software Analyst at Enaiya Information Technology, specializing
+        in
+        building modern web applications and enterprise SharePoint solutions. With a strong foundation in Full Stack
+        Development, I bridge the gap between complex backend logic and intuitive frontend design.</p>
+      <p>Beyond my academic achievements at Shivalik College of Engineering, I have gained practical industry experience
+        optimizing workflows, developing custom SPFx components, and integrating secure API services. I am driven by a
+        passion for exploring new technologies and solving real-world business challenges through code.</p>
+    </div>
   </section>
-  <section class="skills-section hidden" id="skills">
+  <section class="skills-section scroll-reveal" id="skills">
     <div class="skills-container">
-      <h2>Core Technical Skills</h2>
-      <p class="skills-intro">
+      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+        Core Technical Skills</h2>
+      <p class="skills-intro text-gray-400 max-w-3xl mx-auto text-lg mb-12">
         My academic and practical experiences have equipped me with a robust set of technical skills essential for
         modern software development.
         I am proficient in various programming languages and frameworks, enabling me to tackle diverse challenges in the
@@ -136,10 +193,11 @@
       </div>
     </div>
   </section>
-  <section class="experience-section hidden" id="experience">
+  <section class="experience-section scroll-reveal" id="experience">
     <div class="experience-header">
-      <h2>Professional Experience</h2>
-      <p class="experience-intro">
+      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-4">
+        Professional Experience</h2>
+      <p class="experience-intro text-gray-400 max-w-2xl mx-auto text-lg">
         Building modern solutions across full-stack development and enterprise platforms
       </p>
     </div>
@@ -351,10 +409,11 @@
       </div>
     </div>
   </section>
-  <section class="academic-section hidden">
+  <section class="academic-section scroll-reveal">
     <div class="academic-container">
-      <h2>Academic Journey: Shivalik College of Engineering</h2>
-      <p>
+      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+        Academic Journey: Shivalik College of Engineering</h2>
+      <p class="text-gray-400 max-w-4xl mx-auto text-lg tracking-wide mb-8">
         My pursuit of a Bachelor of Technology in Computer Science and Engineering at Shivalik College has provided a
         comprehensive education,
         covering core concepts and advanced topics in the field.
@@ -387,9 +446,10 @@
       </p>
     </div>
   </section>
-  <section class="timeline-section hidden">
-    <h2>Educational Milestones</h2>
-    <p class="sub-heading">
+  <section class="timeline-section scroll-reveal">
+    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+      Educational Milestones</h2>
+    <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
       My academic background spans across various institutions, each contributing to my comprehensive development and
       preparing me for a career in technology.
     </p>
@@ -419,44 +479,84 @@
     <p class="sub-heading">These educational experiences have provided me with a well-rounded academic foundation, from
       foundational schooling to specialized higher education in computer science.</p>
   </section>
-  <section class="interests-section hidden">
-    <h2>Beyond the Code: My Interests and Passions</h2>
-    <p class="sub-heading">
+  <section class="interests-section scroll-reveal">
+    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+      Beyond the Code: My Interests and Passions</h2>
+    <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
       While my primary focus is on technology and computer science, I also have a range of interests that enrich my life
       and contribute to my holistic development. These passions fuel my creativity and drive for continuous learning.
     </p>
-    <div class="interests-container">
-      <div class="interests-list">
-        <div class="interest-box grey">
-          <span class="icon">❔</span>
+    <div class="interests-container max-w-7xl mx-auto px-4">
+      <div class="interests-list grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Box 1 -->
+        <div
+          class="interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-pink-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(236,72,153,0.2)]">
+          <div
+            class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.2)]">
+            <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3">
+              </path>
+            </svg>
+          </div>
           <div>
-            <h3>Problem-Solving Enthusiasm</h3>
-            <p>I am deeply passionate about tackling complex problems and devising innovative solutions.
-              This drive extends beyond coding to everyday challenges, fostering a growth mindset.</p>
+            <h3 class="text-2xl font-semibold text-white mb-3">Listening to Music</h3>
+            <p class="text-gray-400 leading-relaxed text-sm">Music is my ultimate way to unwind and find inspiration.
+              Whether I'm coding or relaxing, exploring different genres keeps my creativity flowing and helps me focus.
+            </p>
           </div>
         </div>
-        <div class="interest-box green">
-          <span class="icon">✅</span>
+
+        <!-- Box 2 -->
+        <div
+          class="interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-orange-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(249,115,22,0.2)]">
+          <div
+            class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-orange-500/30 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
+            <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+              </path>
+            </svg>
+          </div>
           <div>
-            <h3>Exploring New Technologies</h3>
-            <p>Staying updated with the latest advancements in technology is a key interest.
-              I enjoy researching emerging trends and experimenting with new tools and frameworks.</p>
+            <h3 class="text-2xl font-semibold text-white mb-3">Playing Football</h3>
+            <p class="text-gray-400 leading-relaxed text-sm">I'm an avid football player. Being on the field teaches me
+              teamwork, strategy, and resilience—qualities that perfectly translate into my professional life as a
+              developer.</p>
           </div>
         </div>
-        <div class="interest-box blue">
-          <span class="icon">ℹ️</span>
+
+        <!-- Box 3 -->
+        <div
+          class="interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-purple-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]">
+          <div
+            class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-fuchsia-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+            <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+              </path>
+            </svg>
+          </div>
           <div>
-            <h3>Continuous Learning</h3>
-            <p>The tech world is ever-evolving, and I am committed to lifelong learning,
-              constantly seeking new knowledge and refining my skills to stay ahead.</p>
+            <h3 class="text-2xl font-semibold text-white mb-3">Reading Novels</h3>
+            <p class="text-gray-400 leading-relaxed text-sm">Getting lost in a good novel is my favorite way to escape
+              and broaden my perspective. Reading enhances my imagination and ability to understand different
+              viewpoints.</p>
           </div>
         </div>
+
       </div>
     </div>
   </section>
-  <section class="contact-section hidden" id="contact">
-    <h2>Get in Touch</h2>
-    <p class="sub-heading">I'm currently looking for new opportunities. Whether you have a question or just want to say
+  <section class="contact-section scroll-reveal" id="contact">
+    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">Get
+      in Touch</h2>
+    <p class="sub-heading text-gray-400 text-lg mb-12 max-w-2xl mx-auto">I'm currently looking for new opportunities.
+      Whether you have a question or just want to say
       hi, my inbox is always open!</p>
 
     <div class="contact-container">
@@ -477,12 +577,14 @@
           <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
           <label for="message">Message</label>
         </div>
-        <button type="submit" class="btn btn-primary">Send Message</button>
+        <button type="submit"
+          class="btn btn-primary w-full mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3 px-6 rounded-full shadow-[0_4px_15px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_25px_rgba(99,102,241,0.6)] transition-all duration-300">Send
+          Message</button>
       </form>
     </div>
   </section>
 
-  <footer class="footer hidden">
+  <footer class="footer scroll-reveal">
 
     <div class="footer-container">
       <div class="footer-socials">
@@ -513,9 +615,8 @@
       <!-- Native Iframe for Desktop -->
       <iframe src="" id="resumeFrame" width="100%" height="100%" frameborder="0"></iframe>
       <!-- Canvas for Mobile (PDF.js) -->
-      <div id="mobileResumeContainer"
-        style="display: none; width: 100%; height: 100%; overflow-y: auto; -webkit-overflow-scrolling: touch; background: #525659;">
-        <canvas id="resumeCanvas" style="width: 100%; display: block; margin: 0 auto;"></canvas>
+      <div id="mobileResumeContainer" class="mobile-resume-container">
+        <canvas id="resumeCanvas" class="resume-canvas"></canvas>
       </div>
     </div>
   </div>
@@ -558,8 +659,7 @@
       <div class="chatbot-header">
         <div class="chatbot-title">
           <div class="bot-avatar-container">
-            <img src="img/chatbot-svgrepo-com.svg" alt="Bot"
-              style="width: 20px; height: 20px; filter: brightness(0) invert(1);">
+            <img src="img/chatbot-svgrepo-com.svg" alt="Bot" class="chatbot-avatar-small">
           </div>
           <div class="chatbot-title-text">
             <div>Harsh's Assistant</div>
@@ -594,8 +694,7 @@
       </div>
     </div>
     <button class="chatbot-toggle" onclick="toggleChatbot()">
-      <img src="img/chatbot-svgrepo-com.svg" alt="Chat" class="icon"
-        style="width: 32px; height: 32px; filter: brightness(0) invert(1);">
+      <img src="img/chatbot-svgrepo-com.svg" alt="Chat" class="icon chatbot-avatar-large">
     </button>
   </div>
 
@@ -647,6 +746,7 @@
   </nav>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
   <script type="text/javascript">

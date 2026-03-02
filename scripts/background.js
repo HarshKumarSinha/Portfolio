@@ -34,25 +34,76 @@ document.addEventListener("DOMContentLoaded", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // --- PARTICLES ---
+  // --- PARTICLES WITH ANIME.JS MORPHING ---
   const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 700;
+  const particlesCount = 1500; // Increased count for better shapes
 
-  const posArray = new Float32Array(particlesCount * 3);
+  // Position Arrays for Morphing
+  const randomPos = new Float32Array(particlesCount * 3);
+  const spherePos = new Float32Array(particlesCount * 3);
+  const helixPos = new Float32Array(particlesCount * 3);
+  const currentPos = new Float32Array(particlesCount * 3); // The one we render
+
   const colorArray = new Float32Array(particlesCount * 3); // Dynamic colors
   const scaleArray = new Float32Array(particlesCount);
 
-  for (let i = 0; i < particlesCount * 3; i += 3) {
-    posArray[i] = (Math.random() - 0.5) * 45;
-    posArray[i + 1] = (Math.random() - 0.5) * 45;
-    posArray[i + 2] = (Math.random() - 0.5) * 45;
+  // We need an array of objects for Anime.js to tween
+  const particleTargets = [];
 
-    scaleArray[i / 3] = Math.random();
+  for (let i = 0; i < particlesCount; i++) {
+    const i3 = i * 3;
+
+    // 1. Random Galaxy Dust
+    randomPos[i3] = (Math.random() - 0.5) * 50;
+    randomPos[i3 + 1] = (Math.random() - 0.5) * 50;
+    randomPos[i3 + 2] = (Math.random() - 0.5) * 50;
+
+    // 2. Sphere Formation
+    const theta = Math.random() * Math.PI * 2;
+    const phi = Math.acos(Math.random() * 2 - 1);
+    const radius = 15;
+    spherePos[i3] = radius * Math.sin(phi) * Math.cos(theta);
+    spherePos[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+    spherePos[i3 + 2] = radius * Math.cos(phi);
+
+    // 3. Double Helix Formation
+    const helixRadius = 6;
+    const helixHeight = 40;
+    const t = i / particlesCount;
+    const angle = t * Math.PI * 15; // Twists
+    const strand = i % 2 === 0 ? 1 : -1;
+    helixPos[i3] = Math.cos(angle) * helixRadius * strand;
+    helixPos[i3 + 1] = (t - 0.5) * helixHeight;
+    helixPos[i3 + 2] = Math.sin(angle) * helixRadius * strand;
+
+    // Initial State is Random
+    currentPos[i3] = randomPos[i3];
+    currentPos[i3 + 1] = randomPos[i3 + 1];
+    currentPos[i3 + 2] = randomPos[i3 + 2];
+
+    scaleArray[i] = Math.random();
+
+    // Create targeting object for Anime.js
+    particleTargets.push({
+      x: randomPos[i3],
+      y: randomPos[i3 + 1],
+      z: randomPos[i3 + 2],
+      // Store all forms
+      randomX: randomPos[i3],
+      randomY: randomPos[i3 + 1],
+      randomZ: randomPos[i3 + 2],
+      sphereX: spherePos[i3],
+      sphereY: spherePos[i3 + 1],
+      sphereZ: spherePos[i3 + 2],
+      helixX: helixPos[i3],
+      helixY: helixPos[i3 + 1],
+      helixZ: helixPos[i3 + 2],
+    });
   }
 
   particlesGeometry.setAttribute(
     "position",
-    new THREE.BufferAttribute(posArray, 3),
+    new THREE.BufferAttribute(currentPos, 3),
   );
   particlesGeometry.setAttribute(
     "color",
@@ -162,41 +213,153 @@ document.addEventListener("DOMContentLoaded", () => {
     observer.observe(themeToggle, { attributes: true });
   }
 
-  // Mouse Interaction
-  let mouseX = 0;
-  let mouseY = 0;
-  let targetX = 0;
-  let targetY = 0;
+  // --- EPIC ANIME.JS DRIVEN ANIMATIONS ---
 
+  // Create a wrapper group to decouple mouse parallax from continuous auto-rotation
+  const mouseGroup = new THREE.Group();
+  scene.add(mouseGroup);
+  scene.remove(particlesMesh);
+  mouseGroup.add(particlesMesh);
+
+  // Function to apply frame updates to BufferGeometry when AnimeJS tweens the array of objects
+  const updateParticles = () => {
+    for (let i = 0; i < particlesCount; i++) {
+      const i3 = i * 3;
+      currentPos[i3] = particleTargets[i].x;
+      currentPos[i3 + 1] = particleTargets[i].y;
+      currentPos[i3 + 2] = particleTargets[i].z;
+    }
+    particlesGeometry.attributes.position.needsUpdate = true;
+  };
+
+  // Define our morphing sequence
+  const morphSequence = () => {
+    anime
+      .timeline({
+        loop: true,
+        direction: "alternate",
+        update: updateParticles,
+      })
+      // Random -> Sphere
+      .add({
+        targets: particleTargets,
+        x: (el) => el.sphereX,
+        y: (el) => el.sphereY,
+        z: (el) => el.sphereZ,
+        duration: 3000,
+        easing: "easeOutElastic(1, .8)",
+        delay: anime.stagger(2), // Epic ripple stagger effect across 1500 particles!
+        endDelay: 4000,
+      })
+      // Sphere -> Helix
+      .add({
+        targets: particleTargets,
+        x: (el) => el.helixX,
+        y: (el) => el.helixY,
+        z: (el) => el.helixZ,
+        duration: 3000,
+        easing: "easeInOutSine",
+        delay: anime.stagger(1.5),
+        endDelay: 4000,
+      })
+      // Helix -> Random
+      .add({
+        targets: particleTargets,
+        x: (el) => el.randomX,
+        y: (el) => el.randomY,
+        z: (el) => el.randomZ,
+        duration: 3000,
+        easing: "easeOutBack",
+        delay: anime.stagger(1, { from: "center" }),
+      });
+  };
+
+  // 1. Initial State for Entrance
+  camera.position.z = 150;
+  particlesMesh.scale.set(0, 0, 0);
+  particlesMesh.rotation.x = Math.PI / 4;
+  particlesMesh.rotation.y = Math.PI;
+
+  // 2. Entrance Animation Timeline, then start Morph sequence
+  anime
+    .timeline({
+      complete: morphSequence, // Trigger the massive shape morph after entrance
+    })
+    .add({
+      targets: camera.position,
+      z: 20,
+      duration: 4000,
+      easing: "easeOutCubic",
+    })
+    .add(
+      {
+        targets: particlesMesh.scale,
+        x: 1,
+        y: 1,
+        z: 1,
+        duration: 3000,
+        easing: "easeOutExpo",
+      },
+      "-=3500",
+    )
+    .add(
+      {
+        targets: particlesMesh.rotation,
+        x: 0,
+        y: 0,
+        duration: 5000,
+        easing: "easeOutQuart",
+      },
+      "-=4000",
+    );
+
+  // 3. Continuous Base Animation Loops
+  // Slow Space Rotation
+  anime({
+    targets: particlesMesh.rotation,
+    y: Math.PI * 2,
+    duration: 80000,
+    loop: true,
+    easing: "linear",
+  });
+
+  // 4. Smooth Mouse Parallax
   const windowHalfX = window.innerWidth / 2;
   const windowHalfY = window.innerHeight / 2;
 
   document.addEventListener("mousemove", (event) => {
-    mouseX = event.clientX - windowHalfX;
-    mouseY = event.clientY - windowHalfY;
+    // Calculate normalized mouse coordinates
+    const mouseX = (event.clientX - windowHalfX) * 0.001;
+    const mouseY = (event.clientY - windowHalfY) * 0.001;
+
+    // Tween the wrapper group, leaving internal particle rotation intact
+    anime({
+      targets: mouseGroup.rotation,
+      x: mouseY,
+      y: mouseX,
+      duration: 2000,
+      easing: "easeOutCirc",
+    });
   });
 
-  // Scroll Interaction
-  let scrollY = 0;
+  // 5. Immersive Scroll Dive
   window.addEventListener("scroll", () => {
-    scrollY = window.scrollY;
+    // Get total scrollable distance
+    const scrollMax = document.body.scrollHeight - window.innerHeight;
+    const scrollPercent = window.scrollY / scrollMax;
+
+    // Tween camera to fly IN to the particles and pan down
+    anime({
+      targets: camera.position,
+      y: -scrollPercent * 15,
+      z: 20 - scrollPercent * 25, // Dive deep through the stars
+      duration: 1000,
+      easing: "easeOutQuart",
+    });
   });
 
-  const clock = new THREE.Clock();
-
+  // 6. Tick Loop (Now just renders, physics handled perfectly by Anime.js)
   const tick = () => {
-    targetX = mouseX * 0.001;
-    targetY = mouseY * 0.001;
-    const elapsedTime = clock.getElapsedTime();
-
-    particlesMesh.rotation.y = 0.1 * elapsedTime;
-    particlesMesh.rotation.x = 0.05 * elapsedTime;
-
-    particlesMesh.rotation.y += 0.5 * (targetX - particlesMesh.rotation.y);
-    particlesMesh.rotation.x += 0.5 * (targetY - particlesMesh.rotation.x);
-
-    camera.position.y = -scrollY * 0.01;
-
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
   };

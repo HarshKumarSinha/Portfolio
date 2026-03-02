@@ -2,17 +2,132 @@
 pdfjsLib.GlobalWorkerOptions.workerSrc =
   "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
 
-// Simple Intersection Observer to trigger animations on scroll
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("show");
-    }
-  });
-});
+// Advanced 3D Intersection Observer using Anime.js
+const observer = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (
+        entry.isIntersecting &&
+        !entry.target.classList.contains("animated")
+      ) {
+        entry.target.classList.add("animated");
 
-const hiddenElements = document.querySelectorAll(".hidden");
+        // Temporarily disable CSS transitions to let Anime.js take over 3D animations completely
+        entry.target.style.transition = "none";
+        entry.target.style.opacity = "1";
+
+        // Advanced 3D entrance animation with Anime.js
+        anime({
+          targets: entry.target,
+          opacity: [0, 1],
+          translateY: [100, 0],
+          translateZ: [150, 0],
+          rotateX: [15, 0],
+          scale: [0.95, 1],
+          easing: "easeOutElastic(1, .8)",
+          duration: 1500,
+          filter: ["blur(10px)", "blur(0px)"],
+        });
+
+        // Animate child elements in 3D stagger if present (Bento cards, skills, etc)
+        const childCards = entry.target.querySelectorAll(
+          ".bento-card, .skill, .academic-box, .interest-box",
+        );
+        if (childCards.length > 0) {
+          // Prepare children
+          childCards.forEach((c) => {
+            c.style.opacity = "0";
+            c.style.transform =
+              "translateY(40px) translateZ(100px) rotateX(10deg)";
+          });
+
+          anime({
+            targets: childCards,
+            opacity: [0, 1],
+            translateY: [40, 0],
+            translateZ: [100, 0],
+            rotateX: [10, 0],
+            easing: "easeOutElastic(1, .8)",
+            duration: 1200,
+            delay: anime.stagger(100, { start: 300 }),
+          });
+        }
+      }
+    });
+  },
+  { threshold: 0.1 },
+);
+
+const hiddenElements = document.querySelectorAll(".scroll-reveal");
 hiddenElements.forEach((el) => observer.observe(el));
+
+// Hero Section 3D Animations via Anime.js
+document.addEventListener("DOMContentLoaded", () => {
+  // Set initial 3D states so they don't abruptly snap
+  anime.set(".intro h1", {
+    opacity: 0,
+    translateY: 50,
+    translateZ: 150,
+    rotateX: -20,
+  });
+  anime.set(".intro p", { opacity: 0, translateY: 30 });
+  anime.set(".social-links .btn", {
+    opacity: 0,
+    translateY: 20,
+    translateZ: 50,
+  });
+  anime.set(".intro-image", {
+    opacity: 0,
+    scale: 0.8,
+    translateX: 50,
+    rotateY: 20,
+  });
+
+  anime
+    .timeline({
+      easing: "easeOutElastic(1, .8)",
+    })
+    .add({
+      targets: ".intro h1",
+      opacity: [0, 1],
+      translateY: [50, 0],
+      translateZ: [150, 0],
+      rotateX: [-20, 0],
+      duration: 1500,
+      delay: 300,
+    })
+    .add(
+      {
+        targets: ".intro p",
+        opacity: [0, 1],
+        translateY: [30, 0],
+        duration: 1200,
+      },
+      "-=1000",
+    )
+    .add(
+      {
+        targets: ".social-links .btn",
+        opacity: [0, 1],
+        translateY: [20, 0],
+        translateZ: [50, 0],
+        duration: 1200,
+        delay: anime.stagger(150),
+      },
+      "-=800",
+    )
+    .add(
+      {
+        targets: ".intro-image",
+        opacity: [0, 1],
+        scale: [0.8, 1],
+        translateX: [50, 0],
+        rotateY: [20, 0],
+        duration: 1500,
+      },
+      "-=1200",
+    );
+});
 
 // Lenis Smooth Scrolling
 const lenis = new Lenis({
