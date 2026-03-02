@@ -147,24 +147,20 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- THEME COLOR LOGIC ---
   const updateParticleColors = () => {
-    // Check current actual theme from body or localStorage
-    // Note: The toggle script sets attribute on the theme-toggle div, but styles apply based on body/root usually.
-    // Let's check the theme toggle state.
-    const themeToggle = document.querySelector(".theme-toggle");
-    const isLight = themeToggle
-      ? themeToggle.getAttribute("data-active") === "light"
-      : false;
+    // Check current actual theme from html attribute directly
+    const isLight =
+      document.documentElement.getAttribute("data-theme") === "light";
 
     // Colors
     let c1, c2, c3;
 
     if (isLight) {
-      // LIGHT MODE COLORS: Needs to be darker/colorful to show on white
+      // LIGHT MODE COLORS: Needs to be darker/colorful to show on light mesh
       c1 = new THREE.Color("#4f46e5"); // Indigo 600
-      c2 = new THREE.Color("#9333ea"); // Purple 600
-      c3 = new THREE.Color("#0f172a"); // Slate 900 (Dark specks)
+      c2 = new THREE.Color("#db2777"); // Pink 600
+      c3 = new THREE.Color("#7e22ce"); // Purple 700
       particlesMaterial.blending = THREE.NormalBlending; // Better visibility on light
-      particlesMaterial.opacity = 0.7;
+      particlesMaterial.opacity = 0.8;
     } else {
       // DARK MODE COLORS: Glowing light colors
       c1 = new THREE.Color("#6366f1"); // Indigo 500
@@ -196,22 +192,22 @@ document.addEventListener("DOMContentLoaded", () => {
   // Initial Set
   updateParticleColors();
 
-  // Listen for Theme Changes (Observer)
+  // Listen for actual HTML data-theme Changes
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (
         mutation.type === "attributes" &&
-        mutation.attributeName === "data-active"
+        mutation.attributeName === "data-theme"
       ) {
         updateParticleColors();
       }
     });
   });
 
-  const themeToggle = document.querySelector(".theme-toggle");
-  if (themeToggle) {
-    observer.observe(themeToggle, { attributes: true });
-  }
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
 
   // --- EPIC ANIME.JS DRIVEN ANIMATIONS ---
 

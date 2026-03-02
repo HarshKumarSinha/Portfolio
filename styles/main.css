@@ -41,21 +41,27 @@
 
 [data-theme="light"] body {
   background-image:
-    radial-gradient(circle at 10% 20%,
-      rgba(79, 70, 229, 0.08) 0%,
-      transparent 25%),
-    radial-gradient(circle at 90% 80%,
-      rgba(147, 51, 234, 0.08) 0%,
-      transparent 25%);
+    radial-gradient(at 0% 0%, rgba(139, 92, 246, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(236, 72, 153, 0.15) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(56, 189, 248, 0.15) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(167, 139, 250, 0.15) 0px, transparent 50%);
+  background-color: #f8fafc;
+}
+
+[data-theme="light"] .intro,
+[data-theme="light"] .wrapper,
+[data-theme="light"] section,
+[data-theme="light"] .bg-white\/5,
+[data-theme="light"] .backdrop-blur-sm,
+[data-theme="light"] .backdrop-blur-md,
+[data-theme="light"] .rounded-3xl {
+  background: transparent !important;
+  box-shadow: none !important;
+  border: none !important;
 }
 
 [data-theme="light"] .intro {
-  /* Colorful gradient overlay for light mode - No Image to avoid muddy look */
-  background:
-    radial-gradient(circle at top right, rgba(99, 102, 241, 0.15), transparent 40%),
-    radial-gradient(circle at bottom left, rgba(168, 85, 247, 0.15), transparent 40%),
-    linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%);
-  background-size: cover;
+  max-width: 100% !important;
 }
 
 [data-theme="light"] .intro h1,
@@ -115,6 +121,74 @@
 [data-theme="light"] .timeline-item::after {
   background: var(--bg-color);
 }
+
+/* Global Light Mode Tailwind Overrides for Readability & Glassmorphism */
+[data-theme="light"] .text-white {
+  color: #0f172a !important;
+}
+
+[data-theme="light"] .text-gray-200 {
+  color: #1e293b !important;
+}
+
+[data-theme="light"] .text-gray-300 {
+  color: #334155 !important;
+}
+
+[data-theme="light"] .text-gray-400 {
+  color: #475569 !important;
+}
+
+/* Icon Colors for Light Mode */
+[data-theme="light"] .text-pink-400 {
+  color: #db2777 !important;
+}
+
+[data-theme="light"] .text-orange-400 {
+  color: #ea580c !important;
+}
+
+[data-theme="light"] .text-purple-400 {
+  color: #9333ea !important;
+}
+
+[data-theme="light"] .text-indigo-400 {
+  color: #4f46e5 !important;
+}
+
+/* Glass Background Transparency Tweaks */
+[data-theme="light"] .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.07) !important;
+}
+
+[data-theme="light"] .hover\:bg-white\/10:hover {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Glass Borders */
+[data-theme="light"] .border-white\/10 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .border-white\/15 {
+  border-color: rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .border-white\/20 {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Add solid backing to boxes for better contrast */
+[data-theme="light"] .interest-box {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.3) 100%) !important;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07) !important;
+}
+
+
 
 html {
   /* scroll-behavior: smooth; - Disabled for Lenis */
@@ -1462,12 +1536,6 @@ section {
 .chatbot-window {
   width: 350px;
   height: 500px;
-  /* Taller for better view */
-  background: rgba(20, 20, 22, 0.95);
-  /* Slightly darker/solid */
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 24px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
   display: flex;
@@ -1492,9 +1560,6 @@ section {
 
 /* Header */
 .chatbot-header {
-  background: linear-gradient(135deg,
-      var(--primary-color),
-      var(--secondary-color));
   padding: 18px 20px;
   display: flex;
   justify-content: space-between;
@@ -1641,7 +1706,6 @@ section {
   gap: 10px;
   /* Reduced gap slightly */
   align-items: center;
-  background: rgba(0, 0, 0, 0.2);
   box-sizing: border-box;
   width: 100%;
   overflow: hidden;
