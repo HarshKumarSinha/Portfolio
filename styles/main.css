@@ -843,12 +843,13 @@ section {
 
 @media (max-width: 768px) {
   .experience-section {
-    padding: 3rem 1.5rem;
+    padding: 3rem 1.5rem 12rem 1.5rem;
+    /* Increased bottom padding to 12rem */
   }
 
   .bento-grid {
     grid-template-columns: 1fr;
-    gap: 1rem;
+    gap: 1.25rem;
     grid-template-areas:
       "current"
       "previous"
@@ -861,12 +862,19 @@ section {
     padding: 1.5rem;
   }
 
+  .card-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
   .bento-card h3 {
-    font-size: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
   }
 
   .bento-card h4 {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
   }
 
   .stat-number {
@@ -878,7 +886,7 @@ section {
   }
 
   .achievement-list {
-    gap: 0.75rem;
+    gap: 0.65rem;
   }
 }
 
@@ -1249,7 +1257,8 @@ section {
 
   /* Global Section Padding */
   section {
-    padding: 3rem 1.5rem;
+    padding: 3.5rem 1.5rem 12rem 1.5rem;
+    /* Increased bottom padding */
   }
 
   /* Intro Section */
@@ -1257,7 +1266,8 @@ section {
     padding: 1rem;
     min-height: auto;
     padding-top: 15vh;
-    padding-bottom: 5rem;
+    padding-bottom: 12rem;
+    /* Increased bottom padding */
   }
 
   .intro h1 {
@@ -1273,6 +1283,7 @@ section {
     font-size: 1rem;
     text-align: left;
     /* Easier to read on mobile */
+    line-height: 1.5rem;
   }
 
   /* Skills Grid */
@@ -1316,7 +1327,8 @@ section {
   .footer-container {
     flex-direction: column;
     gap: 1rem;
-    padding: 2rem 1rem;
+    padding: 2rem 1rem 6rem 1rem;
+    /* Added bottom padding to footer */
     text-align: center;
     height: auto;
     max-height: none;
@@ -1352,6 +1364,8 @@ section {
 
   .contact-container {
     padding: 1.5rem;
+    margin-bottom: 5rem;
+    /* Additional bottom clear for contact form */
   }
 
   /* Fine tune timeline for very small screens */
@@ -1835,8 +1849,8 @@ section {
   }
 
   .chatbot-widget {
-    right: 20px;
-    bottom: 90px;
+    right: 15px;
+    bottom: 110px;
     /* Lifted up to avoid overlap with floating navbar */
   }
 }
