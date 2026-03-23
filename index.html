@@ -35,18 +35,56 @@
       --font-heading: "Space Grotesk", sans-serif;
       --font-body: "Outfit", sans-serif;
     }
-    body { background-color: var(--bg-color); margin: 0; min-height: 100vh; overflow-x: hidden; font-family: sans-serif; }
+    body { background-color: var(--bg-color); margin: 0; min-height: 100vh; overflow-x: hidden;
+      font-family: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-size: 16px; line-height: 1.6; color: #fff; }
     #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
-    .hero-title-container { min-height: 250px; display: flex; align-items: flex-start; contain: layout size; }
-    @media (min-width: 640px) { .hero-title-container { min-height: 200px; } }
+    
+    /* Critical hero layout - prevents CLS from Tailwind loading */
+    main { display: block; }
+    .intro { 
+      padding-left: 1rem; padding-right: 1rem;
+      width: 100%; box-sizing: border-box;
+      max-width: 1400px; margin: 0 auto;
+      padding-top: 5rem; padding-bottom: 3rem;
+    }
+    .hero-title-container { 
+      min-height: 250px; width: 100%; display: flex; align-items: flex-start;
+      contain: layout size; margin-bottom: 2rem;
+    }
+    @media (min-width: 640px)  { .hero-title-container { min-height: 200px; } }
     @media (min-width: 1024px) { .hero-title-container { min-height: 160px; } }
-    .nav-item svg { width: 24px; height: 24px; }
-    .floating-nav { contain: paint; }
-    /* Reserve space for interest box icon containers to prevent CLS when Tailwind loads */
+    #hero-title { 
+      font-size: clamp(2.25rem, 5vw, 4.5rem); font-weight: 700;
+      line-height: 1.2; margin: 0; width: 100%;
+    }
+    
+    /* Hero bottom row grid - stable before Tailwind */
+    .hero-grid { 
+      display: grid; grid-template-columns: 1fr;
+      gap: 3rem; align-items: center; width: 100%;
+    }
+    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
+    
+    /* Intro image - reserve space to prevent shift */
+    .intro-image { display: flex; justify-content: center; }
+    @media (min-width: 1024px) { .intro-image { justify-content: flex-end; } }
+    .profile-img { width: 320px; height: 320px; object-fit: cover; border-radius: 50%; display: block; }
+    @media (max-width: 768px) { .profile-img { width: 256px; height: 256px; } }
+    
+    /* Cursor blink */
+    .cursor { display: inline-block; width: 3px; height: 1.1em; background: #818cf8; animation: blink 1s infinite; margin-left: 4px; vertical-align: middle; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+    
+    /* Floating nav - contain paint to prevent surrounding layout shifts */
+    .floating-nav { contain: paint; position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 1000; }
+    
+    /* Interest icons - stable dimensions before Tailwind loads */
     .interest-box .w-16 { width: 64px; height: 64px; flex-shrink: 0; }
-    .interest-box .w-8 { width: 32px; height: 32px; }
-    /* Hero image reserve */
-    .intro img { width: 320px; height: 320px; }
+    .interest-box .w-8  { width: 32px; height: 32px; }
+    
+    /* Nav icons */
+    .nav-item svg { width: 24px; height: 24px; }
   </style>
 
   <!-- Deferred Styles -->
@@ -90,12 +128,12 @@
       <h1 id="hero-title"
         class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight">
         Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span
-          class="cursor text-indigo-400">|</span>
+          class="cursor text-indigo-400"></span>
       </h1>
     </div>
 
-      <!-- Bottom Row: 2-Column Grid -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+      <!-- Bottom Row: 2-Column Grid - .hero-grid defined in critical CSS -->
+      <div class="hero-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
         <!-- Left Column: Text -->
         <div class="intro-content text-left">
           <p class="text-lg md:text-xl text-gray-300 drop-shadow-md tracking-wide leading-loose">
