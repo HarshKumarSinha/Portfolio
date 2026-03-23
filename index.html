@@ -5,14 +5,19 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harsh Sinha's Portfolio</title>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <link rel="preload" as="style"
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" media="print" onload="this.media='all'">
   <noscript>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet">
   </noscript>
-  
+
   <link rel="stylesheet" href="styles/main.css?v=3">
   <link rel="stylesheet" href="styles/voice.css" media="print" onload="this.media='all'">
   <link rel="icon" href="img/Portfolio-favicon.png">
@@ -46,551 +51,573 @@
   </div>
   <main>
     <div class="intro px-4 w-full" id="home">
-    <!-- Top Row: Full Width Heading -->
-    <div class="w-full text-left mb-8 lg:mb-4">
-      <h1 id="hero-title"
-        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[160px] sm:min-h-[120px] md:min-h-[110px] lg:min-h-[110px]">
-        Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span class="cursor text-indigo-400">|</span>
-      </h1>
-    </div>
-
-    <!-- Bottom Row: 2-Column Grid -->
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-      <!-- Left Column: Text -->
-      <div class="intro-content text-left">
-        <p class="text-lg md:text-xl text-gray-300 drop-shadow-md tracking-wide leading-loose">
-          Transforming ideas into reality through code. I am a <span
-            class="highlight-text font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text">Full
-            Stack Developer</span>
-          and <span
-            class="highlight-text font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">SharePoint
-            Specialist</span> based in India.</p>
-        <div class="social-links mt-10 flex flex-wrap gap-4 justify-start">
-          <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/"
-            class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
-            target="_blank">Connect
-            on LinkedIn</a>
-          <a href="#contact"
-            class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]">Email
-            me</a>
-          <a href="#"
-            class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
-            onclick="openResume(event)">My Resume</a>
-        </div>
+      <!-- Top Row: Full Width Heading -->
+      <div class="w-full text-left mb-8 lg:mb-4">
+        <h1 id="hero-title"
+          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[160px] sm:min-h-[120px] md:min-h-[110px] lg:min-h-[110px]">
+          Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span
+            class="cursor text-indigo-400">|</span>
+        </h1>
       </div>
 
-      <!-- Right Column: Glass Profile Card -->
-      <div class="intro-image flex justify-center lg:justify-end">
-        <div class="relative group">
-          <!-- Animated Glow Behind -->
-          <div
-            class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+      <!-- Bottom Row: 2-Column Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
+        <!-- Left Column: Text -->
+        <div class="intro-content text-left">
+          <p class="text-lg md:text-xl text-gray-300 drop-shadow-md tracking-wide leading-loose">
+            Transforming ideas into reality through code. I am a <span
+              class="highlight-text font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text">Full
+              Stack Developer</span>
+            and <span
+              class="highlight-text font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">SharePoint
+              Specialist</span> based in India.</p>
+          <div class="social-links mt-10 flex flex-wrap gap-4 justify-start">
+            <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/"
+              class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
+              target="_blank">Connect
+              on LinkedIn</a>
+            <a href="#contact"
+              class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]">Email
+              me</a>
+            <a href="#"
+              class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
+              onclick="openResume(event)">My Resume</a>
           </div>
+        </div>
 
-          <!-- Glass Container -->
-          <div
-            class="relative w-64 h-64 md:w-80 md:h-80 bg-white/5 backdrop-blur-md rounded-full border-[2px] border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.3)] transition-all duration-500 overflow-hidden flex items-center justify-center group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
-            <!-- Profile Image -->
-            <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" alt="Harsh Sinha"
-              class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 profile-img" fetchpriority="high" loading="eager" width="320" height="320" />
+        <!-- Right Column: Glass Profile Card -->
+        <div class="intro-image flex justify-center lg:justify-end">
+          <div class="relative group">
+            <!-- Animated Glow Behind -->
+            <div
+              class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
+            </div>
+
+            <!-- Glass Container -->
+            <div
+              class="relative w-64 h-64 md:w-80 md:h-80 bg-white/5 backdrop-blur-md rounded-full border-[2px] border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.3)] transition-all duration-500 overflow-hidden flex items-center justify-center group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
+              <!-- Profile Image -->
+              <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" alt="Harsh Sinha"
+                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 profile-img"
+                fetchpriority="high" loading="eager" width="320" height="320" />
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  <section class="about scroll-reveal" id="about">
-    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-      About me</h2>
-    <div
-      class="max-w-4xl mx-auto space-y-6 text-gray-300 leading-relaxed text-lg tracking-wide bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500">
-      <p>I am a Computer Science Graduate and a Junior Software Analyst at Enaiya Information Technology, specializing
-        in
-        building modern web applications and enterprise SharePoint solutions. With a strong foundation in Full Stack
-        Development, I bridge the gap between complex backend logic and intuitive frontend design.</p>
-      <p>Beyond my academic achievements at Shivalik College of Engineering, I have gained practical industry experience
-        optimizing workflows, developing custom SPFx components, and integrating secure API services. I am driven by a
-        passion for exploring new technologies and solving real-world business challenges through code.</p>
-    </div>
-  </section>
-  <section class="skills-section scroll-reveal" id="skills">
-    <div class="skills-container">
+    <section class="about scroll-reveal" id="about">
       <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-        Core Technical Skills</h2>
-      <p class="skills-intro text-gray-400 max-w-3xl mx-auto text-lg mb-12">
-        My academic and practical experiences have equipped me with a robust set of technical skills essential for
-        modern software development.
-        I am proficient in various programming languages and frameworks, enabling me to tackle diverse challenges in the
-        tech landscape.
-      </p>
+        About me</h2>
+      <div
+        class="max-w-4xl mx-auto space-y-6 text-gray-300 leading-relaxed text-lg tracking-wide bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500">
+        <p>I am a Computer Science Graduate and a Junior Software Analyst at Enaiya Information Technology, specializing
+          in
+          building modern web applications and enterprise SharePoint solutions. With a strong foundation in Full Stack
+          Development, I bridge the gap between complex backend logic and intuitive frontend design.</p>
+        <p>Beyond my academic achievements at Shivalik College of Engineering, I have gained practical industry
+          experience
+          optimizing workflows, developing custom SPFx components, and integrating secure API services. I am driven by a
+          passion for exploring new technologies and solving real-world business challenges through code.</p>
+      </div>
+    </section>
+    <section class="skills-section scroll-reveal" id="skills">
+      <div class="skills-container">
+        <h2
+          class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+          Core Technical Skills</h2>
+        <p class="skills-intro text-gray-400 max-w-3xl mx-auto text-lg mb-12">
+          My academic and practical experiences have equipped me with a robust set of technical skills essential for
+          modern software development.
+          I am proficient in various programming languages and frameworks, enabling me to tackle diverse challenges in
+          the
+          tech landscape.
+        </p>
 
-      <div class="skills-grid">
-        <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="48" height="48" loading="lazy" decoding="async" />
-          <div>
-            <h3>Python Programming</h3>
-            <p>Extensive experience in Python for scripting, web development, and data manipulation.</p>
+        <div class="skills-grid">
+          <div class="skill">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"
+              width="48" height="48" loading="lazy" decoding="async" />
+            <div>
+              <h3>Python Programming</h3>
+              <p>Extensive experience in Python for scripting, web development, and data manipulation.</p>
+            </div>
+          </div>
+
+          <div class="skill">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"
+              loading="lazy" width="48" height="48" decoding="async" />
+            <div>
+              <h3>Django Framework</h3>
+              <p>Proficient in building robust and scalable web applications using the Django framework.</p>
+            </div>
+          </div>
+
+          <div class="skill">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"
+              loading="lazy" width="48" height="48" decoding="async" />
+            <div>
+              <h3>Java Development</h3>
+              <p>Solid understanding of Java for object-oriented programming and application development.</p>
+            </div>
+          </div>
+
+          <div class="skill">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg" alt="jQuery"
+              loading="lazy" width="48" height="48" decoding="async" />
+            <div>
+              <h3>jQuery</h3>
+              <p>Proficient in simplifying HTML document traversal, event handling, and animation using jQuery.</p>
+            </div>
+          </div>
+
+          <div class="skill">
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg/1280px-Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg.png?20190925170659"
+              alt="SharePoint" loading="lazy" width="48" height="48" decoding="async" />
+            <div>
+              <h3>SharePoint</h3>
+              <p>Experience in managing and configuring SharePoint for document management and team collaboration
+                solutions.</p>
+            </div>
+          </div>
+
+          <div class="skill">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+              alt="Web Technologies" loading="lazy" width="48" height="48" decoding="async" />
+            <div>
+              <h3>Frontend Technologies</h3>
+              <p>Adept in creating responsive and interactive web interfaces using HTML, CSS, JavaScript, and Bootstrap
+                5.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="experience-section scroll-reveal" id="experience">
+      <div class="experience-header">
+        <h2
+          class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-4">
+          Professional Experience</h2>
+        <p class="experience-intro text-gray-400 max-w-2xl mx-auto text-lg">
+          Building modern solutions across full-stack development and enterprise platforms
+        </p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Large Card - Current Role -->
+        <div class="bento-card current-role">
+          <div class="card-header">
+            <div class="role-badge analyst">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 21H3V3"></path>
+                <path d="M18.5 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path>
+                <path d="M5 16l4-5 5 4 6-9"></path>
+              </svg>
+              <span>Current Position</span>
+            </div>
+            <span class="duration">Aug 2025 - Present</span>
+          </div>
+
+          <h3>Junior Software Analyst</h3>
+          <div class="company-info">
+            <div class="company-name">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Enaiya Information Technology
+            </div>
+            <div class="location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Patna, Bihar, India
+            </div>
+          </div>
+
+          <ul class="achievement-list">
+            <li>
+              <span class="achievement-icon">🚀</span>
+              <div>
+                <strong>SharePoint Solutions</strong>
+                <p>Designed and deployed custom SPFx components and site automation features</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">⚡</span>
+              <div>
+                <strong>Performance Optimization</strong>
+                <p>Reduced page load time by ~30% through legacy script refactoring</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">🔧</span>
+              <div>
+                <strong>Enterprise Integration</strong>
+                <p>Built data connectors and CRUD services with SQL Server & Swagger APIs</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">📱</span>
+              <div>
+                <strong>UI/UX Enhancement</strong>
+                <p>Implemented responsive designs and improved user experience across platforms</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">🔄</span>
+              <div>
+                <strong>Workflow Automation</strong>
+                <p>Developed automated workflows reducing manual processing time by 40%</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">📊</span>
+              <div>
+                <strong>Data Management</strong>
+                <p>Optimized database queries and implemented efficient data handling strategies</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="tech-stack">
+            <span class="tech-tag">SharePoint</span>
+            <span class="tech-tag">SPFx</span>
+            <span class="tech-tag">jQuery</span>
+            <span class="tech-tag">REST APIs</span>
+            <span class="tech-tag">SQL Server</span>
           </div>
         </div>
 
-        <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" loading="lazy" width="48" height="48" decoding="async" />
-          <div>
-            <h3>Django Framework</h3>
-            <p>Proficient in building robust and scalable web applications using the Django framework.</p>
+        <!-- Medium Card - Previous Role -->
+        <div class="bento-card previous-role">
+          <div class="card-header">
+            <div class="role-badge developer">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="16 18 22 12 16 6"></polyline>
+                <polyline points="8 6 2 12 8 18"></polyline>
+              </svg>
+              <span>Full Stack</span>
+            </div>
+            <span class="duration">Feb - Mar 2025</span>
+          </div>
+
+          <h3>Full Stack Developer</h3>
+          <div class="company-info">
+            <div class="company-name">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                <polyline points="9 22 9 12 15 12 15 22"></polyline>
+              </svg>
+              Ice Technology Lab
+            </div>
+            <div class="location">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+              </svg>
+              Patna, Bihar, India
+            </div>
+          </div>
+
+          <ul class="achievement-list compact">
+            <li>
+              <span class="achievement-icon">🐍</span>
+              <div>
+                <strong>Django Development</strong>
+                <p>Built full-stack web applications with Python & Django</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">🔗</span>
+              <div>
+                <strong>Integration</strong>
+                <p>Seamlessly connected frontend and backend components</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">👥</span>
+              <div>
+                <strong>Team Collaboration</strong>
+                <p>Debugged and optimized code for better performance</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="tech-stack">
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">Django</span>
+            <span class="tech-tag">HTML/CSS</span>
+            <span class="tech-tag">JavaScript</span>
           </div>
         </div>
 
-        <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy" width="48" height="48" decoding="async" />
-          <div>
-            <h3>Java Development</h3>
-            <p>Solid understanding of Java for object-oriented programming and application development.</p>
+        <!-- Small Card - Stats -->
+        <div class="bento-card stats-card">
+          <div class="stat-item">
+            <div class="stat-number">6+</div>
+            <div class="stat-label">Months Experience</div>
+          </div>
+          <div class="stat-divider"></div>
+          <div class="stat-item">
+            <div class="stat-number">5+</div>
+            <div class="stat-label">Projects Delivered</div>
           </div>
         </div>
 
-        <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg"
-            alt="jQuery" loading="lazy" width="48" height="48" decoding="async" />
-          <div>
-            <h3>jQuery</h3>
-            <p>Proficient in simplifying HTML document traversal, event handling, and animation using jQuery.</p>
+        <!-- Small Card - Highlight -->
+        <div class="bento-card highlight-card">
+          <div class="highlight-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
           </div>
+          <h4>30% Faster</h4>
+          <p>Performance improvement achieved through optimization</p>
         </div>
 
-        <div class="skill">
-          <img
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg/1280px-Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg.png?20190925170659"
-            alt="SharePoint" loading="lazy" width="48" height="48" decoding="async" />
-          <div>
-            <h3>SharePoint</h3>
-            <p>Experience in managing and configuring SharePoint for document management and team collaboration
-              solutions.</p>
+        <!-- Wide Card - Skills Overview -->
+        <div class="bento-card skills-overview">
+          <h4>Core Competencies</h4>
+          <div class="skills-grid-compact">
+            <div class="skill-item">
+              <div class="skill-icon">💻</div>
+              <span>Full Stack Development</span>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">📊</div>
+              <span>SharePoint Solutions</span>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">⚙️</div>
+              <span>API Integration</span>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">🎨</div>
+              <span>UI/UX Implementation</span>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">🔒</div>
+              <span>Security & Auth</span>
+            </div>
+            <div class="skill-item">
+              <div class="skill-icon">📈</div>
+              <span>Performance Tuning</span>
+            </div>
           </div>
         </div>
-
-        <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-            alt="Web Technologies" loading="lazy" width="48" height="48" decoding="async" />
-          <div>
-            <h3>Frontend Technologies</h3>
-            <p>Adept in creating responsive and interactive web interfaces using HTML, CSS, JavaScript, and Bootstrap 5.
+      </div>
+    </section>
+    <section class="academic-section scroll-reveal">
+      <div class="academic-container">
+        <h2
+          class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+          Academic Journey: Shivalik College of Engineering</h2>
+        <p class="text-gray-400 max-w-4xl mx-auto text-lg tracking-wide mb-8">
+          My pursuit of a Bachelor of Technology in Computer Science and Engineering at Shivalik College has provided a
+          comprehensive education,
+          covering core concepts and advanced topics in the field.
+        </p>
+        <div class="academic-grid">
+          <div class="academic-box">
+            <h3>Foundation in Computer Science</h3>
+            <p>Engaged in core computer science subjects, building a strong base in programming, data structures, and
+              algorithms.</p>
+          </div>
+          <div class="academic-box">
+            <h3>Practical Project Work</h3>
+            <p>Actively participated in various projects, applying theoretical knowledge to solve real-world problems
+              and
+              enhance practical skills.</p>
+          </div>
+          <div class="academic-box">
+            <h3>Advanced Specializations</h3>
+            <p>Explored advanced topics such as web development, database management, and software engineering
+              principles.
             </p>
           </div>
+          <div class="academic-box">
+            <h3>Collaborative Learning</h3>
+            <p>Worked in teams on various assignments and projects, fostering teamwork and communication skills crucial
+              for the tech industry.</p>
+          </div>
         </div>
+        <p>
+          This program has prepared me for the dynamic challenges of the tech industry, instilling a mindset of
+          continuous
+          learning and innovation.
+        </p>
       </div>
-    </div>
-  </section>
-  <section class="experience-section scroll-reveal" id="experience">
-    <div class="experience-header">
-      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-4">
-        Professional Experience</h2>
-      <p class="experience-intro text-gray-400 max-w-2xl mx-auto text-lg">
-        Building modern solutions across full-stack development and enterprise platforms
-      </p>
-    </div>
-
-    <div class="bento-grid">
-      <!-- Large Card - Current Role -->
-      <div class="bento-card current-role">
-        <div class="card-header">
-          <div class="role-badge analyst">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 21H3V3"></path>
-              <path d="M18.5 7a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z"></path>
-              <path d="M5 16l4-5 5 4 6-9"></path>
-            </svg>
-            <span>Current Position</span>
-          </div>
-          <span class="duration">Aug 2025 - Present</span>
-        </div>
-
-        <h3>Junior Software Analyst</h3>
-        <div class="company-info">
-          <div class="company-name">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            Enaiya Information Technology
-          </div>
-          <div class="location">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            Patna, Bihar, India
-          </div>
-        </div>
-
-        <ul class="achievement-list">
-          <li>
-            <span class="achievement-icon">🚀</span>
-            <div>
-              <strong>SharePoint Solutions</strong>
-              <p>Designed and deployed custom SPFx components and site automation features</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">⚡</span>
-            <div>
-              <strong>Performance Optimization</strong>
-              <p>Reduced page load time by ~30% through legacy script refactoring</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">🔧</span>
-            <div>
-              <strong>Enterprise Integration</strong>
-              <p>Built data connectors and CRUD services with SQL Server & Swagger APIs</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">📱</span>
-            <div>
-              <strong>UI/UX Enhancement</strong>
-              <p>Implemented responsive designs and improved user experience across platforms</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">🔄</span>
-            <div>
-              <strong>Workflow Automation</strong>
-              <p>Developed automated workflows reducing manual processing time by 40%</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">📊</span>
-            <div>
-              <strong>Data Management</strong>
-              <p>Optimized database queries and implemented efficient data handling strategies</p>
-            </div>
-          </li>
-        </ul>
-
-        <div class="tech-stack">
-          <span class="tech-tag">SharePoint</span>
-          <span class="tech-tag">SPFx</span>
-          <span class="tech-tag">jQuery</span>
-          <span class="tech-tag">REST APIs</span>
-          <span class="tech-tag">SQL Server</span>
-        </div>
-      </div>
-
-      <!-- Medium Card - Previous Role -->
-      <div class="bento-card previous-role">
-        <div class="card-header">
-          <div class="role-badge developer">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <polyline points="16 18 22 12 16 6"></polyline>
-              <polyline points="8 6 2 12 8 18"></polyline>
-            </svg>
-            <span>Full Stack</span>
-          </div>
-          <span class="duration">Feb - Mar 2025</span>
-        </div>
-
-        <h3>Full Stack Developer</h3>
-        <div class="company-info">
-          <div class="company-name">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-              <polyline points="9 22 9 12 15 12 15 22"></polyline>
-            </svg>
-            Ice Technology Lab
-          </div>
-          <div class="location">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
-              <circle cx="12" cy="10" r="3"></circle>
-            </svg>
-            Patna, Bihar, India
-          </div>
-        </div>
-
-        <ul class="achievement-list compact">
-          <li>
-            <span class="achievement-icon">🐍</span>
-            <div>
-              <strong>Django Development</strong>
-              <p>Built full-stack web applications with Python & Django</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">🔗</span>
-            <div>
-              <strong>Integration</strong>
-              <p>Seamlessly connected frontend and backend components</p>
-            </div>
-          </li>
-          <li>
-            <span class="achievement-icon">👥</span>
-            <div>
-              <strong>Team Collaboration</strong>
-              <p>Debugged and optimized code for better performance</p>
-            </div>
-          </li>
-        </ul>
-
-        <div class="tech-stack">
-          <span class="tech-tag">Python</span>
-          <span class="tech-tag">Django</span>
-          <span class="tech-tag">HTML/CSS</span>
-          <span class="tech-tag">JavaScript</span>
-        </div>
-      </div>
-
-      <!-- Small Card - Stats -->
-      <div class="bento-card stats-card">
-        <div class="stat-item">
-          <div class="stat-number">6+</div>
-          <div class="stat-label">Months Experience</div>
-        </div>
-        <div class="stat-divider"></div>
-        <div class="stat-item">
-          <div class="stat-number">5+</div>
-          <div class="stat-label">Projects Delivered</div>
-        </div>
-      </div>
-
-      <!-- Small Card - Highlight -->
-      <div class="bento-card highlight-card">
-        <div class="highlight-icon">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-          </svg>
-        </div>
-        <h4>30% Faster</h4>
-        <p>Performance improvement achieved through optimization</p>
-      </div>
-
-      <!-- Wide Card - Skills Overview -->
-      <div class="bento-card skills-overview">
-        <h4>Core Competencies</h4>
-        <div class="skills-grid-compact">
-          <div class="skill-item">
-            <div class="skill-icon">💻</div>
-            <span>Full Stack Development</span>
-          </div>
-          <div class="skill-item">
-            <div class="skill-icon">📊</div>
-            <span>SharePoint Solutions</span>
-          </div>
-          <div class="skill-item">
-            <div class="skill-icon">⚙️</div>
-            <span>API Integration</span>
-          </div>
-          <div class="skill-item">
-            <div class="skill-icon">🎨</div>
-            <span>UI/UX Implementation</span>
-          </div>
-          <div class="skill-item">
-            <div class="skill-icon">🔒</div>
-            <span>Security & Auth</span>
-          </div>
-          <div class="skill-item">
-            <div class="skill-icon">📈</div>
-            <span>Performance Tuning</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  <section class="academic-section scroll-reveal">
-    <div class="academic-container">
+    </section>
+    <section class="timeline-section scroll-reveal">
       <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-        Academic Journey: Shivalik College of Engineering</h2>
-      <p class="text-gray-400 max-w-4xl mx-auto text-lg tracking-wide mb-8">
-        My pursuit of a Bachelor of Technology in Computer Science and Engineering at Shivalik College has provided a
-        comprehensive education,
-        covering core concepts and advanced topics in the field.
+        Educational Milestones</h2>
+      <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
+        My academic background spans across various institutions, each contributing to my comprehensive development and
+        preparing me for a career in technology.
       </p>
-      <div class="academic-grid">
-        <div class="academic-box">
-          <h3>Foundation in Computer Science</h3>
-          <p>Engaged in core computer science subjects, building a strong base in programming, data structures, and
-            algorithms.</p>
+      <div class="timeline-container">
+        <div class="timeline-item left">
+          <div class="content">
+            <h3>2021 - 2025</h3>
+            <h4>Shivalik College of Engineering, Dehradun</h4>
+            <p>Bachelor of Technology - BTech, Computer Science</p>
+          </div>
         </div>
-        <div class="academic-box">
-          <h3>Practical Project Work</h3>
-          <p>Actively participated in various projects, applying theoretical knowledge to solve real-world problems and
-            enhance practical skills.</p>
+        <div class="timeline-item right">
+          <div class="content">
+            <h3>2020 - 2021</h3>
+            <h4>Assembly of God Church, Asansol</h4>
+            <p>ISC (Indian School Certificate)</p>
+          </div>
         </div>
-        <div class="academic-box">
-          <h3>Advanced Specializations</h3>
-          <p>Explored advanced topics such as web development, database management, and software engineering principles.
-          </p>
-        </div>
-        <div class="academic-box">
-          <h3>Collaborative Learning</h3>
-          <p>Worked in teams on various assignments and projects, fostering teamwork and communication skills crucial
-            for the tech industry.</p>
+        <div class="timeline-item left">
+          <div class="content">
+            <h3>2018 - 2019</h3>
+            <h4>Assembly of God Church, Asansol</h4>
+            <p>ICSE (Indian Certificate of Secondary Education)</p>
+          </div>
         </div>
       </div>
-      <p>
-        This program has prepared me for the dynamic challenges of the tech industry, instilling a mindset of continuous
-        learning and innovation.
+      <p class="sub-heading">These educational experiences have provided me with a well-rounded academic foundation,
+        from
+        foundational schooling to specialized higher education in computer science.</p>
+    </section>
+    <section class="interests-section scroll-reveal">
+      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+        Beyond the Code: My Interests and Passions</h2>
+      <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
+        While my primary focus is on technology and computer science, I also have a range of interests that enrich my
+        life
+        and contribute to my holistic development. These passions fuel my creativity and drive for continuous learning.
       </p>
-    </div>
-  </section>
-  <section class="timeline-section scroll-reveal">
-    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-      Educational Milestones</h2>
-    <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
-      My academic background spans across various institutions, each contributing to my comprehensive development and
-      preparing me for a career in technology.
-    </p>
-    <div class="timeline-container">
-      <div class="timeline-item left">
-        <div class="content">
-          <h3>2021 - 2025</h3>
-          <h4>Shivalik College of Engineering, Dehradun</h4>
-          <p>Bachelor of Technology - BTech, Computer Science</p>
-        </div>
-      </div>
-      <div class="timeline-item right">
-        <div class="content">
-          <h3>2020 - 2021</h3>
-          <h4>Assembly of God Church, Asansol</h4>
-          <p>ISC (Indian School Certificate)</p>
-        </div>
-      </div>
-      <div class="timeline-item left">
-        <div class="content">
-          <h3>2018 - 2019</h3>
-          <h4>Assembly of God Church, Asansol</h4>
-          <p>ICSE (Indian Certificate of Secondary Education)</p>
-        </div>
-      </div>
-    </div>
-    <p class="sub-heading">These educational experiences have provided me with a well-rounded academic foundation, from
-      foundational schooling to specialized higher education in computer science.</p>
-  </section>
-  <section class="interests-section scroll-reveal">
-    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-      Beyond the Code: My Interests and Passions</h2>
-    <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
-      While my primary focus is on technology and computer science, I also have a range of interests that enrich my life
-      and contribute to my holistic development. These passions fuel my creativity and drive for continuous learning.
-    </p>
-    <div class="interests-container max-w-7xl mx-auto px-4">
-      <div class="interests-list grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="interests-container max-w-7xl mx-auto px-4">
+        <div class="interests-list grid grid-cols-1 md:grid-cols-3 gap-8">
 
-        <!-- Box 1 -->
-        <div
-          class="block text-left interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-pink-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(236,72,153,0.2)]">
+          <!-- Box 1 -->
           <div
-            class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.2)]">
-            <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3">
-              </path>
-            </svg>
+            class="block text-left interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-pink-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(236,72,153,0.2)]">
+            <div
+              class="w-16 h-16 rounded-2xl bg-gradient-to-br from-pink-500/20 to-rose-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-pink-500/30 shadow-[0_0_15px_rgba(236,72,153,0.2)]">
+              <svg class="w-8 h-8 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">
+                Listening to Music
+              </h3>
+              <p class="text-gray-400 leading-relaxed text-sm">Music is my ultimate way to unwind and find
+                inspiration.
+                Whether I'm coding or relaxing, exploring different genres keeps my creativity flowing and helps me
+                focus.
+              </p>
+            </div>
           </div>
-          <div>
-            <h3 class="text-2xl font-semibold text-white mb-3">
-              Listening to Music
-            </h3>
-            <p class="text-gray-400 leading-relaxed text-sm">Music is my ultimate way to unwind and find
-              inspiration.
-              Whether I'm coding or relaxing, exploring different genres keeps my creativity flowing and helps me focus.
-            </p>
-          </div>
-        </div>
 
-        <!-- Box 2 -->
-        <div
-          class="block text-left interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-orange-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(249,115,22,0.2)]">
+          <!-- Box 2 -->
           <div
-            class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-orange-500/30 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
-            <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-              </path>
-            </svg>
+            class="block text-left interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-orange-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(249,115,22,0.2)]">
+            <div
+              class="w-16 h-16 rounded-2xl bg-gradient-to-br from-orange-500/20 to-amber-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-orange-500/30 shadow-[0_0_15px_rgba(249,115,22,0.2)]">
+              <svg class="w-8 h-8 text-orange-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">Playing Football</h3>
+              <p class="text-gray-400 leading-relaxed text-sm">I'm an avid football player. Being on the field teaches
+                me
+                teamwork, strategy, and resilience—qualities that perfectly translate into my professional life as a
+                developer.</p>
+            </div>
           </div>
-          <div>
-            <h3 class="text-2xl font-semibold text-white mb-3">Playing Football</h3>
-            <p class="text-gray-400 leading-relaxed text-sm">I'm an avid football player. Being on the field teaches
-              me
-              teamwork, strategy, and resilience—qualities that perfectly translate into my professional life as a
-              developer.</p>
-          </div>
-        </div>
 
-        <!-- Box 3 -->
-        <div
-          class="block text-left interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-purple-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]">
+          <!-- Box 3 -->
           <div
-            class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-fuchsia-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
-            <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
-              </path>
-            </svg>
+            class="block text-left interest-box group bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 hover:border-purple-500/50 hover:bg-white/10 transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(168,85,247,0.2)]">
+            <div
+              class="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500/20 to-fuchsia-500/20 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-purple-500/30 shadow-[0_0_15px_rgba(168,85,247,0.2)]">
+              <svg class="w-8 h-8 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                  d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253">
+                </path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-2xl font-semibold text-white mb-3">Reading Novels</h3>
+              <p class="text-gray-400 leading-relaxed text-sm">Getting lost in a good novel is my favorite way to escape
+                and broaden my perspective. Reading enhances my imagination and ability to understand different
+                viewpoints.</p>
+            </div>
           </div>
-          <div>
-            <h3 class="text-2xl font-semibold text-white mb-3">Reading Novels</h3>
-            <p class="text-gray-400 leading-relaxed text-sm">Getting lost in a good novel is my favorite way to escape
-              and broaden my perspective. Reading enhances my imagination and ability to understand different
-              viewpoints.</p>
-          </div>
-        </div>
 
+        </div>
       </div>
-    </div>
-  </section>
-  <section class="contact-section scroll-reveal" id="contact">
-    <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">Get
-      in Touch</h2>
-    <p class="sub-heading text-gray-400 text-lg mb-12 max-w-2xl mx-auto">I'm currently looking for new opportunities.
-      Whether you have a question or just want to say
-      hi, my inbox is always open!</p>
+    </section>
+    <section class="contact-section scroll-reveal" id="contact">
+      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
+        Get
+        in Touch</h2>
+      <p class="sub-heading text-gray-400 text-lg mb-12 max-w-2xl mx-auto">I'm currently looking for new opportunities.
+        Whether you have a question or just want to say
+        hi, my inbox is always open!</p>
 
-    <div class="contact-container">
-      <form class="contact-form" onsubmit="sendMail(event)">
-        <div class="form-group">
-          <input type="text" id="name" name="name" required placeholder=" " maxlength="50">
-          <label for="name">Name</label>
-        </div>
-        <div class="form-group">
-          <input type="email" id="email" name="email" required placeholder=" ">
-          <label for="email">Email</label>
-        </div>
-        <div class="form-group">
-          <input type="text" id="subject" name="subject" required placeholder=" " maxlength="100">
-          <label for="subject">Subject</label>
-        </div>
-        <div class="form-group">
-          <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
-          <label for="message">Message</label>
-        </div>
-        <button type="submit"
-          class="btn btn-primary w-full mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3 px-6 rounded-full shadow-[0_4px_15px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_25px_rgba(99,102,241,0.6)] transition-all duration-300">Send
-          Message</button>
-      </form>
-    </div>
-  </section>
+      <div class="contact-container">
+        <form class="contact-form" onsubmit="sendMail(event)">
+          <div class="form-group">
+            <input type="text" id="name" name="name" required placeholder=" " maxlength="50">
+            <label for="name">Name</label>
+          </div>
+          <div class="form-group">
+            <input type="email" id="email" name="email" required placeholder=" ">
+            <label for="email">Email</label>
+          </div>
+          <div class="form-group">
+            <input type="text" id="subject" name="subject" required placeholder=" " maxlength="100">
+            <label for="subject">Subject</label>
+          </div>
+          <div class="form-group">
+            <textarea id="message" name="message" rows="5" required placeholder=" "></textarea>
+            <label for="message">Message</label>
+          </div>
+          <button type="submit"
+            class="btn btn-primary w-full mt-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold py-3 px-6 rounded-full shadow-[0_4px_15px_rgba(99,102,241,0.4)] hover:shadow-[0_6px_25px_rgba(99,102,241,0.6)] transition-all duration-300">Send
+            Message</button>
+        </form>
+      </div>
+    </section>
   </main>
 
   <footer class="footer scroll-reveal">
 
     <div class="footer-container">
       <div class="footer-socials">
-        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" width="32" height="32" loading="lazy">
+        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" target="_blank" rel="noopener"
+          aria-label="LinkedIn Profile">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn"
+            width="32" height="32" loading="lazy">
         </a>
         <a href="https://github.com/HarshKumarSinha" target="_blank" rel="noopener" aria-label="GitHub Profile">
           <!-- Assuming GitHub username or placeholder -->
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"
             class="github-icon" width="32" height="32" loading="lazy">
         </a>
-        <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener" aria-label="Instagram Profile">
+        <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener"
+          aria-label="Instagram Profile">
           <!-- Placeholder Instagram link -->
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" width="32" height="32" loading="lazy">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram"
+            width="32" height="32" loading="lazy">
         </a>
       </div>
       <p>&copy; 2026 Harsh Kumar Sinha. All rights reserved</p>
@@ -616,14 +643,16 @@
   <!-- Theme Toggle -->
   <div class="theme-wrapper">
     <div class="theme-toggle" id="themeToggle" role="group" aria-label="Theme selection">
-      <div class="theme-btn active" data-theme="system" title="System Default" role="button" aria-label="Use System Theme" tabindex="0">
+      <div class="theme-btn active" data-theme="system" title="System Default" role="button"
+        aria-label="Use System Theme" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" class="icon-system" stroke="currentColor" stroke-width="2">
           <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
           <line x1="8" y1="21" x2="16" y2="21"></line>
           <line x1="12" y1="17" x2="12" y2="21"></line>
         </svg>
       </div>
-      <div class="theme-btn" data-theme="light" title="Light Mode" role="button" aria-label="Use Light Mode" tabindex="0">
+      <div class="theme-btn" data-theme="light" title="Light Mode" role="button" aria-label="Use Light Mode"
+        tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" class="icon-sun" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -651,7 +680,8 @@
       <div class="chatbot-header bg-gradient-to-br from-indigo-500/60 to-purple-500/60 backdrop-blur-md">
         <div class="chatbot-title">
           <div class="bot-avatar-container">
-            <img src="img/chatbot-svgrepo-com.svg" alt="Bot" class="chatbot-avatar-small" width="30" height="30" loading="lazy">
+            <img src="img/chatbot-svgrepo-com.svg" alt="Bot" class="chatbot-avatar-small" width="30" height="30"
+              loading="lazy">
           </div>
           <div class="chatbot-title-text">
             <div>Harsh's Assistant</div>
@@ -670,14 +700,16 @@
         </div>
       </div>
       <div class="chatbot-footer bg-black/20 backdrop-blur-md">
-        <button id="micBtn" class="mic-btn" onclick="jarvis.toggle()" title="Activate Voice Mode" aria-label="Activate Voice Interaction">
+        <button id="micBtn" class="mic-btn" onclick="jarvis.toggle()" title="Activate Voice Mode"
+          aria-label="Activate Voice Interaction">
           <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
             <path
               d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
           </svg>
         </button>
-        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)" aria-label="Chat input field">
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)"
+          aria-label="Chat input field">
         <button class="send-btn" onclick="sendUserMessage()" aria-label="Send message">
           <svg viewBox="0 0 24 24">
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
@@ -686,7 +718,8 @@
       </div>
     </div>
     <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Toggle Chatbot">
-      <img src="img/chatbot-svgrepo-com.svg" alt="Chat Bot Icon" class="icon chatbot-avatar-large" width="60" height="60" loading="lazy">
+      <img src="img/chatbot-svgrepo-com.svg" alt="Chat Bot Icon" class="icon chatbot-avatar-large" width="60"
+        height="60" loading="lazy">
     </button>
   </div>
 
@@ -749,7 +782,7 @@
     });
     // Use a small delay for initialization to keep main thread free during load
     setTimeout(() => {
-       if (typeof emailjs !== 'undefined') emailjs.init("g0LhAM3b5QHQElm1f");
+      if (typeof emailjs !== 'undefined') emailjs.init("g0LhAM3b5QHQElm1f");
     }, 4000); // Increased delay
   </script>
 </body>
