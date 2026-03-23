@@ -1312,28 +1312,21 @@ function initFloatingNav() {
   };
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        // Remove active class from all
-        navItems.forEach((item) => item.classList.remove("active"));
-
-        // Add active class to current section link
-        const id = entry.target.getAttribute("id");
-        if (id) {
-          const activeLink = document.querySelector(
-            `.floating-nav a[href="#${id}"]`,
-          );
-          if (activeLink) {
-            activeLink.classList.add("active");
-          } else if (id === "home") {
-            // Special case for home usually being top
-            const homeLink = document.querySelector(
-              `.floating-nav a[href="#"]`,
-            );
-            if (homeLink) homeLink.classList.add("active");
+    requestAnimationFrame(() => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          navItems.forEach((item) => item.classList.remove("active"));
+          const id = entry.target.getAttribute("id");
+          if (id) {
+            const activeLink = document.querySelector(`.floating-nav a[href="#${id}"]`);
+            if (activeLink) activeLink.classList.add("active");
+            else if (id === "home") {
+              const homeLink = document.querySelector(`.floating-nav a[href="#"]`);
+              if (homeLink) homeLink.classList.add("active");
+            }
           }
         }
-      }
+      });
     });
   }, observerOptions);
 
@@ -1373,22 +1366,17 @@ function initHeroParallax() {
   if (!introSection || !heading) return;
 
   introSection.addEventListener("mousemove", (e) => {
-    // Calculate center of screen
-    const centerX = window.innerWidth / 2;
-    const centerY = window.innerHeight / 2;
-
-    // Calculate distance from center (percentage)
-    // Small factor (e.g., /50 or /100) to keep movement subtle
-    const x = (centerX - e.clientX) / 50;
-    const y = (centerY - e.clientY) / 50;
-
-    // Move heading slightly opposite to mouse
-    heading.style.transform = `translate(${x}px, ${y}px)`;
-
-    // Move subtext a bit more for depth
-    if (subtext) {
-      subtext.style.transform = `translate(${x * 1.5}px, ${y * 1.5}px)`;
-    }
+    if (introSection._throttle) return;
+    introSection._throttle = true;
+    requestAnimationFrame(() => {
+      const centerX = window.innerWidth / 2;
+      const centerY = window.innerHeight / 2;
+      const x = (centerX - e.clientX) / 50;
+      const y = (centerY - e.clientY) / 50;
+      heading.style.transform = `translate(${x}px, ${y}px)`;
+      if (subtext) subtext.style.transform = `translate(${x * 1.5}px, ${y * 1.5}px)`;
+      introSection._throttle = false;
+    });
   });
 
   // Reset on mouse leave

@@ -7,6 +7,9 @@
   <title>Harsh Sinha's Portfolio</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="preload" as="style"
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
   <link
@@ -18,11 +21,36 @@
       rel="stylesheet">
   </noscript>
 
-  <link rel="stylesheet" href="styles/main.css?v=3">
-  <link rel="stylesheet" href="styles/voice.css" media="print" onload="this.media='all'">
   <link rel="icon" href="img/Portfolio-favicon.png">
-  <link rel="stylesheet" href="styles/tailwind-output.css?v=2" media="print" onload="this.media='all'">
   <link rel="preload" as="image" href="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" fetchpriority="high">
+  
+  <!-- Critical CSS and Styles to prevent FCP/CLS issues -->
+  <style>
+    :root {
+      --bg-color: #050505;
+      --primary-color: #6366f1;
+      --secondary-color: #a855f7;
+      --text-primary: #ffffff;
+      --font-heading: "Space Grotesk", sans-serif;
+      --font-body: "Outfit", sans-serif;
+    }
+    body { background-color: var(--bg-color); margin: 0; min-height: 100vh; overflow-x: hidden; font-family: sans-serif; }
+    #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .hero-title-container { min-height: 250px; display: flex; align-items: flex-start; contain: layout size; }
+    @media (min-width: 640px) { .hero-title-container { min-height: 200px; } }
+    @media (min-width: 1024px) { .hero-title-container { min-height: 160px; } }
+    .nav-item svg { width: 24px; height: 24px; }
+    .floating-nav { contain: paint; }
+  </style>
+
+  <!-- Deferred Styles -->
+  <link rel="stylesheet" href="styles/main.css?v=5" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/tailwind-output.css?v=4" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/voice.css" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="styles/main.css?v=5">
+    <link rel="stylesheet" href="styles/tailwind-output.css?v=4">
+  </noscript>
 </head>
 
 <body>
@@ -51,14 +79,14 @@
   </div>
   <main>
     <div class="intro px-4 w-full" id="home">
-      <!-- Top Row: Full Width Heading -->
-      <div class="w-full text-left mb-8 lg:mb-4">
-        <h1 id="hero-title"
-          class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[160px] sm:min-h-[120px] md:min-h-[110px] lg:min-h-[110px]">
-          Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span
-            class="cursor text-indigo-400">|</span>
-        </h1>
-      </div>
+    <!-- Top Row: Full Width Heading with Fixed Height Container to block CLS -->
+    <div class="w-full text-left mb-8 lg:mb-4 hero-title-container">
+      <h1 id="hero-title"
+        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight">
+        Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span
+          class="cursor text-indigo-400">|</span>
+      </h1>
+    </div>
 
       <!-- Bottom Row: 2-Column Grid -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
