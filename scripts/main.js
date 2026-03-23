@@ -1124,8 +1124,8 @@ document.addEventListener("DOMContentLoaded", () => {
         new TypingEffect();
         initFloatingNav();
         initHeroParallax();
-      }, 500);
-    }, 2000); // 2s duration
+      }, 300); // Reduced delay
+    }, 750); // Reduced from 2s to 0.75s for better LCP
   } else {
     // Fallback if preloader missing
     new TypingEffect();
