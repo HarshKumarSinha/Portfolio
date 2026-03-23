@@ -9,18 +9,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="preload" as="style"
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=optional">
+  
+  <!-- Preload Critical Fonts -->
+  <link rel="preload" href="https://fonts.gstatic.com/s/spacegrotesk/v16/V8mQoQDjQSkFtoMM3T6r8E7mF71Q-g.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="https://fonts.gstatic.com/s/outfit/v11/Q_L99740S85mP9Nkb96l-A.woff2" as="font" type="font/woff2" crossorigin>
+
   <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=optional"
-    rel="stylesheet" media="print" onload="this.media='all'">
-  <noscript>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet">
-  </noscript>
+    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
 
   <link rel="icon" href="img/Portfolio-favicon.png">
   <link rel="preload" as="image" href="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" fetchpriority="high">
@@ -35,30 +31,58 @@
       --font-heading: "Space Grotesk", sans-serif;
       --font-body: "Outfit", sans-serif;
     }
-    body { background-color: var(--bg-color); margin: 0; min-height: 100vh; overflow-x: hidden;
-      font-family: "Outfit", ui-sans-serif, system-ui, -apple-system, sans-serif;
-      font-size: 16px; line-height: 1.6; color: #fff; }
+    
+    /* Pre-calculate and reserve space for hidden elements */
+    body { 
+      background-color: var(--bg-color); 
+      margin: 0; 
+      min-height: 100vh; 
+      overflow-x: hidden;
+      font-family: var(--font-body), ui-sans-serif, system-ui, -apple-system, sans-serif;
+      font-size: 16px; 
+      line-height: 1.6; 
+      color: #fff; 
+    }
+
     #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     
-    /* Critical hero layout - prevents CLS from Tailwind loading */
-    main { display: block; }
+    /* Critical hero layout - prevents CLS from Tailwind failing/loading late */
     .intro { 
       padding-left: 1rem; padding-right: 1rem;
       width: 100%; box-sizing: border-box;
       max-width: 1400px; margin: 0 auto;
       padding-top: 5rem; padding-bottom: 3rem;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
+
+    /* Reserve EXACT height for the title to lock layout */
     .hero-title-container { 
-      min-height: 250px; width: 100%; display: flex; align-items: flex-start;
-      contain: layout size; margin-bottom: 2rem;
+      min-height: 220px; /* Mobile height for 3 lines */
+      width: 100%; 
+      display: flex; 
+      align-items: flex-start;
+      contain: layout size; 
+      margin-bottom: 2rem;
     }
-    @media (min-width: 640px)  { .hero-title-container { min-height: 200px; } }
-    @media (min-width: 1024px) { .hero-title-container { min-height: 160px; } }
+    @media (min-width: 640px)  { .hero-title-container { min-height: 180px; } } /* 2 lines */
+    @media (min-width: 1024px) { .hero-title-container { min-height: 160px; } } /* 1-2 lines */
+
     #hero-title { 
-      font-size: clamp(2.25rem, 5vw, 4.5rem); font-weight: 700;
-      line-height: 1.2; margin: 0; width: 100%;
+      font-size: clamp(2.25rem, 8vw, 4.5rem); 
+      font-weight: 700;
+      line-height: 1.1; 
+      margin: 0; 
+      width: 100%;
+      font-family: var(--font-heading);
     }
     
+    .intro-content p {
+      opacity: 1; /* Restore default visibility */
+    }
+
     /* Hero bottom row grid - stable before Tailwind */
     .hero-grid { 
       display: grid; grid-template-columns: 1fr;
@@ -66,17 +90,27 @@
     }
     @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
     
-    /* Intro image - reserve space to prevent shift */
-    .intro-image { display: flex; justify-content: center; }
-    @media (min-width: 1024px) { .intro-image { justify-content: flex-end; } }
-    .profile-img { width: 320px; height: 320px; object-fit: cover; border-radius: 50%; display: block; }
-    @media (max-width: 768px) { .profile-img { width: 256px; height: 256px; } }
+    .profile-img-container {
+      width: 256px; height: 256px;
+    }
+    @media (min-width: 768px) { .profile-img-container { width: 320px; height: 320px; } }
     
-    /* Cursor blink */
-    .cursor { display: inline-block; width: 3px; height: 1.1em; background: #818cf8; animation: blink 1s infinite; margin-left: 4px; vertical-align: middle; }
+    .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
+    
+    /* Cursor stability */
+    .cursor { 
+      display: inline-block; 
+      width: 3px; 
+      height: 1.05em; 
+      background: #818cf8; 
+      animation: blink 1s infinite; 
+      margin-left: 4px; 
+      vertical-align: middle; 
+      flex-shrink: 0;
+    }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
-    
-    /* Floating nav - contain paint to prevent surrounding layout shifts */
+
+    /* Performance optimization: contain paint for elements that stay in view */
     .floating-nav { contain: paint; position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 1000; }
     
     /* Interest icons - stable dimensions before Tailwind loads */
@@ -159,7 +193,7 @@
 
         <!-- Right Column: Glass Profile Card -->
         <div class="intro-image flex justify-center lg:justify-end">
-          <div class="relative group">
+          <div class="relative group profile-img-container">
             <!-- Animated Glow Behind -->
             <div
               class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
@@ -167,7 +201,7 @@
 
             <!-- Glass Container -->
             <div
-              class="relative w-64 h-64 md:w-80 md:h-80 bg-white/5 backdrop-blur-md rounded-full border-[2px] border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.3)] transition-all duration-500 overflow-hidden flex items-center justify-center group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
+              class="relative w-full h-full bg-white/5 backdrop-blur-md rounded-full border-[2px] border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.3)] transition-all duration-500 overflow-hidden flex items-center justify-center group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
               <!-- Profile Image -->
               <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" alt="Harsh Sinha"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 profile-img"

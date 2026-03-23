@@ -66,23 +66,17 @@ hiddenElements.forEach((el) => observer.observe(el));
 
 // Hero Section 3D Animations via Anime.js
 document.addEventListener("DOMContentLoaded", () => {
-  // Set initial 3D states so they don't abruptly snap
+  // 3D properties that CSS doesn't handle as cleanly for complex entrance
   anime.set(".intro h1", {
-    opacity: 0,
-    translateY: 50,
     translateZ: 150,
     rotateX: -20,
   });
-  anime.set(".intro p", { opacity: 0, translateY: 30 });
   anime.set(".social-links .btn", {
     opacity: 0,
     translateY: 20,
     translateZ: 50,
   });
-  anime.set(".intro-image", {
-    opacity: 0,
-    scale: 0.8,
-    translateX: 50,
+  anime.set(".profile-img-container", {
     rotateY: 20,
   });
 
@@ -93,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
     .add({
       targets: ".intro h1",
       opacity: [0, 1],
-      translateY: [50, 0],
+      translateY: [30, 0], // Matches CSS initial state
       translateZ: [150, 0],
       rotateX: [-20, 0],
       duration: 1500,
@@ -103,7 +97,7 @@ document.addEventListener("DOMContentLoaded", () => {
       {
         targets: ".intro p",
         opacity: [0, 1],
-        translateY: [30, 0],
+        translateY: [20, 0], // Matches CSS initial state
         duration: 1200,
       },
       "-=1000",
@@ -121,12 +115,12 @@ document.addEventListener("DOMContentLoaded", () => {
     )
     .add(
       {
-        targets: ".intro-image",
-        opacity: [0, 1],
-        scale: [0.8, 1],
-        translateX: [50, 0],
-        rotateY: [20, 0],
-        duration: 1500,
+        targets: ".profile-img-container",
+        opacity: [1, 1], // Force full visibility
+        scale: [1, 1],
+        translateX: [0, 0],
+        rotateY: [0, 0],
+        duration: 1, // Near instant
       },
       "-=1200",
     );
@@ -1197,55 +1191,25 @@ class ThemeManager {
 
 // Initialize Theme Manager & Preloader
 document.addEventListener("DOMContentLoaded", () => {
-  new ThemeManager();
+    new ThemeManager();
 
-  // Preloader Logic
-  const preloader = document.getElementById("preloader");
-  const bar = document.querySelector(".loader-progress-bar");
-
-  if (preloader && bar) {
-    // Simulate loading time roughly matching animation
-    const isMobile = window.innerWidth <= 768;
-      setTimeout(() => {
-        document.body.classList.add("loaded");
-        // Start other animations only after loader finishes
+    // Preloader Logic
+    const preloader = document.getElementById("preloader");
+    if (preloader) {
         setTimeout(() => {
-          initVanillaTilt(); // Initialize tilt only after page load
-          new TypingEffect();
-          initFloatingNav();
-          initHeroParallax();
-          
-          // Load Three.js ONLY on scroll/interaction to eliminate 86KiB unused JS
-          let threeLoaded = false;
-          const loadThree = async () => {
-            if (threeLoaded) return;
-            threeLoaded = true;
-            try {
-              await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js");
-              await loadScript("scripts/background.js");
-            } catch (e) { console.error("3D Background Error:", e); }
-          };
-
-          // Trigger on first scroll or after 5s idle (whichever comes first)
-          const onInteraction = () => {
-            loadThree();
-            window.removeEventListener("scroll", onInteraction, { passive: true });
-            window.removeEventListener("mousemove", onInteraction);
-            window.removeEventListener("touchstart", onInteraction, { passive: true });
-          };
-          window.addEventListener("scroll", onInteraction, { passive: true });
-          window.addEventListener("mousemove", onInteraction);
-          window.addEventListener("touchstart", onInteraction, { passive: true });
-          // Fallback: load after 6s even if no interaction
-          setTimeout(loadThree, 6000);
-        }, isMobile ? 500 : 100); // Reduced delay for better LCP
-      }, 400); // Reduced from 750ms for better responsiveness
-  } else {
-    // Fallback if preloader missing
-    new TypingEffect();
-    initFloatingNav();
-    initHeroParallax();
-  }
+            document.body.classList.add("loaded");
+            setTimeout(() => {
+                initVanillaTilt();
+                new TypingEffect();
+                initFloatingNav();
+                // initHeroParallax(); // DISABLED
+            }, 100);
+        }, 400);
+    } else {
+        new TypingEffect();
+        initFloatingNav();
+        // initHeroParallax(); // DISABLED
+    }
 });
 
 // Typing Effect
@@ -1373,8 +1337,8 @@ function initFloatingNav() {
   });
 }
 
-// Hero Parallax Effect
-function initHeroParallax() {
+  // Hero Parallax Effect - Removed per user request
+  /*
   const introSection = document.querySelector(".intro");
   const heading = document.querySelector(".intro h1");
   const subtext = document.querySelector(".intro p");
@@ -1405,10 +1369,10 @@ function initHeroParallax() {
       subtext.style.transform = `translate(0, 0)`;
     }
 
-    // Remove transition after it finishes so mousemove is snappy again
     setTimeout(() => {
       heading.style.transition = "";
       if (subtext) subtext.style.transition = "";
     }, 500);
   });
-}
+  */
+
