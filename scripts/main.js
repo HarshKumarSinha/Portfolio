@@ -1215,13 +1215,29 @@ document.addEventListener("DOMContentLoaded", () => {
           initFloatingNav();
           initHeroParallax();
           
-          // Lazy load the heaviest assets last
-          setTimeout(async () => {
+          // Load Three.js ONLY on scroll/interaction to eliminate 86KiB unused JS
+          let threeLoaded = false;
+          const loadThree = async () => {
+            if (threeLoaded) return;
+            threeLoaded = true;
             try {
               await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js");
               await loadScript("scripts/background.js");
             } catch (e) { console.error("3D Background Error:", e); }
-          }, isMobile ? 3000 : 500); 
+          };
+
+          // Trigger on first scroll or after 5s idle (whichever comes first)
+          const onInteraction = () => {
+            loadThree();
+            window.removeEventListener("scroll", onInteraction, { passive: true });
+            window.removeEventListener("mousemove", onInteraction);
+            window.removeEventListener("touchstart", onInteraction, { passive: true });
+          };
+          window.addEventListener("scroll", onInteraction, { passive: true });
+          window.addEventListener("mousemove", onInteraction);
+          window.addEventListener("touchstart", onInteraction, { passive: true });
+          // Fallback: load after 6s even if no interaction
+          setTimeout(loadThree, 6000);
         }, isMobile ? 500 : 100); // Reduced delay for better LCP
       }, 400); // Reduced from 750ms for better responsiveness
   } else {
