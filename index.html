@@ -11,9 +11,9 @@
     href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="styles/main.css?v=2">
-  <link rel="stylesheet" href="styles/voice.css">
+  <link rel="stylesheet" href="styles/voice.css" media="print" onload="this.media='all'">
   <link rel="icon" href="img/Portfolio-favicon.png">
-  <link rel="stylesheet" href="styles/tailwind-output.css?v=2">
+  <link rel="stylesheet" href="styles/tailwind-output.css?v=2" media="print" onload="this.media='all'">
   <link rel="preload" as="image" href="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).png" fetchpriority="high">
 </head>
 
@@ -44,8 +44,8 @@
   <div class="intro px-4 w-full" id="home">
     <!-- Top Row: Full Width Heading -->
     <div class="w-full text-left mb-8 lg:mb-4">
-      <h1
-        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[1.2em]">
+      <h1 id="hero-title"
+        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[140px] md:min-h-[auto]">
         Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span class="cursor text-indigo-400">|</span>
       </h1>
     </div>
@@ -735,8 +735,6 @@
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
-  <script src="scripts/background.js" defer></script>
   <script src="scripts/main.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>

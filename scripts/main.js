@@ -1201,6 +1201,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   if (preloader && bar) {
     // Simulate loading time roughly matching animation
+    const isMobile = window.innerWidth <= 768;
     setTimeout(() => {
       document.body.classList.add("loaded");
       // Start other animations only after loader finishes
@@ -1209,7 +1210,15 @@ document.addEventListener("DOMContentLoaded", () => {
         new TypingEffect();
         initFloatingNav();
         initHeroParallax();
-      }, 300); // Reduced delay
+        
+        // Lazy load the heaviest assets last
+        setTimeout(async () => {
+          try {
+            await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js");
+            await loadScript("scripts/background.js");
+          } catch (e) { console.error("3D Background Error:", e); }
+        }, isMobile ? 3000 : 500); 
+      }, isMobile ? 2000 : 300); // Drastically delay on mobile to keep thread free
     }, 750); // Reduced from 2s to 0.75s for better LCP
   } else {
     // Fallback if preloader missing

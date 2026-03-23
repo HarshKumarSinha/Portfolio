@@ -35,8 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
   // --- PARTICLES WITH ANIME.JS MORPHING ---
+  const isMobileDevice = window.innerWidth <= 768;
   const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 500; // Reduced count for better performance
+  const particlesCount = isMobileDevice ? 200 : 500; // Drastically reduced for mobile performance
 
   // Position Arrays for Morphing
   const randomPos = new Float32Array(particlesCount * 3);
