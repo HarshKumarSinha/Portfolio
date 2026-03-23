@@ -475,14 +475,14 @@ function updateDynamicKnowledgeBase() {
     // 1. Update Summary from Intro
     const introParams = document.querySelector(".intro p");
     if (introParams) {
-      knowledgeBase.summary = `<b>Quick Summary:</b><br>${introParams.innerText.trim()}`;
+      knowledgeBase.summary = `<b>Quick Summary:</b><br>${introParams.textContent.trim()}`;
     }
 
     // 2. Update About
     const aboutSection = document.querySelector(".about");
     if (aboutSection) {
       const texts = Array.from(aboutSection.querySelectorAll("p"))
-        .map((p) => p.innerText.trim())
+        .map((p) => p.textContent.trim())
         .filter((text) => text.length > 0)
         .join("<br><br>");
       if (texts) knowledgeBase.about = texts;
@@ -493,7 +493,7 @@ function updateDynamicKnowledgeBase() {
     if (skillsGrid) {
       let skillsList = [];
       skillsGrid.querySelectorAll(".skill").forEach((skill) => {
-        const title = skill.querySelector("h3")?.innerText.trim();
+        const title = skill.querySelector("h3")?.textContent.trim();
         if (title) skillsList.push(title);
       });
 
@@ -501,7 +501,7 @@ function updateDynamicKnowledgeBase() {
       const compactSkills = document.querySelectorAll(
         ".skills-overview .skill-item span",
       );
-      compactSkills.forEach((s) => skillsList.push(s.innerText.trim()));
+      compactSkills.forEach((s) => skillsList.push(s.textContent.trim()));
 
       // Unique skills
       skillsList = [...new Set(skillsList)];
@@ -519,14 +519,14 @@ function updateDynamicKnowledgeBase() {
       const cards = expSection.querySelectorAll(".bento-card");
 
       cards.forEach((card) => {
-        const duration = card.querySelector(".duration")?.innerText.trim();
+        const duration = card.querySelector(".duration")?.textContent.trim();
         if (duration) {
-          const role = card.querySelector("h3")?.innerText.trim();
+          const role = card.querySelector("h3")?.textContent.trim();
           // Get company name, removing extra whitespace from SVG/newlines
           let company =
             card
               .querySelector(".company-name")
-              ?.innerText.replace(/\s+/g, " ")
+              ?.textContent.replace(/\s+/g, " ")
               .trim() || "";
 
           expHTML += `• <b>${role}</b> @ ${company} (${duration})<br>`;
@@ -536,8 +536,8 @@ function updateDynamicKnowledgeBase() {
             ".achievement-list li div",
           );
           achievements.forEach((ach) => {
-            const title = ach.querySelector("strong")?.innerText.trim();
-            const desc = ach.querySelector("p")?.innerText.trim();
+            const title = ach.querySelector("strong")?.textContent.trim();
+            const desc = ach.querySelector("p")?.textContent.trim();
             if (title) {
               projectsHTML += `• <b>${title}</b>: ${desc}<br>`;
             }
@@ -554,9 +554,9 @@ function updateDynamicKnowledgeBase() {
       let eduHTML = "<b>Education History:</b><br>";
       const items = timeline.querySelectorAll(".timeline-item .content");
       items.forEach((item) => {
-        const year = item.querySelector("h3")?.innerText.trim();
-        const school = item.querySelector("h4")?.innerText.trim();
-        const degree = item.querySelector("p")?.innerText.trim();
+        const year = item.querySelector("h3")?.textContent.trim();
+        const school = item.querySelector("h4")?.textContent.trim();
+        const degree = item.querySelector("p")?.textContent.trim();
         eduHTML += `• <b>${school}</b>: ${degree} (${year})<br>`;
       });
       knowledgeBase.education = eduHTML;
@@ -582,8 +582,12 @@ function updateDynamicKnowledgeBase() {
   }
 }
 
-// Run update on load
-updateDynamicKnowledgeBase();
+// Run update on load when idle to keep thread free for FCP/LCP
+if ('requestIdleCallback' in window) {
+  requestIdleCallback(() => updateDynamicKnowledgeBase(), { timeout: 4000 });
+} else {
+  setTimeout(() => updateDynamicKnowledgeBase(), 4000);
+}
 
 function toggleChatbot() {
   chatbotWidget.classList.toggle("active");
@@ -1202,24 +1206,24 @@ document.addEventListener("DOMContentLoaded", () => {
   if (preloader && bar) {
     // Simulate loading time roughly matching animation
     const isMobile = window.innerWidth <= 768;
-    setTimeout(() => {
-      document.body.classList.add("loaded");
-      // Start other animations only after loader finishes
       setTimeout(() => {
-        initVanillaTilt(); // Initialize tilt only after page load
-        new TypingEffect();
-        initFloatingNav();
-        initHeroParallax();
-        
-        // Lazy load the heaviest assets last
-        setTimeout(async () => {
-          try {
-            await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js");
-            await loadScript("scripts/background.js");
-          } catch (e) { console.error("3D Background Error:", e); }
-        }, isMobile ? 3000 : 500); 
-      }, isMobile ? 2000 : 300); // Drastically delay on mobile to keep thread free
-    }, 750); // Reduced from 2s to 0.75s for better LCP
+        document.body.classList.add("loaded");
+        // Start other animations only after loader finishes
+        setTimeout(() => {
+          initVanillaTilt(); // Initialize tilt only after page load
+          new TypingEffect();
+          initFloatingNav();
+          initHeroParallax();
+          
+          // Lazy load the heaviest assets last
+          setTimeout(async () => {
+            try {
+              await loadScript("https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js");
+              await loadScript("scripts/background.js");
+            } catch (e) { console.error("3D Background Error:", e); }
+          }, isMobile ? 3000 : 500); 
+        }, isMobile ? 500 : 100); // Reduced delay for better LCP
+      }, 400); // Reduced from 750ms for better responsiveness
   } else {
     // Fallback if preloader missing
     new TypingEffect();

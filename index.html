@@ -5,12 +5,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Harsh Sinha's Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-    rel="stylesheet">
-  <link rel="stylesheet" href="styles/main.css?v=2">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+  <noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  </noscript>
+  
+  <link rel="stylesheet" href="styles/main.css?v=3">
   <link rel="stylesheet" href="styles/voice.css" media="print" onload="this.media='all'">
   <link rel="icon" href="img/Portfolio-favicon.png">
   <link rel="stylesheet" href="styles/tailwind-output.css?v=2" media="print" onload="this.media='all'">
@@ -46,7 +49,7 @@
     <!-- Top Row: Full Width Heading -->
     <div class="w-full text-left mb-8 lg:mb-4">
       <h1 id="hero-title"
-        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[140px] md:min-h-[auto]">
+        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight flex flex-wrap min-h-[160px] sm:min-h-[120px] md:min-h-[110px] lg:min-h-[110px]">
         Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span class="cursor text-indigo-400">|</span>
       </h1>
     </div>
@@ -122,7 +125,7 @@
 
       <div class="skills-grid">
         <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="48" height="48" loading="lazy" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" width="48" height="48" loading="lazy" decoding="async" />
           <div>
             <h3>Python Programming</h3>
             <p>Extensive experience in Python for scripting, web development, and data manipulation.</p>
@@ -130,7 +133,7 @@
         </div>
 
         <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" loading="lazy" width="48" height="48" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" loading="lazy" width="48" height="48" decoding="async" />
           <div>
             <h3>Django Framework</h3>
             <p>Proficient in building robust and scalable web applications using the Django framework.</p>
@@ -138,7 +141,7 @@
         </div>
 
         <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy" width="48" height="48" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy" width="48" height="48" decoding="async" />
           <div>
             <h3>Java Development</h3>
             <p>Solid understanding of Java for object-oriented programming and application development.</p>
@@ -147,7 +150,7 @@
 
         <div class="skill">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg"
-            alt="jQuery" loading="lazy" width="48" height="48" />
+            alt="jQuery" loading="lazy" width="48" height="48" decoding="async" />
           <div>
             <h3>jQuery</h3>
             <p>Proficient in simplifying HTML document traversal, event handling, and animation using jQuery.</p>
@@ -157,7 +160,7 @@
         <div class="skill">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg/1280px-Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg.png?20190925170659"
-            alt="SharePoint" loading="lazy" width="48" height="48" />
+            alt="SharePoint" loading="lazy" width="48" height="48" decoding="async" />
           <div>
             <h3>SharePoint</h3>
             <p>Experience in managing and configuring SharePoint for document management and team collaboration
@@ -167,7 +170,7 @@
 
         <div class="skill">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-            alt="Web Technologies" loading="lazy" width="48" height="48" />
+            alt="Web Technologies" loading="lazy" width="48" height="48" decoding="async" />
           <div>
             <h3>Frontend Technologies</h3>
             <p>Adept in creating responsive and interactive web interfaces using HTML, CSS, JavaScript, and Bootstrap 5.
@@ -578,16 +581,16 @@
     <div class="footer-container">
       <div class="footer-socials">
         <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn" width="32" height="32" loading="lazy">
         </a>
         <a href="https://github.com/HarshKumarSinha" target="_blank" rel="noopener" aria-label="GitHub Profile">
           <!-- Assuming GitHub username or placeholder -->
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"
-            class="github-icon">
+            class="github-icon" width="32" height="32" loading="lazy">
         </a>
         <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener" aria-label="Instagram Profile">
           <!-- Placeholder Instagram link -->
-          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram" width="32" height="32" loading="lazy">
         </a>
       </div>
       <p>&copy; 2026 Harsh Kumar Sinha. All rights reserved</p>
@@ -648,7 +651,7 @@
       <div class="chatbot-header bg-gradient-to-br from-indigo-500/60 to-purple-500/60 backdrop-blur-md">
         <div class="chatbot-title">
           <div class="bot-avatar-container">
-            <img src="img/chatbot-svgrepo-com.svg" alt="Bot" class="chatbot-avatar-small">
+            <img src="img/chatbot-svgrepo-com.svg" alt="Bot" class="chatbot-avatar-small" width="30" height="30" loading="lazy">
           </div>
           <div class="chatbot-title-text">
             <div>Harsh's Assistant</div>
@@ -683,7 +686,7 @@
       </div>
     </div>
     <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Toggle Chatbot">
-      <img src="img/chatbot-svgrepo-com.svg" alt="Chat Bot Icon" class="icon chatbot-avatar-large">
+      <img src="img/chatbot-svgrepo-com.svg" alt="Chat Bot Icon" class="icon chatbot-avatar-large" width="60" height="60" loading="lazy">
     </button>
   </div>
 
