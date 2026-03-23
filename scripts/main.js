@@ -1,6 +1,9 @@
-// Set up PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc =
-  "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+function initPDFWorker() {
+  if (typeof pdfjsLib !== 'undefined') {
+    pdfjsLib.GlobalWorkerOptions.workerSrc =
+      "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+  }
+}
 
 // Advanced 3D Intersection Observer using Anime.js
 const observer = new IntersectionObserver(
@@ -297,6 +300,7 @@ function openResume(event) {
 }
 
 function renderMobilePDF(url) {
+  initPDFWorker();
   const loadingTask = pdfjsLib.getDocument(url);
   loadingTask.promise.then(
     function (pdf) {
