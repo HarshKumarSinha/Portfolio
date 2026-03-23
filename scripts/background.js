@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- PARTICLES WITH ANIME.JS MORPHING ---
   const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = 1500; // Increased count for better shapes
+  const particlesCount = 500; // Reduced count for better performance
 
   // Position Arrays for Morphing
   const randomPos = new Float32Array(particlesCount * 3);
