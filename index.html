@@ -129,7 +129,7 @@
         </div>
 
         <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" loading="lazy" />
           <div>
             <h3>Django Framework</h3>
             <p>Proficient in building robust and scalable web applications using the Django framework.</p>
@@ -137,7 +137,7 @@
         </div>
 
         <div class="skill">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" />
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy" />
           <div>
             <h3>Java Development</h3>
             <p>Solid understanding of Java for object-oriented programming and application development.</p>
@@ -146,7 +146,7 @@
 
         <div class="skill">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg"
-            alt="jQuery" />
+            alt="jQuery" loading="lazy" />
           <div>
             <h3>jQuery</h3>
             <p>Proficient in simplifying HTML document traversal, event handling, and animation using jQuery.</p>
@@ -156,7 +156,7 @@
         <div class="skill">
           <img
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg/1280px-Microsoft_Office_SharePoint_%282019%E2%80%932025%29.svg.png?20190925170659"
-            alt="SharePoint" />
+            alt="SharePoint" loading="lazy" />
           <div>
             <h3>SharePoint</h3>
             <p>Experience in managing and configuring SharePoint for document management and team collaboration
@@ -166,7 +166,7 @@
 
         <div class="skill">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-            alt="Web Technologies" />
+            alt="Web Technologies" loading="lazy" />
           <div>
             <h3>Frontend Technologies</h3>
             <p>Adept in creating responsive and interactive web interfaces using HTML, CSS, JavaScript, and Bootstrap 5.
@@ -732,68 +732,12 @@
     </a>
   </nav>
 
-  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
-  <script type="text/javascript">
-    // Initialize VanillaTilt on load
-    document.addEventListener("DOMContentLoaded", function () {
-      // Bento Cards
-      VanillaTilt.init(document.querySelectorAll(".bento-card"), {
-        max: 5,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.2,
-        scale: 1.02,
-        gyroscope: true,
-      });
-
-      // Skill Cards
-      VanillaTilt.init(document.querySelectorAll(".skill"), {
-        max: 8,
-        speed: 400,
-        glare: true,
-        "max-glare": 0.1,
-        scale: 1.05
-      });
-
-      // Interest Boxes
-      VanillaTilt.init(document.querySelectorAll(".interest-box"), {
-        max: 5,
-        speed: 400,
-        scale: 1.02
-      });
-
-      // Academic Box
-      VanillaTilt.init(document.querySelectorAll(".academic-box"), {
-        max: 5,
-        speed: 400,
-        scale: 1.02
-      });
-
-      // Timeline Items (Educational Milestones)
-      VanillaTilt.init(document.querySelectorAll(".timeline-item .content"), {
-        max: 5,
-        speed: 400,
-        scale: 1.02,
-        glare: true,
-        "max-glare": 0.1
-      });
-
-      // Contact Container
-      VanillaTilt.init(document.querySelectorAll(".contact-container"), {
-        max: 3,
-        speed: 400,
-        scale: 1.01,
-        glare: true,
-        "max-glare": 0.05
-      });
-    });
-  </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script src="scripts/background.js"></script>
-  <script src="scripts/main.js"></script>
+  <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
+  <script src="scripts/background.js" defer></script>
+  <script src="scripts/main.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
   <script type="text/javascript">
@@ -803,7 +747,7 @@
     // Use a small delay for initialization to keep main thread free during load
     setTimeout(() => {
        if (typeof emailjs !== 'undefined') emailjs.init("g0LhAM3b5QHQElm1f");
-    }, 3000);
+    }, 4000); // Increased delay
   </script>
 </body>
 

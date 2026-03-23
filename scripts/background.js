@@ -322,40 +322,39 @@ document.addEventListener("DOMContentLoaded", () => {
   // 4. Smooth Mouse Parallax
   const windowHalfX = window.innerWidth / 2;
   const windowHalfY = window.innerHeight / 2;
+  let targetRotationX = 0;
+  let targetRotationY = 0;
 
   document.addEventListener("mousemove", (event) => {
     // Calculate normalized mouse coordinates
-    const mouseX = (event.clientX - windowHalfX) * 0.001;
-    const mouseY = (event.clientY - windowHalfY) * 0.001;
-
-    // Tween the wrapper group, leaving internal particle rotation intact
-    anime({
-      targets: mouseGroup.rotation,
-      x: mouseY,
-      y: mouseX,
-      duration: 2000,
-      easing: "easeOutCirc",
-    });
+    targetRotationY = (event.clientX - windowHalfX) * 0.001;
+    targetRotationX = (event.clientY - windowHalfY) * 0.001;
   });
 
   // 5. Immersive Scroll Dive
+  let targetCameraY = 0;
+  let targetCameraZ = 20;
+
   window.addEventListener("scroll", () => {
     // Get total scrollable distance
     const scrollMax = document.body.scrollHeight - window.innerHeight;
     const scrollPercent = window.scrollY / scrollMax;
 
-    // Tween camera to fly IN to the particles and pan down
-    anime({
-      targets: camera.position,
-      y: -scrollPercent * 15,
-      z: 20 - scrollPercent * 25, // Dive deep through the stars
-      duration: 1000,
-      easing: "easeOutQuart",
-    });
+    // Set target positions for the tick loop to interpolate
+    targetCameraY = -scrollPercent * 15;
+    targetCameraZ = 20 - scrollPercent * 25;
   });
 
-  // 6. Tick Loop (Now just renders, physics handled perfectly by Anime.js)
+  // 6. Tick Loop (Now handles smooth interpolation for mouse and scroll)
   const tick = () => {
+    // Smooth interpolation for mouse parallax (Lerp)
+    mouseGroup.rotation.x += (targetRotationX - mouseGroup.rotation.x) * 0.05;
+    mouseGroup.rotation.y += (targetRotationY - mouseGroup.rotation.y) * 0.05;
+
+    // Smooth interpolation for scroll dive
+    camera.position.y += (targetCameraY - camera.position.y) * 0.05;
+    camera.position.z += (targetCameraZ - camera.position.z) * 0.05;
+
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
   };

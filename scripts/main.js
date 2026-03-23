@@ -184,6 +184,72 @@ let canvas = document.getElementById("resumeCanvas");
 let ctx = canvas.getContext("2d");
 let isMobileRendered = false;
 
+// Function to load scripts dynamically
+async function loadScript(url) {
+  return new Promise((resolve, reject) => {
+    const script = document.createElement('script');
+    script.src = url;
+    script.onload = resolve;
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+function initVanillaTilt() {
+  if (typeof VanillaTilt === 'undefined') return;
+  
+  // Bento Cards
+  VanillaTilt.init(document.querySelectorAll(".bento-card"), {
+    max: 5,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.2,
+    scale: 1.02,
+    gyroscope: true,
+  });
+
+  // Skill Cards
+  VanillaTilt.init(document.querySelectorAll(".skill"), {
+    max: 8,
+    speed: 400,
+    glare: true,
+    "max-glare": 0.1,
+    scale: 1.05
+  });
+
+  // Interest Boxes
+  VanillaTilt.init(document.querySelectorAll(".interest-box"), {
+    max: 5,
+    speed: 400,
+    scale: 1.02
+  });
+
+  // Academic Box
+  VanillaTilt.init(document.querySelectorAll(".academic-box"), {
+    max: 5,
+    speed: 400,
+    scale: 1.02
+  });
+
+  // Timeline Items (Educational Milestones)
+  VanillaTilt.init(document.querySelectorAll(".timeline-item .content"), {
+    max: 5,
+    speed: 400,
+    scale: 1.02,
+    glare: true,
+    "max-glare": 0.1
+  });
+
+  // Contact Container
+  VanillaTilt.init(document.querySelectorAll(".contact-container"), {
+    max: 3,
+    speed: 400,
+    scale: 1.01,
+    glare: true,
+    "max-glare": 0.05
+  });
+}
+
 function openResume(event) {
   event.preventDefault();
 
@@ -200,8 +266,22 @@ function openResume(event) {
     frame.style.display = "none";
     mobileContainer.style.display = "block";
 
-    // Render PDF only if not already rendered
-    if (!isMobileRendered) {
+    // Detect if PDF.js is loaded, else load it dynamically
+    if (typeof pdfjsLib === 'undefined') {
+        const loadingMsg = document.createElement('div');
+        loadingMsg.id = "pdfLoadingMsg";
+        loadingMsg.innerText = "Loading PDF viewer...";
+        loadingMsg.style.color = "white";
+        loadingMsg.style.textAlign = "center";
+        loadingMsg.style.padding = "20px";
+        mobileContainer.appendChild(loadingMsg);
+
+        loadScript("https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js").then(() => {
+            const msg = document.getElementById("pdfLoadingMsg");
+            if (msg) msg.remove();
+            if (!isMobileRendered) renderMobilePDF("document/Harsh_Kumar_Sinha_Resume.pdf");
+        });
+    } else if (!isMobileRendered) {
       renderMobilePDF("document/Harsh_Kumar_Sinha_Resume.pdf");
     }
   } else {
@@ -1121,6 +1201,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.body.classList.add("loaded");
       // Start other animations only after loader finishes
       setTimeout(() => {
+        initVanillaTilt(); // Initialize tilt only after page load
         new TypingEffect();
         initFloatingNav();
         initHeroParallax();
