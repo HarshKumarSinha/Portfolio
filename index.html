@@ -19,11 +19,11 @@
 
 <body>
   <!-- 3D Background Canvas -->
-  <canvas id="canvas3d"></canvas>
+  <canvas id="canvas3d" aria-hidden="true"></canvas>
 
   <!-- Preloader -->
-  <!-- Preloader -->
-  <div id="preloader">
+  <div id="preloader" role="status" aria-label="Loading">
+
     <div class="loader-content">
       <div class="geometric-loader">
         <div class="cube-wrapper">
@@ -41,7 +41,8 @@
       </div>
     </div>
   </div>
-  <div class="intro px-4 w-full" id="home">
+  <main>
+    <div class="intro px-4 w-full" id="home">
     <!-- Top Row: Full Width Heading -->
     <div class="w-full text-left mb-8 lg:mb-4">
       <h1 id="hero-title"
@@ -570,20 +571,21 @@
       </form>
     </div>
   </section>
+  </main>
 
   <footer class="footer scroll-reveal">
 
     <div class="footer-container">
       <div class="footer-socials">
-        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" target="_blank" rel="noopener">
+        <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" target="_blank" rel="noopener" aria-label="LinkedIn Profile">
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="LinkedIn">
         </a>
-        <a href="https://github.com/HarshKumarSinha" target="_blank" rel="noopener">
+        <a href="https://github.com/HarshKumarSinha" target="_blank" rel="noopener" aria-label="GitHub Profile">
           <!-- Assuming GitHub username or placeholder -->
           <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"
             class="github-icon">
         </a>
-        <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener">
+        <a href="https://www.instagram.com/harsh_kumar_2201" target="_blank" rel="noopener" aria-label="Instagram Profile">
           <!-- Placeholder Instagram link -->
           <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" alt="Instagram">
         </a>
@@ -610,15 +612,15 @@
 
   <!-- Theme Toggle -->
   <div class="theme-wrapper">
-    <div class="theme-toggle" id="themeToggle">
-      <div class="theme-btn active" data-theme="system" title="System Default">
+    <div class="theme-toggle" id="themeToggle" role="group" aria-label="Theme selection">
+      <div class="theme-btn active" data-theme="system" title="System Default" role="button" aria-label="Use System Theme" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" class="icon-system" stroke="currentColor" stroke-width="2">
           <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
           <line x1="8" y1="21" x2="16" y2="21"></line>
           <line x1="12" y1="17" x2="12" y2="21"></line>
         </svg>
       </div>
-      <div class="theme-btn" data-theme="light" title="Light Mode">
+      <div class="theme-btn" data-theme="light" title="Light Mode" role="button" aria-label="Use Light Mode" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" class="icon-sun" stroke="currentColor" stroke-width="2">
           <circle cx="12" cy="12" r="5"></circle>
           <line x1="12" y1="1" x2="12" y2="3"></line>
@@ -631,7 +633,7 @@
           <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
         </svg>
       </div>
-      <div class="theme-btn" data-theme="dark" title="Dark Mode">
+      <div class="theme-btn" data-theme="dark" title="Dark Mode" role="button" aria-label="Use Dark Mode" tabindex="0">
         <svg viewBox="0 0 24 24" fill="none" class="icon-moon" stroke="currentColor" stroke-width="2">
           <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
         </svg>
@@ -654,7 +656,7 @@
             <div id="voiceStatus" class="voice-status">Listening...</div>
           </div>
         </div>
-        <button class="close-chat" onclick="toggleChatbot()">×</button>
+        <button class="close-chat" onclick="toggleChatbot()" aria-label="Close Chat">×</button>
       </div>
       <div class="chatbot-body" id="chatbotBody" data-lenis-prevent>
         <div class="message bot-message">
@@ -665,23 +667,23 @@
         </div>
       </div>
       <div class="chatbot-footer bg-black/20 backdrop-blur-md">
-        <button id="micBtn" class="mic-btn" onclick="jarvis.toggle()" title="Activate Voice Mode">
+        <button id="micBtn" class="mic-btn" onclick="jarvis.toggle()" title="Activate Voice Mode" aria-label="Activate Voice Interaction">
           <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
             <path d="M12 14c1.66 0 3-1.34 3-3V5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3z" />
             <path
               d="M17 11c0 2.76-2.24 5-5 5s-5-2.24-5-5H5c0 3.53 2.61 6.43 6 6.92V21h2v-3.08c3.39-.49 6-3.39 6-6.92h-2z" />
           </svg>
         </button>
-        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)">
-        <button class="send-btn" onclick="sendUserMessage()">
+        <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleChatInput(event)" aria-label="Chat input field">
+        <button class="send-btn" onclick="sendUserMessage()" aria-label="Send message">
           <svg viewBox="0 0 24 24">
             <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
           </svg>
         </button>
       </div>
     </div>
-    <button class="chatbot-toggle" onclick="toggleChatbot()">
-      <img src="img/chatbot-svgrepo-com.svg" alt="Chat" class="icon chatbot-avatar-large">
+    <button class="chatbot-toggle" onclick="toggleChatbot()" aria-label="Toggle Chatbot">
+      <img src="img/chatbot-svgrepo-com.svg" alt="Chat Bot Icon" class="icon chatbot-avatar-large">
     </button>
   </div>
 
