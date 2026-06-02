@@ -2610,22 +2610,7 @@ body.loaded #preloader .loader-content {
   }
 }
 
-.float-badge-left {
-  animation: floatBadgeY 4.5s ease-in-out infinite alternate;
-}
 
-.float-badge-right {
-  animation: floatBadgeY 4.5s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes floatBadgeY {
-  0% {
-    transform: translateY(0);
-  }
-  100% {
-    transform: translateY(-8px);
-  }
-}
 
 
 
