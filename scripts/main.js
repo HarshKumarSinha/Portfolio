@@ -1375,4 +1375,3 @@ function initFloatingNav() {
     }, 500);
   });
   */
-
