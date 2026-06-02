@@ -4,7 +4,7 @@
   "description": "This portfolio I have made to showcase myself not my technical stack so I kept it basic.\r Here I have used the basic html css and js \r For the smoothness of the UI I have used Lenis which is an open source scroll library.\r I will keep it making more attractive yet user friendly and making it the best UI website to suit my personality...😊❤️😊",
   "main": "tailwind.config.js",
   "scripts": {
-    "build": "npx terser scripts/main.js -o scripts/main.min.js --compress --mangle && npx cleancss -o styles/main.min.css styles/main.css",
+    "build": "npx terser scripts/main.js -o scripts/main.min.js --compress --mangle && npx terser scripts/background.js -o scripts/background.min.js --compress --mangle && npx cleancss -o styles/main.min.css styles/main.css",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

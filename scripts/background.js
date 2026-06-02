@@ -1,17 +1,12 @@
-// Three.js Background Animation
-/* 
-  Creates a "La Rose" inspired atmospheric particle field.
-  Features:
-  - Slow floating particles (Stars/Dust)
-  - Subtle mouse interaction (Parallax)
-  - Theme Awareness (Dark vs Light Mode)
-*/
-
+// Three.js Background Animation - Scroll-Linked Morphing Particle Field
 document.addEventListener("DOMContentLoaded", () => {
   const canvas = document.querySelector("#canvas3d");
 
-  // Safety check
-  if (!canvas) return;
+  // Safety check to verify Three.js and Canvas exist
+  if (!canvas || typeof THREE === "undefined") {
+    console.warn("Three.js not loaded or canvas #canvas3d not found. Background animation disabled.");
+    return;
+  }
 
   // Scene Setup
   const scene = new THREE.Scene();
@@ -21,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
     75,
     window.innerWidth / window.innerHeight,
     0.1,
-    1000,
+    1000
   );
   camera.position.z = 20;
 
@@ -34,109 +29,91 @@ document.addEventListener("DOMContentLoaded", () => {
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-  // --- PARTICLES WITH ANIME.JS MORPHING ---
-  const isMobileDevice = window.innerWidth <= 768;
+  // Particle Setup
+  const isMobile = window.innerWidth <= 768;
   const particlesGeometry = new THREE.BufferGeometry();
-  const particlesCount = isMobileDevice ? 200 : 500; // Drastically reduced for mobile performance
+  const particlesCount = isMobile ? 250 : 600; // Performance friendly count
 
-  // Position Arrays for Morphing
+  // Coordinates Arrays
   const randomPos = new Float32Array(particlesCount * 3);
   const spherePos = new Float32Array(particlesCount * 3);
   const helixPos = new Float32Array(particlesCount * 3);
-  const currentPos = new Float32Array(particlesCount * 3); // The one we render
-
-  const colorArray = new Float32Array(particlesCount * 3); // Dynamic colors
+  const torusPos = new Float32Array(particlesCount * 3);
+  const currentPos = new Float32Array(particlesCount * 3);
+  
+  const colorArray = new Float32Array(particlesCount * 3);
   const scaleArray = new Float32Array(particlesCount);
 
-  // We need an array of objects for Anime.js to tween
-  const particleTargets = [];
-
+  // Generate layouts
   for (let i = 0; i < particlesCount; i++) {
     const i3 = i * 3;
 
-    // 1. Random Galaxy Dust
-    randomPos[i3] = (Math.random() - 0.5) * 50;
-    randomPos[i3 + 1] = (Math.random() - 0.5) * 50;
-    randomPos[i3 + 2] = (Math.random() - 0.5) * 50;
+    // 1. Random Space Galaxy Dust (Home Section)
+    randomPos[i3] = (Math.random() - 0.5) * 45;
+    randomPos[i3 + 1] = (Math.random() - 0.5) * 45;
+    randomPos[i3 + 2] = (Math.random() - 0.5) * 45;
 
-    // 2. Sphere Formation
+    // 2. Revolving Sphere (About Section)
     const theta = Math.random() * Math.PI * 2;
     const phi = Math.acos(Math.random() * 2 - 1);
-    const radius = 15;
-    spherePos[i3] = radius * Math.sin(phi) * Math.cos(theta);
-    spherePos[i3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
-    spherePos[i3 + 2] = radius * Math.cos(phi);
+    const sphereRadius = 14;
+    spherePos[i3] = sphereRadius * Math.sin(phi) * Math.cos(theta);
+    spherePos[i3 + 1] = sphereRadius * Math.sin(phi) * Math.sin(theta);
+    spherePos[i3 + 2] = sphereRadius * Math.cos(phi);
 
-    // 3. Double Helix Formation
-    const helixRadius = 6;
-    const helixHeight = 40;
+    // 3. Double Helix (Skills / Experience Section)
+    const helixRadius = 5.5;
+    const helixHeight = 35;
     const t = i / particlesCount;
-    const angle = t * Math.PI * 15; // Twists
-    const strand = i % 2 === 0 ? 1 : -1;
+    const angle = t * Math.PI * 18; // Spiral twists
+    const strand = (i % 2 === 0) ? 1 : -1;
     helixPos[i3] = Math.cos(angle) * helixRadius * strand;
     helixPos[i3 + 1] = (t - 0.5) * helixHeight;
     helixPos[i3 + 2] = Math.sin(angle) * helixRadius * strand;
 
-    // Initial State is Random
+    // 4. Torus Ring (Contact Section)
+    const torusRadius = 11;
+    const tubeRadius = 3.5;
+    const u = Math.random() * Math.PI * 2;
+    const v = Math.random() * Math.PI * 2;
+    torusPos[i3] = (torusRadius + tubeRadius * Math.cos(v)) * Math.cos(u);
+    torusPos[i3 + 1] = (torusRadius + tubeRadius * Math.cos(v)) * Math.sin(u);
+    torusPos[i3 + 2] = tubeRadius * Math.sin(v);
+
+    // Initialize with Galaxy positions
     currentPos[i3] = randomPos[i3];
     currentPos[i3 + 1] = randomPos[i3 + 1];
     currentPos[i3 + 2] = randomPos[i3 + 2];
 
     scaleArray[i] = Math.random();
-
-    // Create targeting object for Anime.js
-    particleTargets.push({
-      x: randomPos[i3],
-      y: randomPos[i3 + 1],
-      z: randomPos[i3 + 2],
-      // Store all forms
-      randomX: randomPos[i3],
-      randomY: randomPos[i3 + 1],
-      randomZ: randomPos[i3 + 2],
-      sphereX: spherePos[i3],
-      sphereY: spherePos[i3 + 1],
-      sphereZ: spherePos[i3 + 2],
-      helixX: helixPos[i3],
-      helixY: helixPos[i3 + 1],
-      helixZ: helixPos[i3 + 2],
-    });
   }
 
-  particlesGeometry.setAttribute(
-    "position",
-    new THREE.BufferAttribute(currentPos, 3),
-  );
-  particlesGeometry.setAttribute(
-    "color",
-    new THREE.BufferAttribute(colorArray, 3),
-  );
-  particlesGeometry.setAttribute(
-    "aScale",
-    new THREE.BufferAttribute(scaleArray, 1),
-  );
+  particlesGeometry.setAttribute("position", new THREE.BufferAttribute(currentPos, 3));
+  particlesGeometry.setAttribute("color", new THREE.BufferAttribute(colorArray, 3));
+  particlesGeometry.setAttribute("aScale", new THREE.BufferAttribute(scaleArray, 1));
 
-  // Texture
+  // Dynamic Radial Gradient Texture
   const getTexture = () => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 32;
-    canvas.height = 32;
-    const ctx = canvas.getContext("2d");
+    const texCanvas = document.createElement("canvas");
+    texCanvas.width = 32;
+    texCanvas.height = 32;
+    const ctx = texCanvas.getContext("2d");
     const grad = ctx.createRadialGradient(16, 16, 0, 16, 16, 16);
-    grad.addColorStop(0, "rgba(255,255,255,1)");
-    grad.addColorStop(1, "rgba(255,255,255,0)");
+    grad.addColorStop(0, "rgba(255, 255, 255, 1)");
+    grad.addColorStop(1, "rgba(255, 255, 255, 0)");
     ctx.fillStyle = grad;
     ctx.fillRect(0, 0, 32, 32);
 
-    const texture = new THREE.Texture(canvas);
+    const texture = new THREE.Texture(texCanvas);
     texture.needsUpdate = true;
     return texture;
   };
 
   const particlesMaterial = new THREE.PointsMaterial({
-    size: 0.15,
+    size: 0.16,
     map: getTexture(),
     transparent: true,
-    opacity: 0.8,
+    opacity: 0.85,
     vertexColors: true,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
@@ -144,223 +121,151 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-  scene.add(particlesMesh);
 
-  // --- THEME COLOR LOGIC ---
+  // Group for mouse parallax
+  const mouseGroup = new THREE.Group();
+  scene.add(mouseGroup);
+  mouseGroup.add(particlesMesh);
+
+  // Particle Colors matching Theme
   const updateParticleColors = () => {
-    // Check current actual theme from html attribute directly
-    const isLight =
-      document.documentElement.getAttribute("data-theme") === "light";
-
-    // Colors
+    const isLight = document.documentElement.getAttribute("data-theme") === "light";
     let c1, c2, c3;
 
     if (isLight) {
-      // LIGHT MODE COLORS: Needs to be darker/colorful to show on light mesh
+      // Light Theme Colors (Darker and richer to be visible)
       c1 = new THREE.Color("#4f46e5"); // Indigo 600
-      c2 = new THREE.Color("#db2777"); // Pink 600
-      c3 = new THREE.Color("#7e22ce"); // Purple 700
-      particlesMaterial.blending = THREE.NormalBlending; // Better visibility on light
-      particlesMaterial.opacity = 0.8;
+      c2 = new THREE.Color("#7e22ce"); // Purple 700
+      c3 = new THREE.Color("#db2777"); // Pink 600
+      particlesMaterial.blending = THREE.NormalBlending;
+      particlesMaterial.opacity = 0.75;
     } else {
-      // DARK MODE COLORS: Glowing light colors
+      // Dark Theme Colors (Glowing neon shades)
       c1 = new THREE.Color("#6366f1"); // Indigo 500
       c2 = new THREE.Color("#a855f7"); // Purple 500
-      c3 = new THREE.Color("#ffffff"); // White sparkles
-      particlesMaterial.blending = THREE.AdditiveBlending; // Glow
-      particlesMaterial.opacity = 0.8;
+      c3 = new THREE.Color("#06b6d4"); // Cyan 500
+      particlesMaterial.blending = THREE.AdditiveBlending;
+      particlesMaterial.opacity = 0.85;
     }
 
     const colors = particlesGeometry.attributes.color.array;
-
     for (let i = 0; i < particlesCount * 3; i += 3) {
-      const mixedColor = Math.random();
-      let selectedColor;
+      const randVal = Math.random();
+      let chosenColor;
+      if (randVal < 0.4) chosenColor = c1;
+      else if (randVal < 0.75) chosenColor = c2;
+      else chosenColor = c3;
 
-      if (mixedColor < 0.33) selectedColor = c1;
-      else if (mixedColor < 0.66) selectedColor = c2;
-      else selectedColor = c3;
-
-      colors[i] = selectedColor.r;
-      colors[i + 1] = selectedColor.g;
-      colors[i + 2] = selectedColor.b;
+      colors[i] = chosenColor.r;
+      colors[i + 1] = chosenColor.g;
+      colors[i + 2] = chosenColor.b;
     }
 
     particlesGeometry.attributes.color.needsUpdate = true;
     particlesMaterial.needsUpdate = true;
   };
 
-  // Initial Set
   updateParticleColors();
 
-  // Listen for actual HTML data-theme Changes
-  const observer = new MutationObserver((mutations) => {
+  // Listen for theme attribute mutations
+  const themeObserver = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
-      if (
-        mutation.type === "attributes" &&
-        mutation.attributeName === "data-theme"
-      ) {
+      if (mutation.type === "attributes" && mutation.attributeName === "data-theme") {
         updateParticleColors();
       }
     });
   });
-
-  observer.observe(document.documentElement, {
+  themeObserver.observe(document.documentElement, {
     attributes: true,
     attributeFilter: ["data-theme"],
   });
 
-  // --- EPIC ANIME.JS DRIVEN ANIMATIONS ---
-
-  // Create a wrapper group to decouple mouse parallax from continuous auto-rotation
-  const mouseGroup = new THREE.Group();
-  scene.add(mouseGroup);
-  scene.remove(particlesMesh);
-  mouseGroup.add(particlesMesh);
-
-  // Function to apply frame updates to BufferGeometry when AnimeJS tweens the array of objects
-  const updateParticles = () => {
-    for (let i = 0; i < particlesCount; i++) {
-      const i3 = i * 3;
-      currentPos[i3] = particleTargets[i].x;
-      currentPos[i3 + 1] = particleTargets[i].y;
-      currentPos[i3 + 2] = particleTargets[i].z;
-    }
-    particlesGeometry.attributes.position.needsUpdate = true;
-  };
-
-  // Define our morphing sequence
-  const morphSequence = () => {
-    anime
-      .timeline({
-        loop: true,
-        direction: "alternate",
-        update: updateParticles,
-      })
-      // Random -> Sphere
-      .add({
-        targets: particleTargets,
-        x: (el) => el.sphereX,
-        y: (el) => el.sphereY,
-        z: (el) => el.sphereZ,
-        duration: 3000,
-        easing: "easeOutElastic(1, .8)",
-        delay: anime.stagger(2), // Epic ripple stagger effect across 1500 particles!
-        endDelay: 4000,
-      })
-      // Sphere -> Helix
-      .add({
-        targets: particleTargets,
-        x: (el) => el.helixX,
-        y: (el) => el.helixY,
-        z: (el) => el.helixZ,
-        duration: 3000,
-        easing: "easeInOutSine",
-        delay: anime.stagger(1.5),
-        endDelay: 4000,
-      })
-      // Helix -> Random
-      .add({
-        targets: particleTargets,
-        x: (el) => el.randomX,
-        y: (el) => el.randomY,
-        z: (el) => el.randomZ,
-        duration: 3000,
-        easing: "easeOutBack",
-        delay: anime.stagger(1, { from: "center" }),
-      });
-  };
-
-  // 1. Initial State for Entrance
-  camera.position.z = 150;
-  particlesMesh.scale.set(0, 0, 0);
-  particlesMesh.rotation.x = Math.PI / 4;
-  particlesMesh.rotation.y = Math.PI;
-
-  // 2. Entrance Animation Timeline, then start Morph sequence
-  anime
-    .timeline({
-      complete: morphSequence, // Trigger the massive shape morph after entrance
-    })
-    .add({
-      targets: camera.position,
-      z: 20,
-      duration: 4000,
-      easing: "easeOutCubic",
-    })
-    .add(
-      {
-        targets: particlesMesh.scale,
-        x: 1,
-        y: 1,
-        z: 1,
-        duration: 3000,
-        easing: "easeOutExpo",
-      },
-      "-=3500",
-    )
-    .add(
-      {
-        targets: particlesMesh.rotation,
-        x: 0,
-        y: 0,
-        duration: 5000,
-        easing: "easeOutQuart",
-      },
-      "-=4000",
-    );
-
-  // 3. Continuous Base Animation Loops
-  // Slow Space Rotation
-  anime({
-    targets: particlesMesh.rotation,
-    y: Math.PI * 2,
-    duration: 80000,
-    loop: true,
-    easing: "linear",
-  });
-
-  // 4. Smooth Mouse Parallax
+  // Mouse Parallax Trackers
   const windowHalfX = window.innerWidth / 2;
   const windowHalfY = window.innerHeight / 2;
   let targetRotationX = 0;
   let targetRotationY = 0;
 
   document.addEventListener("mousemove", (event) => {
-    // Calculate normalized mouse coordinates
-    targetRotationY = (event.clientX - windowHalfX) * 0.001;
-    targetRotationX = (event.clientY - windowHalfY) * 0.001;
+    targetRotationY = (event.clientX - windowHalfX) * 0.0006;
+    targetRotationX = (event.clientY - windowHalfY) * 0.0006;
   });
 
-  // 5. Immersive Scroll Dive
-  let targetCameraY = 0;
-  let targetCameraZ = 20;
+  // Scroll Morphing Setup
+  let targetScrollPercent = 0;
+  let currentScrollPercent = 0;
 
-  window.addEventListener("scroll", () => {
-    // Get total scrollable distance
+  const handleScroll = () => {
     const scrollMax = document.body.scrollHeight - window.innerHeight;
-    const scrollPercent = window.scrollY / scrollMax;
+    if (scrollMax > 0) {
+      targetScrollPercent = window.scrollY / scrollMax;
+    } else {
+      targetScrollPercent = 0;
+    }
+  };
 
-    // Set target positions for the tick loop to interpolate
-    targetCameraY = -scrollPercent * 15;
-    targetCameraZ = 20 - scrollPercent * 25;
-  });
+  window.addEventListener("scroll", handleScroll);
 
-  // 6. Tick Loop (Now handles smooth interpolation for mouse and scroll)
+  // Render & Animation Loop
   const tick = () => {
-    // Smooth interpolation for mouse parallax (Lerp)
+    // Smooth interpolation for scroll progress (Lerp)
+    currentScrollPercent += (targetScrollPercent - currentScrollPercent) * 0.06;
+
+    // Smooth interpolation for mouse parallax
     mouseGroup.rotation.x += (targetRotationX - mouseGroup.rotation.x) * 0.05;
     mouseGroup.rotation.y += (targetRotationY - mouseGroup.rotation.y) * 0.05;
 
-    // Smooth interpolation for scroll dive
-    camera.position.y += (targetCameraY - camera.position.y) * 0.05;
-    camera.position.z += (targetCameraZ - camera.position.z) * 0.05;
+    // Smooth camera zoom/dive links
+    camera.position.y += (-currentScrollPercent * 18 - camera.position.y) * 0.05;
+    camera.position.z += ((20 - currentScrollPercent * 12) - camera.position.z) * 0.05;
+
+    // Continuous slow background rotation
+    particlesMesh.rotation.y += 0.0008;
+    particlesMesh.rotation.x += 0.0003;
+
+    // Interpolate positions between Galaxy Dust -> Sphere -> Helix -> Torus
+    let progress = 0;
+    let fromPos, toPos;
+
+    if (currentScrollPercent < 0.33) {
+      // Phase 1: Galaxy -> Sphere
+      progress = currentScrollPercent / 0.33;
+      fromPos = randomPos;
+      toPos = spherePos;
+    } else if (currentScrollPercent < 0.66) {
+      // Phase 2: Sphere -> Helix
+      progress = (currentScrollPercent - 0.33) / 0.33;
+      fromPos = spherePos;
+      toPos = helixPos;
+    } else {
+      // Phase 3: Helix -> Torus
+      progress = (currentScrollPercent - 0.66) / 0.34;
+      fromPos = helixPos;
+      toPos = torusPos;
+    }
+
+    // Clamp progress between 0 and 1
+    progress = Math.max(0, Math.min(1, progress));
+
+    // Smoothstep easing for a organic warp feeling
+    const easeT = progress * progress * (3 - 2 * progress);
+
+    const positions = particlesGeometry.attributes.position.array;
+    for (let i = 0; i < particlesCount; i++) {
+      const i3 = i * 3;
+      positions[i3] = fromPos[i3] + (toPos[i3] - fromPos[i3]) * easeT;
+      positions[i3 + 1] = fromPos[i3 + 1] + (toPos[i3 + 1] - fromPos[i3 + 1]) * easeT;
+      positions[i3 + 2] = fromPos[i3 + 2] + (toPos[i3 + 2] - fromPos[i3 + 2]) * easeT;
+    }
+    particlesGeometry.attributes.position.needsUpdate = true;
 
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
   };
+
   tick();
 
+  // Resize Handler
   window.addEventListener("resize", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();

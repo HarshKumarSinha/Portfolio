@@ -1,3 +1,9 @@
+// Force scroll to top on reload/load to ensure clean entry
+if ('scrollRestoration' in history) {
+  history.scrollRestoration = 'manual';
+}
+window.scrollTo(0, 0);
+
 function initPDFWorker() {
   if (typeof pdfjsLib !== 'undefined') {
     pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -65,7 +71,7 @@ const hiddenElements = document.querySelectorAll(".scroll-reveal");
 hiddenElements.forEach((el) => observer.observe(el));
 
 // Hero Section 3D Animations via Anime.js
-document.addEventListener("DOMContentLoaded", () => {
+function runHeroEntranceAnimation() {
   // 3D properties that CSS doesn't handle as cleanly for complex entrance
   anime.set(".intro h1", {
     translateZ: 150,
@@ -124,7 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
       },
       "-=1200",
     );
-});
+}
 
 // Lenis Smooth Scrolling
 const lenis = new Lenis({
@@ -137,6 +143,7 @@ const lenis = new Lenis({
   smoothTouch: false,
   touchMultiplier: 2,
 });
+lenis.scrollTo(0, { immediate: true });
 
 // Handle anchor links for Lenis
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
@@ -146,7 +153,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-const timelineSection = document.querySelector(".timeline-section");
+const timelineSection = document.querySelector(".journey-section");
 const timelineContainer = document.querySelector(".timeline-container");
 
 // Use Lenis scroll event to drive the animation
@@ -1191,25 +1198,69 @@ class ThemeManager {
 
 // Initialize Theme Manager & Preloader
 document.addEventListener("DOMContentLoaded", () => {
-    new ThemeManager();
+  new ThemeManager();
 
-    // Preloader Logic
-    const preloader = document.getElementById("preloader");
-    if (preloader) {
+  // Preloader Counting Logic
+  const preloader = document.getElementById("preloader");
+  const circleFill = document.getElementById("loader-circle-fill");
+  const percentageText = document.getElementById("loader-percentage");
+
+  if (preloader) {
+    let count = 0;
+    const speed = 12; // Base speed of count steps
+
+    function updateLoader() {
+      // realistic increments
+      let increment = 1;
+      if (count < 35) {
+        increment = Math.floor(Math.random() * 4) + 2;
+      } else if (count < 80) {
+        increment = Math.floor(Math.random() * 2) + 1;
+      } else {
+        increment = 1;
+      }
+
+      count += increment;
+      if (count > 100) count = 100;
+
+      if (percentageText) {
+        percentageText.innerHTML = `${count}<span class="loader-pct">%</span>`;
+      }
+      if (circleFill) {
+        const circumference = 2 * Math.PI * 46; // ~289.03
+        const offset = circumference - (count / 100) * circumference;
+        circleFill.style.strokeDashoffset = offset;
+      }
+
+      if (count < 100) {
+        // Slow down at the very end
+        const delay = count > 80 ? speed + 25 : speed;
+        setTimeout(updateLoader, delay);
+      } else {
+        // Loading complete!
         setTimeout(() => {
-            document.body.classList.add("loaded");
-            setTimeout(() => {
-                initVanillaTilt();
-                new TypingEffect();
-                initFloatingNav();
-                // initHeroParallax(); // DISABLED
-            }, 100);
-        }, 400);
-    } else {
-        new TypingEffect();
-        initFloatingNav();
-        // initHeroParallax(); // DISABLED
+          document.body.classList.add("loaded");
+          
+          // Let screen slide up/fade out (400ms transition), then trigger entrance
+          setTimeout(() => {
+            initVanillaTilt();
+            new TypingEffect();
+            initFloatingNav();
+            runHeroEntranceAnimation();
+          }, 350);
+        }, 150);
+      }
     }
+
+    // Start counting loop
+    updateLoader();
+  } else {
+    // Fallback if preloader is not in the DOM
+    initVanillaTilt();
+    new TypingEffect();
+    initFloatingNav();
+    runHeroEntranceAnimation();
+  }
 });
 
 // Typing Effect

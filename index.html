@@ -60,20 +60,20 @@
 
     /* Reserve EXACT height for the title to lock layout */
     .hero-title-container { 
-      min-height: 220px; /* Mobile height for 3 lines */
+      min-height: 140px; /* Mobile height for 3 lines */
       width: 100%; 
       display: flex; 
       align-items: flex-start;
       contain: layout size; 
       margin-bottom: 2rem;
     }
-    @media (min-width: 640px)  { .hero-title-container { min-height: 180px; } } /* 2 lines */
-    @media (min-width: 1024px) { .hero-title-container { min-height: 160px; } } /* 1-2 lines */
-
+    @media (min-width: 640px)  { .hero-title-container { min-height: 110px; } } /* 2 lines */
+    @media (min-width: 1024px) { .hero-title-container { min-height: 90px; } } /* 1-2 lines */
+ 
     #hero-title { 
-      font-size: clamp(2.25rem, 8vw, 4.5rem); 
+      font-size: clamp(1.85rem, 5.5vw, 3.25rem); 
       font-weight: 700;
-      line-height: 1.1; 
+      line-height: 1.25; 
       margin: 0; 
       width: 100%;
       font-family: var(--font-heading);
@@ -137,22 +137,23 @@
 
   <!-- Preloader -->
   <div id="preloader" role="status" aria-label="Loading">
-
     <div class="loader-content">
-      <div class="geometric-loader">
-        <div class="cube-wrapper">
-          <div class="cube-face front"></div>
-          <div class="cube-face back"></div>
-          <div class="cube-face right"></div>
-          <div class="cube-face left"></div>
-          <div class="cube-face top"></div>
-          <div class="cube-face bottom"></div>
-        </div>
+      <div class="loader-circle-wrapper">
+        <!-- SVG Ring -->
+        <svg class="loader-circle" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="loader-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="var(--primary-color)" />
+              <stop offset="100%" stop-color="var(--secondary-color)" />
+            </linearGradient>
+          </defs>
+          <circle class="loader-circle-bg" cx="50" cy="50" r="46"></circle>
+          <circle class="loader-circle-fill" cx="50" cy="50" r="46" id="loader-circle-fill"></circle>
+        </svg>
+        <div class="loader-percentage" id="loader-percentage">0%</div>
       </div>
-      <div class="loader-logo" data-text="Harsh Sinha">Harsh Sinha</div>
-      <div class="loader-progress-wrapper">
-        <div class="loader-progress-bar"></div>
-      </div>
+      <div class="loader-logo">Harsh Sinha</div>
+      <div class="loader-status">Loading Portfolio...</div>
     </div>
   </div>
   <main>
@@ -166,10 +167,16 @@
       </h1>
     </div>
 
-      <!-- Bottom Row: 2-Column Grid - .hero-grid defined in critical CSS -->
+      <!-- Bottom Row: 2-Column Grid - .hero-grid defined in CSS -->
       <div class="hero-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
         <!-- Left Column: Text -->
         <div class="intro-content text-left">
+          <div class="hero-badge-container mb-4 flex items-center gap-2">
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 shadow-[0_0_15px_rgba(99,102,241,0.15)] animate-pulse">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+              Available for Hire
+            </span>
+          </div>
           <p class="text-lg md:text-xl text-gray-300 drop-shadow-md tracking-wide leading-loose">
             Transforming ideas into reality through code. I am a <span
               class="highlight-text font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text">Full
@@ -191,39 +198,83 @@
           </div>
         </div>
 
-        <!-- Right Column: Glass Profile Card -->
+        <!-- Right Column: Glass Profile Dashboard Card -->
         <div class="intro-image flex justify-center lg:justify-end">
-          <div class="relative group profile-img-container">
-            <!-- Animated Glow Behind -->
-            <div
-              class="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full blur opacity-50 group-hover:opacity-100 transition duration-1000 group-hover:duration-200">
-            </div>
+          <div class="relative group dashboard-profile-card">
+            <!-- Animated Radial Glow Behind -->
+            <div class="absolute -inset-2 bg-gradient-to-r from-indigo-500 via-purple-600 to-cyan-500 rounded-[36px] blur opacity-45 group-hover:opacity-75 transition duration-1000 group-hover:duration-200"></div>
 
-            <!-- Glass Container -->
-            <div
-              class="relative w-full h-full bg-white/5 backdrop-blur-md rounded-full border-[2px] border-white/20 shadow-[0_0_40px_rgba(99,102,241,0.3)] transition-all duration-500 overflow-hidden flex items-center justify-center group-hover:shadow-[0_0_60px_rgba(99,102,241,0.6)]">
-              <!-- Profile Image -->
-              <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" alt="Harsh Sinha"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 profile-img"
-                fetchpriority="high" loading="eager" width="320" height="320" />
+            <!-- Dashboard Frame -->
+            <div class="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] bg-white/5 backdrop-blur-xl rounded-[32px] border border-white/10 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] overflow-hidden flex items-center justify-center transition-all duration-500 group-hover:shadow-[0_25px_60px_-12px_rgba(99,102,241,0.4)]">
+              
+              <!-- Profile Image (Rounded Squircle inside) -->
+              <div class="w-[90%] h-[90%] rounded-[24px] overflow-hidden relative">
+                <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" alt="Harsh Sinha"
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  fetchpriority="high" loading="eager" width="320" height="320" />
+                
+                <!-- Overlay gradient for depth -->
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              </div>
+
+              <!-- Floating Badges -->
+              <span class="absolute top-6 left-6 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-black/60 backdrop-blur-md text-white border border-white/10 shadow-lg float-badge-left">
+                💼 Analyst
+              </span>
+              
+              <span class="absolute top-6 right-6 px-3 py-1.5 rounded-full text-[10px] font-bold tracking-wider uppercase bg-indigo-500/80 backdrop-blur-md text-white border border-indigo-400/20 shadow-lg float-badge-right">
+                💻 SharePoint
+              </span>
+
+              <!-- Code Snippet Console Capsule Overlay -->
+              <div class="absolute bottom-6 left-6 right-6 p-4 rounded-2xl bg-black/75 backdrop-blur-md border border-white/10 shadow-2xl code-capsule-overlay transition-all duration-300 group-hover:-translate-y-1">
+                <div class="flex items-center gap-1.5 mb-2 border-b border-white/5 pb-1.5">
+                  <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                  <span class="text-[9px] text-gray-500 font-mono ml-2">HarshSinha.js</span>
+                </div>
+                <pre class="text-[9.5px] text-gray-300 font-mono leading-normal m-0" style="font-family: var(--font-heading), monospace;"><code><span class="text-purple-400">const</span> developer = {
+  role: <span class="text-emerald-400">'Full Stack'</span>,
+  spfx: <span class="text-cyan-400">true</span>,
+  love: [<span class="text-amber-400">'JS'</span>, <span class="text-indigo-400">'Python'</span>]
+};</code></pre>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+    
     <section class="about scroll-reveal" id="about">
-      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-        About me</h2>
-      <div
-        class="max-w-4xl mx-auto space-y-6 text-gray-300 leading-relaxed text-lg tracking-wide bg-white/5 backdrop-blur-sm p-8 rounded-3xl border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500">
-        <p>I am a Computer Science Graduate and a Junior Software Analyst at Enaiya Information Technology, specializing
-          in
-          building modern web applications and enterprise SharePoint solutions. With a strong foundation in Full Stack
-          Development, I bridge the gap between complex backend logic and intuitive frontend design.</p>
-        <p>Beyond my academic achievements at Shivalik College of Engineering, I have gained practical industry
-          experience
-          optimizing workflows, developing custom SPFx components, and integrating secure API services. I am driven by a
-          passion for exploring new technologies and solving real-world business challenges through code.</p>
+      <div class="section-header-compact">
+        <span class="section-number">01</span>
+        <h2 class="section-title">About Me</h2>
+      </div>
+
+      <div class="about-split-grid">
+        <!-- Left: Statement / Quote -->
+        <div class="about-quote-container">
+          <p class="about-quote">"Bridging complex backend logic and intuitive frontend design to deliver seamless business solutions."</p>
+          <div class="about-accent-line"></div>
+        </div>
+
+        <!-- Right: Description -->
+        <div class="about-details-container bg-white/5 backdrop-blur-sm p-8 rounded-[28px] border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500">
+          <p class="text-gray-300 text-lg leading-relaxed mb-6">I am a Computer Science Graduate and a Junior Software Analyst at <strong>Enaiya Information Technology</strong>, specializing in building modern web applications and enterprise SharePoint solutions. I enjoy transforming complex requirements into reliable, user-friendly software.</p>
+          <p class="text-gray-300 text-lg leading-relaxed mb-8">Beyond my academic journey at Shivalik College, I focus on optimizing enterprise workflows, constructing custom SPFx components, and integrating REST API services. I am driven by a continuous passion for discovering new tech stacks and solving real-world challenges through code.</p>
+          
+          <div class="about-highlights-row">
+            <div class="about-highlight-item border border-white/5 bg-white/[0.02] p-4 rounded-2xl">
+              <span class="highlight-val bg-gradient-to-r from-indigo-400 to-cyan-400 text-transparent bg-clip-text font-bold text-xl">B.Tech</span>
+              <span class="highlight-lbl text-xs text-gray-400 uppercase tracking-wide mt-1">Computer Science</span>
+            </div>
+            <div class="about-highlight-item border border-white/5 bg-white/[0.02] p-4 rounded-2xl">
+              <span class="highlight-val bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text font-bold text-xl">SPFx</span>
+              <span class="highlight-lbl text-xs text-gray-400 uppercase tracking-wide mt-1">SharePoint Build</span>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
     <section class="skills-section scroll-reveal" id="skills">
@@ -240,7 +291,8 @@
         </p>
 
         <div class="skills-grid">
-          <div class="skill">
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot python"></span>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"
               width="48" height="48" loading="lazy" decoding="async" />
             <div>
@@ -249,7 +301,8 @@
             </div>
           </div>
 
-          <div class="skill">
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot django"></span>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"
               loading="lazy" width="48" height="48" decoding="async" />
             <div>
@@ -258,7 +311,8 @@
             </div>
           </div>
 
-          <div class="skill">
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot java"></span>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"
               loading="lazy" width="48" height="48" decoding="async" />
             <div>
@@ -267,7 +321,8 @@
             </div>
           </div>
 
-          <div class="skill">
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot jquery"></span>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg" alt="jQuery"
               loading="lazy" width="48" height="48" decoding="async" />
             <div>
@@ -276,7 +331,8 @@
             </div>
           </div>
 
-          <div class="skill">
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot sharepoint"></span>
             <!-- SharePoint inline SVG - avoids loading 1280px external image for a 48x48 display -->
             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="SharePoint">
               <rect width="48" height="48" rx="8" fill="#0078d4"/>
@@ -292,7 +348,8 @@
             </div>
           </div>
 
-          <div class="skill">
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot frontend"></span>
             <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
               alt="Web Technologies" loading="lazy" width="48" height="48" decoding="async" />
             <div>
@@ -522,80 +579,67 @@
         </div>
       </div>
     </section>
-    <section class="academic-section scroll-reveal">
-      <div class="academic-container">
-        <h2
-          class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-          Academic Journey: Shivalik College of Engineering</h2>
-        <p class="text-gray-400 max-w-4xl mx-auto text-lg tracking-wide mb-8">
-          My pursuit of a Bachelor of Technology in Computer Science and Engineering at Shivalik College has provided a
-          comprehensive education,
-          covering core concepts and advanced topics in the field.
-        </p>
-        <div class="academic-grid">
-          <div class="academic-box">
-            <h3>Foundation in Computer Science</h3>
-            <p>Engaged in core computer science subjects, building a strong base in programming, data structures, and
-              algorithms.</p>
-          </div>
-          <div class="academic-box">
-            <h3>Practical Project Work</h3>
-            <p>Actively participated in various projects, applying theoretical knowledge to solve real-world problems
-              and
-              enhance practical skills.</p>
-          </div>
-          <div class="academic-box">
-            <h3>Advanced Specializations</h3>
-            <p>Explored advanced topics such as web development, database management, and software engineering
-              principles.
-            </p>
-          </div>
-          <div class="academic-box">
-            <h3>Collaborative Learning</h3>
-            <p>Worked in teams on various assignments and projects, fostering teamwork and communication skills crucial
-              for the tech industry.</p>
-          </div>
-        </div>
-        <p>
-          This program has prepared me for the dynamic challenges of the tech industry, instilling a mindset of
-          continuous
-          learning and innovation.
-        </p>
+    <section class="journey-section scroll-reveal" id="journey">
+      <div class="section-header-compact">
+        <span class="section-number">03</span>
+        <h2 class="section-title">Journey & Education</h2>
       </div>
-    </section>
-    <section class="timeline-section scroll-reveal">
-      <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-        Educational Milestones</h2>
-      <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
-        My academic background spans across various institutions, each contributing to my comprehensive development and
-        preparing me for a career in technology.
-      </p>
-      <div class="timeline-container">
-        <div class="timeline-item left">
-          <div class="content">
-            <h3>2021 - 2025</h3>
-            <h4>Shivalik College of Engineering, Dehradun</h4>
-            <p>Bachelor of Technology - BTech, Computer Science</p>
+
+      <div class="journey-split-grid">
+        <!-- Left Column: Schooling Milestone Timeline -->
+        <div class="journey-timeline-column">
+          <h3 class="journey-col-title">Educational Milestones</h3>
+          <div class="timeline-container">
+            <div class="timeline-item left">
+              <div class="content">
+                <span class="timeline-year">2021 - 2025</span>
+                <h4>Shivalik College of Engineering, Dehradun</h4>
+                <p>Bachelor of Technology - BTech, Computer Science</p>
+              </div>
+            </div>
+            <div class="timeline-item right">
+              <div class="content">
+                <span class="timeline-year">2020 - 2021</span>
+                <h4>Assembly of God Church, Asansol</h4>
+                <p>ISC (Indian School Certificate)</p>
+              </div>
+            </div>
+            <div class="timeline-item left">
+              <div class="content">
+                <span class="timeline-year">2018 - 2019</span>
+                <h4>Assembly of God Church, Asansol</h4>
+                <p>ICSE (Indian Certificate of Secondary Education)</p>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="timeline-item right">
-          <div class="content">
-            <h3>2020 - 2021</h3>
-            <h4>Assembly of God Church, Asansol</h4>
-            <p>ISC (Indian School Certificate)</p>
-          </div>
-        </div>
-        <div class="timeline-item left">
-          <div class="content">
-            <h3>2018 - 2019</h3>
-            <h4>Assembly of God Church, Asansol</h4>
-            <p>ICSE (Indian Certificate of Secondary Education)</p>
+
+        <!-- Right Column: Academic Highlights Grid -->
+        <div class="journey-details-column">
+          <h3 class="journey-col-title">College Academic Highlights</h3>
+          <p class="text-gray-400 mb-6 leading-relaxed">
+            My B.Tech program in Computer Science has provided a robust academic foundation, focusing on core software structures, software engineering principles, and database management.
+          </p>
+          <div class="academic-grid">
+            <div class="academic-box">
+              <h3>CS Foundation</h3>
+              <p>Core subjects building a strong base in OOP, Data Structures, and Algorithms.</p>
+            </div>
+            <div class="academic-box">
+              <h3>Project Work</h3>
+              <p>Applied theoretical knowledge to solve real-world problems and enhance practical skills.</p>
+            </div>
+            <div class="academic-box">
+              <h3>Specializations</h3>
+              <p>Explored web development, database management, and SPFx component architecture.</p>
+            </div>
+            <div class="academic-box">
+              <h3>Team Focus</h3>
+              <p>Worked in teams on various lab projects, fostering communication and collaboration skills.</p>
+            </div>
           </div>
         </div>
       </div>
-      <p class="sub-heading">These educational experiences have provided me with a well-rounded academic foundation,
-        from
-        foundational schooling to specialized higher education in computer science.</p>
     </section>
     <section class="interests-section scroll-reveal">
       <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
@@ -882,8 +926,10 @@
   </nav>
 
   <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js" defer></script>
+  <script src="scripts/background.min.js" defer></script>
   <script src="scripts/main.min.js" defer></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11" defer></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js" defer></script>
