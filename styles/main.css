@@ -206,6 +206,28 @@ html {
   /* scroll-behavior: smooth; - Disabled for Lenis */
   height: 100%;
   overscroll-behavior: none;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color) var(--bg-color);
+}
+
+/* Global Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+  border-radius: 5px;
+  border: 2px solid var(--bg-color);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, var(--secondary-color), var(--primary-color));
 }
 
 body {
