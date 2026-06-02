@@ -194,9 +194,10 @@ document.addEventListener("DOMContentLoaded", () => {
   // Scroll Morphing Setup
   let targetScrollPercent = 0;
   let currentScrollPercent = 0;
+  let lastScrollPercent = -1;
+  let scrollMax = document.body.scrollHeight - window.innerHeight;
 
   const handleScroll = () => {
-    const scrollMax = document.body.scrollHeight - window.innerHeight;
     if (scrollMax > 0) {
       targetScrollPercent = window.scrollY / scrollMax;
     } else {
@@ -204,12 +205,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  window.addEventListener("scroll", handleScroll);
+  window.addEventListener("scroll", handleScroll, { passive: true });
 
   // Render & Animation Loop
   const tick = () => {
     // Smooth interpolation for scroll progress (Lerp)
-    currentScrollPercent += (targetScrollPercent - currentScrollPercent) * 0.06;
+    const scrollDiff = targetScrollPercent - currentScrollPercent;
+    if (Math.abs(scrollDiff) > 0.0001) {
+      currentScrollPercent += scrollDiff * 0.06;
+    } else {
+      currentScrollPercent = targetScrollPercent;
+    }
 
     // Smooth interpolation for mouse parallax
     mouseGroup.rotation.x += (targetRotationX - mouseGroup.rotation.x) * 0.05;
@@ -223,41 +229,45 @@ document.addEventListener("DOMContentLoaded", () => {
     particlesMesh.rotation.y += 0.0008;
     particlesMesh.rotation.x += 0.0003;
 
-    // Interpolate positions between Galaxy Dust -> Sphere -> Helix -> Torus
-    let progress = 0;
-    let fromPos, toPos;
+    // Only update position buffer if shape morph progress actually changed
+    if (Math.abs(currentScrollPercent - lastScrollPercent) > 0.00005) {
+      // Interpolate positions between Galaxy Dust -> Sphere -> Helix -> Torus
+      let progress = 0;
+      let fromPos, toPos;
 
-    if (currentScrollPercent < 0.33) {
-      // Phase 1: Galaxy -> Sphere
-      progress = currentScrollPercent / 0.33;
-      fromPos = randomPos;
-      toPos = spherePos;
-    } else if (currentScrollPercent < 0.66) {
-      // Phase 2: Sphere -> Helix
-      progress = (currentScrollPercent - 0.33) / 0.33;
-      fromPos = spherePos;
-      toPos = helixPos;
-    } else {
-      // Phase 3: Helix -> Torus
-      progress = (currentScrollPercent - 0.66) / 0.34;
-      fromPos = helixPos;
-      toPos = torusPos;
+      if (currentScrollPercent < 0.33) {
+        // Phase 1: Galaxy -> Sphere
+        progress = currentScrollPercent / 0.33;
+        fromPos = randomPos;
+        toPos = spherePos;
+      } else if (currentScrollPercent < 0.66) {
+        // Phase 2: Sphere -> Helix
+        progress = (currentScrollPercent - 0.33) / 0.33;
+        fromPos = spherePos;
+        toPos = helixPos;
+      } else {
+        // Phase 3: Helix -> Torus
+        progress = (currentScrollPercent - 0.66) / 0.34;
+        fromPos = helixPos;
+        toPos = torusPos;
+      }
+
+      // Clamp progress between 0 and 1
+      progress = Math.max(0, Math.min(1, progress));
+
+      // Smoothstep easing for an organic warp feeling
+      const easeT = progress * progress * (3 - 2 * progress);
+
+      const positions = particlesGeometry.attributes.position.array;
+      for (let i = 0; i < particlesCount; i++) {
+        const i3 = i * 3;
+        positions[i3] = fromPos[i3] + (toPos[i3] - fromPos[i3]) * easeT;
+        positions[i3 + 1] = fromPos[i3 + 1] + (toPos[i3 + 1] - fromPos[i3 + 1]) * easeT;
+        positions[i3 + 2] = fromPos[i3 + 2] + (toPos[i3 + 2] - fromPos[i3 + 2]) * easeT;
+      }
+      particlesGeometry.attributes.position.needsUpdate = true;
+      lastScrollPercent = currentScrollPercent;
     }
-
-    // Clamp progress between 0 and 1
-    progress = Math.max(0, Math.min(1, progress));
-
-    // Smoothstep easing for a organic warp feeling
-    const easeT = progress * progress * (3 - 2 * progress);
-
-    const positions = particlesGeometry.attributes.position.array;
-    for (let i = 0; i < particlesCount; i++) {
-      const i3 = i * 3;
-      positions[i3] = fromPos[i3] + (toPos[i3] - fromPos[i3]) * easeT;
-      positions[i3 + 1] = fromPos[i3 + 1] + (toPos[i3 + 1] - fromPos[i3 + 1]) * easeT;
-      positions[i3 + 2] = fromPos[i3 + 2] + (toPos[i3 + 2] - fromPos[i3 + 2]) * easeT;
-    }
-    particlesGeometry.attributes.position.needsUpdate = true;
 
     renderer.render(scene, camera);
     window.requestAnimationFrame(tick);
@@ -270,5 +280,6 @@ document.addEventListener("DOMContentLoaded", () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
+    scrollMax = document.body.scrollHeight - window.innerHeight;
   });
 });
