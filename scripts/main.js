@@ -1329,17 +1329,17 @@ class TypingEffect {
   }
 }
 
-// Floating Navigation Logic
+// Dot Navigation Logic
 function initFloatingNav() {
   const sections = document.querySelectorAll("section, .intro");
-  const navItems = document.querySelectorAll(".floating-nav .nav-item");
+  const navItems = document.querySelectorAll(".dot-nav .dot-nav-item");
 
   if (!navItems.length) return;
 
   const observerOptions = {
     root: null,
     rootMargin: "0px",
-    threshold: 0.3, // Trigger when 30% of section is visible
+    threshold: 0.3,
   };
 
   const observer = new IntersectionObserver((entries) => {
@@ -1349,10 +1349,10 @@ function initFloatingNav() {
           navItems.forEach((item) => item.classList.remove("active"));
           const id = entry.target.getAttribute("id");
           if (id) {
-            const activeLink = document.querySelector(`.floating-nav a[href="#${id}"]`);
+            const activeLink = document.querySelector(`.dot-nav a[href="#${id}"]`);
             if (activeLink) activeLink.classList.add("active");
             else if (id === "home") {
-              const homeLink = document.querySelector(`.floating-nav a[href="#"]`);
+              const homeLink = document.querySelector(`.dot-nav a[href="#"]`);
               if (homeLink) homeLink.classList.add("active");
             }
           }
@@ -1377,7 +1377,7 @@ function initFloatingNav() {
       item.classList.add("active");
 
       if (targetId === "" || targetId === "#") {
-        lenis.scrollTo(0); // Scroll to top for Home
+        lenis.scrollTo(0);
       } else {
         const targetElement = document.getElementById(targetId);
         if (targetElement) {

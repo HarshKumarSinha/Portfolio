@@ -32,7 +32,6 @@
       --font-body: "Outfit", sans-serif;
     }
     
-    /* Pre-calculate and reserve space for hidden elements */
     body { 
       background-color: var(--bg-color); 
       margin: 0; 
@@ -46,57 +45,49 @@
 
     #preloader { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--bg-color); z-index: 9999; display: flex; flex-direction: column; justify-content: center; align-items: center; }
     
-    /* Critical hero layout - prevents CLS from Tailwind failing/loading late */
+    /* Critical hero layout */
     .intro { 
-      padding-left: 1rem; padding-right: 1rem;
+      padding: 2rem clamp(1.5rem, 5vw, 4rem);
       width: 100%; box-sizing: border-box;
-      max-width: 1400px; margin: 0 auto;
-      padding-top: 5rem; padding-bottom: 3rem;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      align-items: center;
     }
 
-    /* Reserve EXACT height for the title to lock layout */
-    .hero-title-container { 
-      min-height: 140px; /* Mobile height for 3 lines */
-      width: 100%; 
-      display: flex; 
-      align-items: flex-start;
-      contain: layout size; 
-      margin-bottom: 2rem;
+    /* Two-column hero grid */
+    .hero-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem);
+      align-items: center;
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
     }
-    @media (min-width: 640px)  { .hero-title-container { min-height: 110px; } } /* 2 lines */
-    @media (min-width: 1024px) { .hero-title-container { min-height: 90px; } } /* 1-2 lines */
+
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-left { order: 2; }
+      .hero-right { order: 1; }
+    }
+
+    /* Reserve space to prevent CLS */
+    .hero-title-container { 
+      display: block;
+      width: 100%;
+    }
  
     #hero-title { 
-      font-size: clamp(1.85rem, 5.5vw, 3.25rem); 
-      font-weight: 700;
-      line-height: 1.25; 
+      font-size: clamp(1.5rem, 2.8vw, 2.4rem); 
+      font-weight: 800;
+      line-height: 1.2; 
       margin: 0; 
       width: 100%;
       font-family: var(--font-heading);
     }
-    
-    .intro-content p {
-      opacity: 1; /* Restore default visibility */
-    }
 
-    /* Hero bottom row grid - stable before Tailwind */
-    .hero-grid { 
-      display: grid; grid-template-columns: 1fr;
-      gap: 3rem; align-items: center; width: 100%;
-    }
-    @media (min-width: 1024px) { .hero-grid { grid-template-columns: 1fr 1fr; } }
-    
-    .profile-img-container {
-      width: 256px; height: 256px;
-    }
-    @media (min-width: 768px) { .profile-img-container { width: 320px; height: 320px; } }
-    
-    .profile-img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; display: block; }
-    
     /* Cursor stability */
     .cursor { 
       display: inline-block; 
@@ -110,23 +101,19 @@
     }
     @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
 
-    /* Performance optimization: contain paint for elements that stay in view */
+    /* Performance optimization */
     .floating-nav { contain: paint; position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%); z-index: 1000; }
     
-    /* Interest icons - stable dimensions before Tailwind loads */
-    .interest-box .w-16 { width: 64px; height: 64px; flex-shrink: 0; }
-    .interest-box .w-8  { width: 32px; height: 32px; }
-    
     /* Nav icons */
-    .nav-item svg { width: 24px; height: 24px; }
+    .nav-icon-wrap svg { width: 20px; height: 20px; }
   </style>
 
   <!-- Deferred Styles -->
-  <link rel="stylesheet" href="styles/main.min.css?v=5" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="styles/main.min.css?v=11" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="styles/tailwind-output.css?v=4" media="print" onload="this.media='all'">
   <link rel="stylesheet" href="styles/voice.css" media="print" onload="this.media='all'">
   <noscript>
-    <link rel="stylesheet" href="styles/main.min.css?v=5">
+    <link rel="stylesheet" href="styles/main.min.css?v=6">
     <link rel="stylesheet" href="styles/tailwind-output.css?v=4">
   </noscript>
 </head>
@@ -158,45 +145,90 @@
   </div>
   <main>
     <div class="intro px-4 w-full" id="home">
-    <!-- Top Row: Full Width Heading with Fixed Height Container to block CLS -->
-    <div class="w-full text-left mb-8 lg:mb-4 hero-title-container">
-      <h1 id="hero-title"
-        class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-indigo-400 to-purple-400 text-transparent bg-clip-text drop-shadow-[0_0_15px_rgba(99,102,241,0.5)] leading-tight">
-        Harsh Sinha: &nbsp;<span id="typing-text" class="text-white"></span><span
-          class="cursor text-indigo-400"></span>
-      </h1>
-    </div>
 
-      <!-- Bottom Row: 2-Column Grid - .hero-grid defined in CSS -->
-      <div class="hero-grid grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full">
-        <!-- Left Column: Text -->
-        <div class="intro-content text-left">
-          <p class="text-lg md:text-xl text-gray-300 drop-shadow-md tracking-wide leading-loose">
-            Transforming ideas into reality through code. I am a <span
-              class="highlight-text font-bold bg-gradient-to-r from-indigo-400 to-purple-400 text-transparent bg-clip-text">Full
-              Stack Developer</span>
-            and <span
-              class="highlight-text font-bold bg-gradient-to-r from-purple-400 to-pink-400 text-transparent bg-clip-text">SharePoint
-              Specialist</span> based in India.</p>
-          <div class="social-links mt-10 flex flex-wrap gap-4 justify-start">
-            <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/"
-              class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
-              target="_blank">Connect
-              on LinkedIn</a>
-            <a href="#contact"
-              class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]">Email
-              me</a>
-            <a href="#"
-              class="btn backdrop-blur-md bg-white/10 border border-white/20 hover:bg-gradient-to-r hover:from-indigo-600 hover:to-purple-600 text-white rounded-full px-8 py-3 transition-all duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(99,102,241,0.6)]"
-              onclick="openResume(event)">My Resume</a>
+      <!-- Hero Inner Wrapper - Two Column Layout -->
+      <div class="hero-inner">
+
+        <!-- Left Column: Text Content -->
+        <div class="hero-left">
+
+          <!-- Main Heading -->
+          <div class="hero-title-container">
+            <h1 id="hero-title">
+              <span class="hero-name">Harsh Sinha</span>
+              <span class="hero-colon"> — </span>
+              <span id="typing-text"></span><span class="cursor"></span>
+            </h1>
+          </div>
+
+          <!-- Sub Description -->
+          <p class="hero-description">
+            Transforming ideas into reality through code. I am a
+            <span class="hero-highlight indigo">Full Stack Developer</span>
+            and <span class="hero-highlight pink">SharePoint Specialist</span>
+            based in India.
+          </p>
+
+          <!-- Social Proof Chips -->
+          <div class="hero-chips">
+            <div class="hero-chip">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+              Full Stack
+            </div>
+            <div class="hero-chip">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"></rect><path d="M8 21h8M12 17v4"></path></svg>
+              SharePoint SPFx
+            </div>
+            <div class="hero-chip">
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              Patna, India
+            </div>
+          </div>
+
+          <!-- CTA Buttons -->
+          <div class="hero-cta">
+            <a href="https://www.linkedin.com/in/harsh-sinha-24b65731a/" class="hero-btn hero-btn-primary" target="_blank" rel="noopener">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              Connect on LinkedIn
+            </a>
+            <a href="#contact" class="hero-btn hero-btn-secondary">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+              Email Me
+            </a>
+            <a href="#" class="hero-btn hero-btn-ghost" onclick="openResume(event)">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+              My Resume
+            </a>
           </div>
         </div>
+
+        <!-- Right Column: Profile Visual -->
+        <div class="hero-right">
+          <div class="hero-profile-wrapper">
+            <!-- Decorative rings -->
+            <div class="hero-ring hero-ring-1"></div>
+            <div class="hero-ring hero-ring-2"></div>
+            <!-- Profile Image -->
+            <div class="hero-profile-frame">
+              <img src="img/Gemini_Generated_Image_opbx7iopbx7iopbx(1).jpg" alt="Harsh Sinha" class="hero-profile-img" width="320" height="320">
+            </div>
+            <!-- Floating stat cards -->
+            <div class="hero-stat-card hero-stat-card--tl">
+              <span class="hero-stat-number">6+</span>
+              <span class="hero-stat-label">Months Exp.</span>
+            </div>
+            <div class="hero-stat-card hero-stat-card--br">
+              <span class="hero-stat-number">5+</span>
+              <span class="hero-stat-label">Projects</span>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
     
     <section class="about scroll-reveal" id="about">
       <div class="section-header-compact">
-        <span class="section-number">01</span>
         <h2 class="section-title">About Me</h2>
       </div>
 
@@ -209,8 +241,8 @@
 
         <!-- Right: Description -->
         <div class="about-details-container bg-white/5 backdrop-blur-sm p-8 rounded-[28px] border border-white/10 shadow-xl hover:shadow-[0_0_30px_rgba(99,102,241,0.15)] transition-all duration-500">
-          <p class="text-gray-300 text-lg leading-relaxed mb-6">I am a Computer Science Graduate and a Junior Software Analyst at <strong>Enaiya Information Technology</strong>, specializing in building modern web applications and enterprise SharePoint solutions. I enjoy transforming complex requirements into reliable, user-friendly software.</p>
-          <p class="text-gray-300 text-lg leading-relaxed mb-8">Beyond my academic journey at Shivalik College, I focus on optimizing enterprise workflows, constructing custom SPFx components, and integrating REST API services. I am driven by a continuous passion for discovering new tech stacks and solving real-world challenges through code.</p>
+          <p class="text-gray-300 text-lg leading-relaxed mb-6">As a Computer Science Graduate, I possess practical experience in developing applications with Django and SharePoint. I am adept at creating full-stack solutions, enhancing system performance, and managing backend API and database integrations.</p>
+          <p class="text-gray-300 text-lg leading-relaxed mb-8">I am a dedicated problem-solver who thrives in team environments and remains committed to researching modern software architecture and AI. I enjoy transforming complex requirements into reliable, user-friendly software.</p>
           
           <div class="about-highlights-row">
             <div class="about-highlight-item border border-white/5 bg-white/[0.02] p-4 rounded-2xl">
@@ -239,72 +271,91 @@
         </p>
 
         <div class="skills-grid">
+          <!-- Card 1: Languages -->
           <div class="skill relative overflow-hidden">
             <span class="skill-hotspot python"></span>
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"
-              width="48" height="48" loading="lazy" decoding="async" />
+            <div class="skill-logo-stack">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg" alt="jQuery" loading="lazy" decoding="async" />
+            </div>
             <div>
-              <h3>Python Programming</h3>
-              <p>Extensive experience in Python for scripting, web development, and data manipulation.</p>
+              <h3>Programming Languages</h3>
+              <p>Python, Java, SQL, HTML, CSS, JavaScript, jQuery, ASP.Net</p>
             </div>
           </div>
 
+          <!-- Card 2: Frameworks -->
           <div class="skill relative overflow-hidden">
             <span class="skill-hotspot django"></span>
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"
-              loading="lazy" width="48" height="48" decoding="async" />
+            <div class="skill-logo-stack">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" loading="lazy" decoding="async" />
+            </div>
             <div>
-              <h3>Django Framework</h3>
-              <p>Proficient in building robust and scalable web applications using the Django framework.</p>
+              <h3>Frameworks</h3>
+              <p>Django, SharePoint Framework (SPFx), React</p>
             </div>
           </div>
 
-          <div class="skill relative overflow-hidden">
-            <span class="skill-hotspot java"></span>
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java"
-              loading="lazy" width="48" height="48" decoding="async" />
-            <div>
-              <h3>Java Development</h3>
-              <p>Solid understanding of Java for object-oriented programming and application development.</p>
-            </div>
-          </div>
-
-          <div class="skill relative overflow-hidden">
-            <span class="skill-hotspot jquery"></span>
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jquery/jquery-original.svg" alt="jQuery"
-              loading="lazy" width="48" height="48" decoding="async" />
-            <div>
-              <h3>jQuery</h3>
-              <p>Proficient in simplifying HTML document traversal, event handling, and animation using jQuery.</p>
-            </div>
-          </div>
-
+          <!-- Card 3: SharePoint -->
           <div class="skill relative overflow-hidden">
             <span class="skill-hotspot sharepoint"></span>
-            <!-- SharePoint inline SVG - avoids loading 1280px external image for a 48x48 display -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" role="img" aria-label="SharePoint">
-              <rect width="48" height="48" rx="8" fill="#0078d4"/>
-              <circle cx="18" cy="18" r="9" fill="#83b9f9"/>
-              <circle cx="29" cy="26" r="11" fill="#fff" opacity="0.9"/>
-              <circle cx="29" cy="26" r="7" fill="#0078d4"/>
-              <text x="24" y="44" font-size="6" fill="#fff" text-anchor="middle" font-family="sans-serif">SP</text>
-            </svg>
+            <div class="skill-logo-stack">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="SharePoint">
+                <rect width="48" height="48" rx="8" fill="#0078d4"/>
+                <circle cx="18" cy="18" r="9" fill="#83b9f9"/>
+                <circle cx="29" cy="26" r="11" fill="#fff" opacity="0.9"/>
+                <circle cx="29" cy="26" r="7" fill="#0078d4"/>
+                <text x="24" y="44" font-size="6" fill="#fff" text-anchor="middle" font-family="sans-serif">SP</text>
+              </svg>
+            </div>
             <div>
-              <h3>SharePoint</h3>
-              <p>Experience in managing and configuring SharePoint for document management and team collaboration
-                solutions.</p>
+              <h3>SharePoint Ecosystem</h3>
+              <p>SharePoint Online, SharePoint On-Premise, SPFx Custom Components</p>
             </div>
           </div>
 
+          <!-- Card 4: Databases -->
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot java"></span>
+            <div class="skill-logo-stack">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt="MySQL" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg" alt="SQLite" loading="lazy" decoding="async" />
+            </div>
+            <div>
+              <h3>Databases</h3>
+              <p>Relational database management using MySQL and SQLite</p>
+            </div>
+          </div>
+
+          <!-- Card 5: Tools & IDEs -->
           <div class="skill relative overflow-hidden">
             <span class="skill-hotspot frontend"></span>
-            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
-              alt="Web Technologies" loading="lazy" width="48" height="48" decoding="async" />
+            <div class="skill-logo-stack">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/androidstudio/androidstudio-original.svg" alt="Android Studio" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/intellij/intellij-original.svg" alt="IntelliJ" loading="lazy" decoding="async" />
+            </div>
             <div>
-              <h3>Frontend Technologies</h3>
-              <p>Adept in creating responsive and interactive web interfaces using HTML, CSS, JavaScript, and Bootstrap
-                5.
-              </p>
+              <h3>Tools & IDEs</h3>
+              <p>VS Code, Android Studio, IntelliJ, Google Colab</p>
+            </div>
+          </div>
+
+          <!-- Card 6: Version Control -->
+          <div class="skill relative overflow-hidden">
+            <span class="skill-hotspot jquery"></span>
+            <div class="skill-logo-stack">
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" loading="lazy" decoding="async" />
+              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub" loading="lazy" decoding="async" />
+            </div>
+            <div>
+              <h3>Version Control</h3>
+              <p>Code versioning, branch management, and collaboration using Git and GitHub</p>
             </div>
           </div>
         </div>
@@ -332,7 +383,7 @@
               </svg>
               <span>Current Position</span>
             </div>
-            <span class="duration">Aug 2025 - Present</span>
+            <span class="duration">Aug 2025 - Current</span>
           </div>
 
           <h3>Junior Software Analyst</h3>
@@ -342,7 +393,7 @@
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
-              Enaiya Information Technology
+              Enaviya Information Technology
             </div>
             <div class="location">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -357,43 +408,22 @@
             <li>
               <span class="achievement-icon">🚀</span>
               <div>
-                <strong>SharePoint Solutions</strong>
-                <p>Designed and deployed custom SPFx components and site automation features</p>
+                <strong>Modern Applications & SPFx</strong>
+                <p>Designed, developed, and deployed modern applications in SharePoint Online including custom SPFx components, UI enhancements, and site automation features.</p>
               </div>
             </li>
             <li>
               <span class="achievement-icon">⚡</span>
               <div>
                 <strong>Performance Optimization</strong>
-                <p>Reduced page load time by ~30% through legacy script refactoring</p>
+                <p>Optimized page performance and reduced average load time by ~30% by refactoring legacy scripts, improving DOM operations, and implementing efficient async handling using jQuery/REST APIs.</p>
               </div>
             </li>
             <li>
               <span class="achievement-icon">🔧</span>
               <div>
                 <strong>Enterprise Integration</strong>
-                <p>Built data connectors and CRUD services with SQL Server & Swagger APIs</p>
-              </div>
-            </li>
-            <li>
-              <span class="achievement-icon">📱</span>
-              <div>
-                <strong>UI/UX Enhancement</strong>
-                <p>Implemented responsive designs and improved user experience across platforms</p>
-              </div>
-            </li>
-            <li>
-              <span class="achievement-icon">🔄</span>
-              <div>
-                <strong>Workflow Automation</strong>
-                <p>Developed automated workflows reducing manual processing time by 40%</p>
-              </div>
-            </li>
-            <li>
-              <span class="achievement-icon">📊</span>
-              <div>
-                <strong>Data Management</strong>
-                <p>Optimized database queries and implemented efficient data handling strategies</p>
+                <p>Worked on SharePoint On-Premise environments integrated with SQL Server and Swagger-based APIs, creating data connectors, CRUD services, and secure backend endpoints for enterprise workflows.</p>
               </div>
             </li>
           </ul>
@@ -417,7 +447,7 @@
               </svg>
               <span>Full Stack</span>
             </div>
-            <span class="duration">Feb - Mar 2025</span>
+            <span class="duration">Feb 2025 – Apr 2025</span>
           </div>
 
           <h3>Full Stack Developer</h3>
@@ -427,7 +457,7 @@
                 <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                 <polyline points="9 22 9 12 15 12 15 22"></polyline>
               </svg>
-              Ice Technology Lab
+              ICE Technology Lab
             </div>
             <div class="location">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -443,21 +473,21 @@
               <span class="achievement-icon">🐍</span>
               <div>
                 <strong>Django Development</strong>
-                <p>Built full-stack web applications with Python & Django</p>
+                <p>Developed and deployed a Django-based web application, enhancing user interaction by integrating frontend and backend modules.</p>
               </div>
             </li>
             <li>
-              <span class="achievement-icon">🔗</span>
+              <span class="achievement-icon">⚡</span>
               <div>
-                <strong>Integration</strong>
-                <p>Seamlessly connected frontend and backend components</p>
+                <strong>Backend Optimization</strong>
+                <p>Collaborated with a team to improve website load speed by 30% through backend optimization.</p>
               </div>
             </li>
             <li>
-              <span class="achievement-icon">👥</span>
+              <span class="achievement-icon">🧩</span>
               <div>
-                <strong>Team Collaboration</strong>
-                <p>Debugged and optimized code for better performance</p>
+                <strong>MVC Architecture</strong>
+                <p>Wrote reusable and modular Python code following MVC architecture.</p>
               </div>
             </li>
           </ul>
@@ -527,9 +557,61 @@
         </div>
       </div>
     </section>
+
+    <section class="projects-section scroll-reveal" id="projects">
+      <div class="section-header-compact">
+        <h2 class="section-title">Projects</h2>
+      </div>
+
+      <div class="bento-grid">
+        <div class="bento-card current-role">
+          <div class="card-header">
+            <div class="role-badge developer">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+              </svg>
+              <span>Full Stack Application</span>
+            </div>
+            <span class="duration">Personal Project</span>
+          </div>
+
+          <h3>Blog Website</h3>
+          
+          <ul class="achievement-list mt-6">
+            <li>
+              <span class="achievement-icon">🔐</span>
+              <div>
+                <strong>Role-Based Access</strong>
+                <p>Built a role-based blog platform with login panels for Admin, Writer, and User.</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">📝</span>
+              <div>
+                <strong>Content Management</strong>
+                <p>Enabled CRUD operations for writers and blog moderation tools for admins.</p>
+              </div>
+            </li>
+            <li>
+              <span class="achievement-icon">🛡️</span>
+              <div>
+                <strong>Authentication & Security</strong>
+                <p>Implemented authentication and access control using Django's built-in features.</p>
+              </div>
+            </li>
+          </ul>
+
+          <div class="tech-stack">
+            <span class="tech-tag">Django</span>
+            <span class="tech-tag">Python</span>
+            <span class="tech-tag">SQLite</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="journey-section scroll-reveal" id="journey">
       <div class="section-header-compact">
-        <span class="section-number">03</span>
         <h2 class="section-title">Journey & Education</h2>
       </div>
 
@@ -540,23 +622,23 @@
           <div class="timeline-container">
             <div class="timeline-item left">
               <div class="content">
-                <span class="timeline-year">2021 - 2025</span>
+                <span class="timeline-year">June 2025</span>
                 <h4>Shivalik College of Engineering, Dehradun</h4>
-                <p>Bachelor of Technology - BTech, Computer Science</p>
+                <p>B.Tech in Computer Science | 65%</p>
               </div>
             </div>
             <div class="timeline-item right">
               <div class="content">
-                <span class="timeline-year">2020 - 2021</span>
-                <h4>Assembly of God Church, Asansol</h4>
-                <p>ISC (Indian School Certificate)</p>
+                <span class="timeline-year">April 2021</span>
+                <h4>Assembly of God Church School, Asansol</h4>
+                <p>ISC (Class 12) | 84%</p>
               </div>
             </div>
             <div class="timeline-item left">
               <div class="content">
-                <span class="timeline-year">2018 - 2019</span>
-                <h4>Assembly of God Church, Asansol</h4>
-                <p>ICSE (Indian Certificate of Secondary Education)</p>
+                <span class="timeline-year">March 2019</span>
+                <h4>Assembly of God Church School, Asansol</h4>
+                <p>ICSE (Class 10) | 71%</p>
               </div>
             </div>
           </div>
@@ -591,11 +673,9 @@
     </section>
     <section class="interests-section scroll-reveal">
       <h2 class="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 text-transparent bg-clip-text mb-6">
-        Beyond the Code: My Interests and Passions</h2>
+        Achievements &amp; Extracurriculars</h2>
       <p class="sub-heading text-gray-400 text-lg mb-12 max-w-3xl mx-auto">
-        While my primary focus is on technology and computer science, I also have a range of interests that enrich my
-        life
-        and contribute to my holistic development. These passions fuel my creativity and drive for continuous learning.
+        A snapshot of my achievements and activities beyond the screen.
       </p>
       <div class="interests-container max-w-7xl mx-auto px-4">
         <div class="interests-list grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -614,13 +694,9 @@
             </div>
             <div>
               <h3 class="text-2xl font-semibold text-white mb-3">
-                Listening to Music
+                Intercollege Football (2023)
               </h3>
-              <p class="text-gray-400 leading-relaxed text-sm">Music is my ultimate way to unwind and find
-                inspiration.
-                Whether I'm coding or relaxing, exploring different genres keeps my creativity flowing and helps me
-                focus.
-              </p>
+              <p class="text-gray-400 leading-relaxed text-sm">Secured 2nd place in the Intercollege Football Tournament, demonstrating strong teamwork and strategic play on the field.</p>
             </div>
           </div>
 
@@ -637,11 +713,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-2xl font-semibold text-white mb-3">Playing Football</h3>
-              <p class="text-gray-400 leading-relaxed text-sm">I'm an avid football player. Being on the field teaches
-                me
-                teamwork, strategy, and resilience—qualities that perfectly translate into my professional life as a
-                developer.</p>
+              <h3 class="text-2xl font-semibold text-white mb-3">Singing Competition Finalist</h3>
+              <p class="text-gray-400 leading-relaxed text-sm">Reached the finals of the Inter-school Singing Competition, showcasing dedication, practice, and confidence on stage.</p>
             </div>
           </div>
 
@@ -658,10 +731,8 @@
               </svg>
             </div>
             <div>
-              <h3 class="text-2xl font-semibold text-white mb-3">Reading Novels</h3>
-              <p class="text-gray-400 leading-relaxed text-sm">Getting lost in a good novel is my favorite way to escape
-                and broaden my perspective. Reading enhances my imagination and ability to understand different
-                viewpoints.</p>
+              <h3 class="text-2xl font-semibold text-white mb-3">Photography</h3>
+              <p class="text-gray-400 leading-relaxed text-sm">Enthusiastic photographer capturing moments and perspectives. Check out my photography portfolio on Instagram (@timel_essclassics).</p>
             </div>
           </div>
 
@@ -826,50 +897,27 @@
     </button>
   </div>
 
-  <!-- Floating Navigation Bar -->
-  <nav class="floating-nav">
-    <a href="#" class="nav-item active" data-section="home" aria-label="Home Section">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
-        <polyline points="9 22 9 12 15 12 15 22"></polyline>
-      </svg>
-      <span class="nav-text">Home</span>
+  <!-- Right-Side Dot Navigation -->
+  <nav class="dot-nav" id="dotNav" aria-label="Page sections">
+    <a href="#" class="dot-nav-item active" data-section="home" aria-label="Home">
+      <span class="dot-nav-dot"></span>
+      <span class="dot-nav-tooltip">Home</span>
     </a>
-    <a href="#about" class="nav-item" data-section="about" aria-label="About Section">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <circle cx="12" cy="12" r="10"></circle>
-        <line x1="12" y1="16" x2="12" y2="12"></line>
-        <line x1="12" y1="8" x2="12.01" y2="8"></line>
-      </svg>
-      <span class="nav-text">About Me</span>
+    <a href="#about" class="dot-nav-item" data-section="about" aria-label="About">
+      <span class="dot-nav-dot"></span>
+      <span class="dot-nav-tooltip">About</span>
     </a>
-    <a href="#skills" class="nav-item" data-section="skills" aria-label="Skills Section">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <polyline points="16 18 22 12 16 6"></polyline>
-        <polyline points="8 6 2 12 8 18"></polyline>
-      </svg>
-      <span class="nav-text">Skills</span>
+    <a href="#skills" class="dot-nav-item" data-section="skills" aria-label="Skills">
+      <span class="dot-nav-dot"></span>
+      <span class="dot-nav-tooltip">Skills</span>
     </a>
-    <a href="#experience" class="nav-item" data-section="experience" aria-label="Experience Section">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <path d="M12 11a4 4 0 1 0-4-4 4 4 0 0 0 4 4z"></path>
-        <path d="M16 21v-2a4 4 0 0 0-8 0v2"></path>
-        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(45 12 12)"></ellipse>
-        <ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(135 12 12)"></ellipse>
-      </svg>
-      <span class="nav-text">Work</span>
+    <a href="#experience" class="dot-nav-item" data-section="experience" aria-label="Work">
+      <span class="dot-nav-dot"></span>
+      <span class="dot-nav-tooltip">Work</span>
     </a>
-    <a href="#contact" class="nav-item" data-section="contact" aria-label="Contact Section">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-        stroke-linejoin="round">
-        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-        <polyline points="22,6 12,13 2,6"></polyline>
-      </svg>
-      <span class="nav-text">Contact</span>
+    <a href="#contact" class="dot-nav-item" data-section="contact" aria-label="Contact">
+      <span class="dot-nav-dot"></span>
+      <span class="dot-nav-tooltip">Contact</span>
     </a>
   </nav>
 
