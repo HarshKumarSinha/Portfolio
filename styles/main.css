@@ -204,12 +204,10 @@
 
 html {
   /* scroll-behavior: smooth; - Disabled for Lenis */
-  height: 100%;
-  width: 100vw;
-  overflow-x: hidden;
   overscroll-behavior: none;
   scrollbar-width: thin;
   scrollbar-color: var(--primary-color) var(--bg-color);
+  overflow-x: clip;
 }
 
 /* Global Custom Scrollbar */
@@ -238,13 +236,7 @@ body {
   color: var(--text-primary);
   background-color: var(--bg-color);
   line-height: 1.6;
-  overflow-x: hidden;
-}
-
-main {
-  overflow-x: hidden;
-  width: 100%;
-  position: relative;
+  overflow-x: clip;
 }
 
 /* Glowing Floating Gradient Blobs */
@@ -796,7 +788,7 @@ p {
   .hero-stat-card--br { bottom: 4%; right: -4%; }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 768px) {
   .hero-cta {
     flex-direction: column;
     width: 100%;
