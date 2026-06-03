@@ -558,6 +558,7 @@ p {
   flex-wrap: wrap;
   gap: 0.85rem;
   align-items: center;
+  box-sizing: border-box;
 }
 
 .hero-btn {
@@ -574,6 +575,7 @@ p {
   cursor: pointer;
   border: none;
   white-space: nowrap;
+  box-sizing: border-box;
 }
 
 .hero-btn-primary {
