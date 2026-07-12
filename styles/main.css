@@ -202,6 +202,108 @@
   box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07) !important;
 }
 
+/* Hero light mode enhancements */
+[data-theme="light"] .hero-name {
+  background: linear-gradient(135deg, #1e1b4b 0%, #312e81 40%, #4f46e5 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 30px rgba(79, 70, 229, 0.15));
+}
+
+[data-theme="light"] .hero-colon {
+  background: linear-gradient(135deg, #312e81, #4f46e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  opacity: 0.95;
+}
+
+[data-theme="light"] #typing-text {
+  background: linear-gradient(135deg, #4f46e5, #db2777, #ea580c);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .hero-highlight.indigo {
+  background: linear-gradient(135deg, #312e81, #4f46e5);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .hero-highlight.pink {
+  background: linear-gradient(135deg, #9d174d, #db2777);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+[data-theme="light"] .hero-chip {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .hero-chip:hover {
+  background: rgba(79, 70, 229, 0.08) !important;
+  border-color: rgba(79, 70, 229, 0.3) !important;
+  color: var(--primary-color) !important;
+}
+
+[data-theme="light"] .hero-btn-secondary {
+  background: rgba(0, 0, 0, 0.02) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .hero-btn-secondary:hover {
+  background: rgba(0, 0, 0, 0.06) !important;
+  border-color: rgba(0, 0, 0, 0.3) !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .hero-btn-ghost {
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .hero-btn-ghost:hover {
+  color: var(--primary-color) !important;
+  border-color: rgba(79, 70, 229, 0.3) !important;
+  background: rgba(79, 70, 229, 0.05) !important;
+}
+
+[data-theme="light"] .hero-stat-card {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .hero-stat-number {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+[data-theme="light"] .hero-profile-frame {
+  box-shadow:
+    0 0 30px rgba(99, 102, 241, 0.15),
+    0 0 60px rgba(168, 85, 247, 0.08),
+    inset 0 0 20px rgba(99, 102, 241, 0.03) !important;
+}
+
+[data-theme="light"] .timeline-item h4 {
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .timeline-item .content:hover h4 {
+  color: var(--text-primary) !important;
+}
+
 html {
   /* scroll-behavior: smooth; - Disabled for Lenis */
   overscroll-behavior: none;
@@ -2379,6 +2481,78 @@ section {
   40% {
     transform: scale(1);
   }
+}
+
+/* Chatbot Light Mode Enhancements */
+[data-theme="light"] .chatbot-window {
+  background-color: rgba(255, 255, 255, 0.75) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15) !important;
+}
+
+[data-theme="light"] .chatbot-header {
+  color: var(--text-primary) !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .close-chat {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .close-chat:hover {
+  background: rgba(0, 0, 0, 0.1) !important;
+}
+
+[data-theme="light"] .bot-message {
+  background: rgba(0, 0, 0, 0.04) !important;
+  color: var(--text-primary) !important;
+  border-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .chatbot-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.06) !important;
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+[data-theme="light"] .chatbot-footer input {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .chatbot-footer input:focus {
+  border-color: var(--primary-color) !important;
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+[data-theme="light"] .bot-avatar-container {
+  background: rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme="light"] .mic-btn {
+  background: rgba(0, 0, 0, 0.04) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-secondary) !important;
+}
+
+[data-theme="light"] .mic-btn:hover {
+  background: rgba(0, 0, 0, 0.08) !important;
+  color: var(--text-primary) !important;
+}
+
+[data-theme="light"] .mic-btn.listening {
+  background: #ef4444 !important;
+  border-color: #ef4444 !important;
+  color: white !important;
+}
+
+[data-theme="light"] .typing-indicator {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+[data-theme="light"] .typing-indicator span {
+  background: rgba(0, 0, 0, 0.4) !important;
 }
 
 @media (max-width: 768px) {
