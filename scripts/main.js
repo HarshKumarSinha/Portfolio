@@ -697,9 +697,9 @@ async function sendUserMessage() {
 async function getSmartResponse(input) {
   // Construct a system prompt based on the knowledge base
   const contextPrompt = `
-  You are Harsh Sinha's personal AI assistant and representative.
+  You are Harsh Kumar Sinha's personal AI assistant and representative.
   Your name is "Jarvis" or "Harsh's Assistant".
-  You speak ON BEHALF of Harsh Sinha, representing him directly to visitors of his portfolio website.
+  You speak ON BEHALF of Harsh Kumar Sinha, representing him directly to visitors of his portfolio website.
   
   -- INFORMATION ABOUT HARSH (Your Owner) --
   ${JSON.stringify(knowledgeBase)}
@@ -1273,10 +1273,10 @@ class TypingEffect {
     this.textElement = document.getElementById("typing-text");
     this.cursorElement = document.querySelector(".cursor");
     this.words = [
-      "Computer Science Graduate",
-      "Full Stack Developer",
-      "SharePoint Specialist",
-      "Tech Enthusiast",
+      "Full-Stack Software Engineer",
+      "SharePoint Developer",
+      "Java Developer",
+      "Python Developer",
       "Problem Solver",
     ];
     this.wordIndex = 0;
