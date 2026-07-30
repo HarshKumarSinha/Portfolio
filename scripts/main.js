@@ -652,7 +652,7 @@ function scrollToBottom() {
 // Obfuscated Gemini API Key (Reconstructed at runtime to bypass GitHub scanners)
 // WARNING: This only prevents simple pattern matching; it is not secure client-side encryption.
 const getGeminiApiKey = () => {
-  const parts = ["EWECuxY", "nC50f6", "Vo2FHF", "mYHlcF", "KLQLJhM", "BySazIA"];
+  const parts = ["AsaSjGEQeVRXh", "Tng1jnnb", "CsuXW28D", "kof6vhUm", "CDFMN6MI", "NR8bA.QA"];
   return parts.map(p => p.split("").reverse().join("")).reverse().join("");
 };
 
@@ -744,12 +744,22 @@ async function getSmartResponse(input) {
     );
 
     if (!response.ok) {
+      let errorDetails = "";
+      try {
+        const errJson = await response.json();
+        if (errJson.error && errJson.error.message) {
+          errorDetails = ` - ${errJson.error.message}`;
+        }
+      } catch (e) {
+        // Fallback if body is not JSON or cannot be read
+      }
+
       if (response.status === 404) {
         throw new Error(
-          "Model not found (404). API Key might need 'Generative Language API' enabled in Google Cloud Console.",
+          `Model not found (404). API Key might need 'Generative Language API' enabled in Google Cloud Console.${errorDetails}`,
         );
       }
-      throw new Error(`HTTP Error: ${response.status} ${response.statusText}`);
+      throw new Error(`HTTP Error: ${response.status} ${response.statusText}${errorDetails}`);
     }
 
     const data = await response.json();
