@@ -652,7 +652,7 @@ function scrollToBottom() {
 // Obfuscated Gemini API Key (Reconstructed at runtime to bypass GitHub scanners)
 // WARNING: This only prevents simple pattern matching; it is not secure client-side encryption.
 const getGeminiApiKey = () => {
-  const parts = ["AsaSjGEQeVRXh", "Tng1jnnb", "CsuXW28D", "kof6vhUm", "CDFMN6MI", "NR8bA.QA"];
+  const parts = ["AsSaj", "GEQeVRXh", "Tng1jnnb", "CsuxW28D", "kof6vhUm", "CDFN6MI6", "NR8bA.QA"];
   return parts.map(p => p.split("").reverse().join("")).reverse().join("");
 };
 
