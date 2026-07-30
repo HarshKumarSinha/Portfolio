@@ -351,6 +351,16 @@ body {
   background-color: var(--bg-color);
   line-height: 1.6;
   overflow-x: clip;
+  zoom: 0.9;
+}
+
+@supports (-moz-appearance: none) {
+  body {
+    transform: scale(0.9);
+    transform-origin: top center;
+    width: 111.11%;
+    min-height: 111.11vh;
+  }
 }
 
 /* Glowing Floating Gradient Blobs */
