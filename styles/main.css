@@ -3507,6 +3507,10 @@ body.loaded #preloader .loader-content {
   color: #f43f5e;
   background-color: #f43f5e;
 }
+.skill-hotspot.ai {
+  color: #a855f7;
+  background-color: #a855f7;
+}
 
 /* 4. Journey & Education (Merged split columns) */
 .journey-split-grid {
@@ -3688,4 +3692,161 @@ body.loaded #preloader .loader-content {
     align-self: start;
     justify-content: center;
   }
+}
+
+/* Project Action Links */
+.project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+}
+
+.project-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 1.1rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.project-btn-primary {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff !important;
+  border: 1px solid rgba(139, 92, 246, 0.4);
+}
+
+.project-btn-primary:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
+  color: #fff !important;
+}
+
+.project-btn-outline {
+  background: rgba(255, 255, 255, 0.05);
+  color: #e0e7ff !important;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.project-btn-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #fff !important;
+  transform: translateY(-2px);
+}
+
+[data-theme="light"] .project-btn-outline {
+  background: rgba(0, 0, 0, 0.03);
+  color: #1e293b !important;
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .project-btn-outline:hover {
+  background: rgba(0, 0, 0, 0.08);
+  border-color: rgba(0, 0, 0, 0.3);
+  color: #0f172a !important;
+}
+
+/* Direct Contact Info Grid */
+.contact-info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto 2.5rem auto;
+  width: 100%;
+}
+
+.contact-info-card {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding: 1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.contact-info-card:hover {
+  background: rgba(255, 255, 255, 0.07);
+  border-color: rgba(99, 102, 241, 0.4);
+  transform: translateY(-2px);
+  color: #fff;
+}
+
+.contact-info-card .contact-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(99, 102, 241, 0.15);
+  color: #818cf8;
+  flex-shrink: 0;
+}
+
+.contact-info-card .contact-text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.contact-info-card .contact-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+}
+
+.contact-info-card .contact-value {
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+[data-theme="light"] .contact-info-card {
+  background: rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 0, 0, 0.08);
+  color: #0f172a;
+}
+
+[data-theme="light"] .contact-info-card:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(99, 102, 241, 0.3);
+  color: #0f172a;
+}
+
+[data-theme="light"] .contact-info-card .contact-icon {
+  background: rgba(99, 102, 241, 0.1);
+  color: #4f46e5;
+}
+
+[data-theme="light"] .contact-info-card .contact-label {
+  color: #64748b;
+}
+
+/* Certifications Sub-heading */
+.subsection-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+.subsection-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #e2e8f0;
+  font-family: var(--font-heading);
+}
+[data-theme="light"] .subsection-title {
+  color: #1e293b;
 }

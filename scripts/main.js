@@ -460,13 +460,14 @@ const knowledgeBase = {
     "Hello! I'm ready to answer your questions about Harsh.",
     "Greetings! Ask me anything about Harsh's work.",
   ],
-  about: "",
-  experience: "",
-  skills: "",
-  education: "",
-  projects: "",
-  contact: "",
-  summary: "",
+  about: "Harsh Kumar Sinha is a passionate Junior Software Developer with 1 year of professional experience developing enterprise applications using SharePoint Online, SPFx, React.js, JavaScript, and TypeScript, alongside hands-on Python and Django development experience. Skilled in building reusable frontend components, integrating REST APIs, and developing database-driven applications.",
+  experience: "<b>Professional Experience:</b><br>• <b>Junior Software Analyst Engineer</b> @ Enaviya Information Technology (Aug 2025 – Jul 2026): Custom SharePoint Online, SPFx, React.js, TypeScript, Power Automate workflows, and REST APIs.<br>• <b>Full Stack Development Intern</b> @ ICE Technology Lab (Feb 2025 – Apr 2025): Python & Django backend development, RESTful API endpoints, and Django ORM.",
+  skills: "<b>Core Technical Skills:</b><br>• <b>Programming Languages:</b> Java, Python, JavaScript (ES6+), SQL<br>• <b>Frontend:</b> React.js, TypeScript, jQuery, HTML5, CSS3, Bootstrap<br>• <b>Backend:</b> Django, REST API Development<br>• <b>Databases:</b> MySQL, SQL Server, SQLite<br>• <b>Enterprise:</b> SharePoint Online, SPFx, Power Automate<br>• <b>Tools:</b> Git, GitHub, VS Code, Postman<br>• <b>AI:</b> GenAI Fundamentals, LLM Concepts, Prompt Engineering",
+  education: "<b>Education:</b><br>• <b>Shivalik College of Engineering, Dehradun:</b> B.Tech in Computer Science | 65% (Graduated: Jul 2025)<br>• <b>Assembly of God Church School, Asansol:</b> ISC (Class 12): 84% (2021) | ICSE (Class 10): 71% (2019)",
+  certifications: "<b>Certifications:</b><br>• Core Java Certification<br>• Android Development Certification<br>• JavaScript Certification",
+  projects: "<b>Featured Projects:</b><br>• <b>Rajesh Construction Web Platform:</b> Commercial full-stack platform with multi-step quote workflow, Express.js REST APIs, SQLite, and authenticated admin dashboard.<br>• <b>Personal Portfolio Website:</b> Responsive portfolio showcase built with HTML5, CSS3, Vanilla JavaScript, Lenis scroll, and Three.js 3D avatar, deployed on GitHub Pages.",
+  contact: "<b>Contact Details:</b><br>• <b>Email:</b> <a href='mailto:sinhaharsh.hks@gmail.com' style='color: #a855f7;'>sinhaharsh.hks@gmail.com</a><br>• <b>Phone:</b> <a href='tel:+919064318550' style='color: #a855f7;'>+91-9064318550</a><br>• <b>Location:</b> Patna, Bihar, India<br>• <b>LinkedIn:</b> <a href='https://www.linkedin.com/in/harsh-sinha-24b65731a/' target='_blank' style='color: #a855f7;'>linkedin.com/in/harsh-sinha-24b65731a</a><br>• <b>GitHub:</b> <a href='https://github.com/HarshKumarSinha' target='_blank' style='color: #a855f7;'>github.com/HarshKumarSinha</a>",
+  summary: "<b>Harsh Kumar Sinha</b> - Junior Full Stack Developer | React.js | JavaScript | Python (Django) | SQL | REST APIs | SharePoint Online & SPFx.",
   personality: "",
 };
 
@@ -495,35 +496,29 @@ function updateDynamicKnowledgeBase() {
       let skillsList = [];
       skillsGrid.querySelectorAll(".skill").forEach((skill) => {
         const title = skill.querySelector("h3")?.textContent.trim();
-        if (title) skillsList.push(title);
+        const details = skill.querySelector("p")?.textContent.trim();
+        if (title && details) {
+          skillsList.push(`• <b>${title}:</b> ${details}`);
+        } else if (title) {
+          skillsList.push(title);
+        }
       });
 
-      // Compact Skills from Overview
-      const compactSkills = document.querySelectorAll(
-        ".skills-overview .skill-item span",
-      );
-      compactSkills.forEach((s) => skillsList.push(s.textContent.trim()));
-
-      // Unique skills
-      skillsList = [...new Set(skillsList)];
-
       if (skillsList.length > 0) {
-        knowledgeBase.skills = `<b>Core Technical Skills:</b><br>${skillsList.join(", ")}`;
+        knowledgeBase.skills = `<b>Core Technical Skills:</b><br>${skillsList.join("<br>")}`;
       }
     }
 
-    // 4. Update Experience & Projects
+    // 4. Update Experience
     const expSection = document.querySelector(".experience-section");
     if (expSection) {
       let expHTML = "<b>Professional Experience:</b><br>";
-      let projectsHTML = "<b>Key Projects & Achievements:</b><br>";
-      const cards = expSection.querySelectorAll(".bento-card");
+      const cards = expSection.querySelectorAll(".bento-card.current-role, .bento-card.previous-role");
 
       cards.forEach((card) => {
         const duration = card.querySelector(".duration")?.textContent.trim();
         if (duration) {
           const role = card.querySelector("h3")?.textContent.trim();
-          // Get company name, removing extra whitespace from SVG/newlines
           let company =
             card
               .querySelector(".company-name")
@@ -531,31 +526,64 @@ function updateDynamicKnowledgeBase() {
               .trim() || "";
 
           expHTML += `• <b>${role}</b> @ ${company} (${duration})<br>`;
-
-          // Extract achievements for Projects
-          const achievements = card.querySelectorAll(
-            ".achievement-list li div",
-          );
+          const achievements = card.querySelectorAll(".achievement-list li div");
           achievements.forEach((ach) => {
             const title = ach.querySelector("strong")?.textContent.trim();
             const desc = ach.querySelector("p")?.textContent.trim();
-            if (title) {
-              projectsHTML += `• <b>${title}</b>: ${desc}<br>`;
+            if (title && desc) {
+              expHTML += `  - <i>${title}:</i> ${desc}<br>`;
             }
           });
         }
       });
       knowledgeBase.experience = expHTML;
-      knowledgeBase.projects = projectsHTML;
     }
 
-    // 5. Update Education from Timeline
+    // 5. Update Projects
+    const projSection = document.querySelector(".projects-section");
+    if (projSection) {
+      let projHTML = "<b>Featured Projects:</b><br>";
+      const pCards = projSection.querySelectorAll(".projects-grid .bento-card");
+      pCards.forEach((card) => {
+        const title = card.querySelector("h3")?.textContent.trim();
+        const subtitle = card.querySelector("p")?.textContent.trim();
+        if (title) {
+          projHTML += `• <b>${title}</b> (${subtitle || ""})<br>`;
+          const achs = card.querySelectorAll(".achievement-list li div");
+          achs.forEach((ach) => {
+            const strong = ach.querySelector("strong")?.textContent.trim();
+            const p = ach.querySelector("p")?.textContent.trim();
+            if (strong && p) {
+              projHTML += `  - <i>${strong}:</i> ${p}<br>`;
+            }
+          });
+        }
+      });
+      knowledgeBase.projects = projHTML;
+    }
+
+    // 6. Update Certifications
+    const certSection = document.querySelector("#certifications");
+    if (certSection) {
+      let certHTML = "<b>Certifications:</b><br>";
+      const cCards = certSection.querySelectorAll(".interest-box");
+      cCards.forEach((c) => {
+        const title = c.querySelector("h3")?.textContent.trim();
+        const desc = c.querySelector("p")?.textContent.trim();
+        if (title && title.includes("Certification")) {
+          certHTML += `• <b>${title}:</b> ${desc}<br>`;
+        }
+      });
+      knowledgeBase.certifications = certHTML;
+    }
+
+    // 7. Update Education from Timeline
     const timeline = document.querySelector(".timeline-container");
     if (timeline) {
       let eduHTML = "<b>Education History:</b><br>";
       const items = timeline.querySelectorAll(".timeline-item .content");
       items.forEach((item) => {
-        const year = item.querySelector("h3")?.textContent.trim();
+        const year = item.querySelector(".timeline-year")?.textContent.trim();
         const school = item.querySelector("h4")?.textContent.trim();
         const degree = item.querySelector("p")?.textContent.trim();
         eduHTML += `• <b>${school}</b>: ${degree} (${year})<br>`;
@@ -563,10 +591,10 @@ function updateDynamicKnowledgeBase() {
       knowledgeBase.education = eduHTML;
     }
 
-    // 6. Update Contact
+    // 8. Update Contact
     const footerSocials = document.querySelectorAll(".footer-socials a");
     let contactHTML =
-      "You can reach Harsh via the <a href='#contact' style='color: #a855f7;'>contact form</a> below.<br>";
+      "You can reach Harsh at <b>sinhaharsh.hks@gmail.com</b>, phone: <b>+91-9064318550</b>, or via the contact form.<br>";
     if (footerSocials.length > 0) {
       contactHTML += "<b>Social Links:</b><br>";
       footerSocials.forEach((link) => {
@@ -835,6 +863,39 @@ function getLocalResponse(input) {
     lowerInput.includes("study")
   ) {
     return knowledgeBase.education;
+  }
+
+  if (
+    lowerInput.includes("certif") ||
+    lowerInput.includes("license") ||
+    lowerInput.includes("credential")
+  ) {
+    return knowledgeBase.certifications || "Harsh holds certifications in Core Java, Android Development, and JavaScript.";
+  }
+
+  if (
+    lowerInput.includes("phone") ||
+    lowerInput.includes("mobile") ||
+    lowerInput.includes("call") ||
+    lowerInput.includes("number")
+  ) {
+    return "You can reach Harsh at <b>+91-9064318550</b> or via email at <b>sinhaharsh.hks@gmail.com</b>.";
+  }
+
+  if (
+    lowerInput.includes("rajesh") ||
+    lowerInput.includes("construction")
+  ) {
+    return "The <b>Rajesh Construction Web Platform</b> is a commercial full-stack web application Harsh built using Node.js, Express, SQLite, and REST APIs with an interactive multi-step quote workflow, automated emails, and an authenticated admin dashboard.";
+  }
+
+  if (
+    lowerInput.includes("ai") ||
+    lowerInput.includes("llm") ||
+    lowerInput.includes("genai") ||
+    lowerInput.includes("prompt")
+  ) {
+    return "Harsh has solid theoretical and practical knowledge in <b>GenAI Fundamentals</b>, <b>LLM Concepts</b>, and <b>Prompt Engineering</b>, alongside his full-stack and enterprise development skill set.";
   }
 
   if (
@@ -1283,11 +1344,11 @@ class TypingEffect {
     this.textElement = document.getElementById("typing-text");
     this.cursorElement = document.querySelector(".cursor");
     this.words = [
-      "Full-Stack Software Engineer",
-      "SharePoint Developer",
-      "Java Developer",
-      "Python Developer",
-      "Problem Solver",
+      "Junior Full Stack Developer",
+      "React.js Developer",
+      "Python (Django) Developer",
+      "SharePoint & SPFx Developer",
+      "REST API & Database Engineer",
     ];
     this.wordIndex = 0;
     this.isDeleting = false;
